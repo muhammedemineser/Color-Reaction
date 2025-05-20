@@ -1,0 +1,436 @@
+ /* === Allgemeines Layout === */
+.body {
+  transition: 0.5s ease;
+  background-color: #2a2a2a;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  transition: 0.3s ease;
+}
+
+.containerNachClick {
+  display: none;
+}
+
+.containerNachClick.sichtbar {
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  transition: 0.3s ease;
+}
+
+/* === Button zentriert === */
+#gameBtn {
+  position: sticky;
+  top: 28%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 15px;
+  height: 50px;
+  width: 140px;
+  border-radius: 20px;
+  border: 1px solid rgb(175, 255, 246);
+  background-color: #00ffcc;
+  font-family: 'Sergio-UI', sans-serif;
+  font-weight: bold;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  transition: 0.3s ease;
+  top: 45%;
+  margin: 50px auto;
+}
+
+#gameBtn:hover {
+  background-color: rgb(0, 255, 217);
+  color: #ffffff;
+}
+
+#gameBtn.unsichtbar {
+  display:none;
+}
+
+#gameBtnSec {
+ display:none;
+}
+
+
+#gameBtnSec.sichtbar {
+    position: sticky;
+  top: 28%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 15px;
+  height: 50px;
+  width: 140px;
+  border-radius: 20px;
+  border: 1px solid rgb(175, 255, 246);
+  background-color: #00ffcc;
+  font-family: 'Sergio-UI', sans-serif;
+  font-weight: bold;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  transition: 0.3s ease;
+  top: 45%;
+  margin: 50px auto;
+}
+
+#gameBtnSec.sichtbar:hover {
+  background-color: rgb(0, 255, 217);
+  color: #ffffff;
+}
+
+
+#platzhalterZwei {
+  width: 100vw;
+  height: 1vh;
+  background-color:transparent;
+}
+
+.intro-wrapper.unsichtbar {
+    display: none;
+}
+.intro-wrapper {
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  transition: 0.5s ease;
+  position: sticky;
+    list-style-position: inside;
+  text-align: center;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.intro-title.unsichtbar {
+    display: none;
+}
+.intro-title {
+  font-size: 32px;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #00ffcc;
+  text-shadow: 0 0 10px #00ffcc;
+    list-style-position: inside;
+  text-align: center;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.intro-highlight.unsichtbar {
+    display: none;
+}
+.intro-highlight {
+  font-size: 22px;
+  font-weight: 700;
+  color: #00ffcc;
+  margin-top: 20px;
+  margin-bottom: 10px;
+    list-style-position: inside;
+  text-align: center;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.intro-text.unsichtbar {
+    display: none;
+}
+.intro-text {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+    list-style-position: inside;
+  text-align: center;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.intro-subtle.unsichtbar {
+display: none;
+}
+.intro-subtle {
+  font-size: 16px;
+  font-style: italic;
+  color: #00ffcc;
+  margin-bottom: 20px;
+    list-style-position: inside;
+  text-align: center;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.intro-list ul.unsichtbar {
+    display:none;
+}
+.intro-list ul {
+  padding-left: 20px;
+  list-style-type: disc;
+  margin-bottom: 20px;
+  list-style-position: inside;
+  text-align: center;
+  padding: 0;
+  margin: 0 auto;
+}
+
+
+.intro-info ul.unsichtbar {
+    display: none;
+}
+.intro-info ul {
+  padding-left: 20px;
+  list-style: square;
+  margin-top: 10px;
+    list-style-position: inside;
+  text-align: center;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.intro-call.unsichtbar {
+    display: none;
+}
+
+.intro-call {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 40px;
+  color: #00ffcc;
+  animation: pulse 1.2s infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    text-shadow: 0 0 10px #00ffcc;
+  }
+  to {
+    text-shadow: 0 0 25px #00ffcc, 0 0 40px #00ffcc;
+  }
+}
+
+#platzhalter {
+  width: 100vw;
+  height: 1vh;
+  background-color: transparent;
+}
+
+
+/* === Eingabe-Feld === */
+#inputBlock {
+  display: flex;
+  justify-content: center;
+  margin-top: 4%;
+}
+
+#input {
+  color:white;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 5px;
+  height: 30px;
+  width: 200px;
+  font-family: 'Sergio-UI', sans-serif;
+  font-size: 14px;
+  padding: 5px;
+  transition: 0.3s ease;
+}
+
+/* === Feedback (Richtig/Falsch) === */
+#feedbackRight,
+#feedbackFalse {
+  display: none;
+}
+
+#feedbackRight.sichtbar,
+#feedbackFalse.sichtbar {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 20px;
+  width: 90px;
+  border-radius: 20px;
+  padding: 15px;
+  font-family: 'Sergio-UI', sans-serif;
+  font-weight: bold;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s ease;
+}
+
+#feedbackRight.sichtbar {
+  background-color: rgb(0, 225, 255);
+  color: white;
+  border: 2px solid white;
+}
+
+#feedbackFalse.sichtbar {
+  background-color: red;
+  color: black;
+  border: 2px solid rgb(255, 106, 106);
+}
+
+/* === Karte (Farbfeld) === */
+
+.anzeige-wrapper {
+  display: none;
+}
+.anzeige-wrapper.sichtbar {
+  position: relative;
+  height: 300px; /* genug Platz zum Zentrieren */
+}
+
+.colorchanger {
+  display: none;
+}
+
+.colorchanger.sichtbar {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: blue;
+  height: 200px;
+  width: 200px;
+  border-radius: 30px;
+  transition: 0.3s ease;
+}
+
+.punktezeiger {
+  display: none;
+}
+
+.punktezeiger.sichtbar {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 130px); /* etwas rechts neben der colorchanger */
+  transform: translateY(-50%);
+  width: 50px;
+  height: 70px;
+  background-color: white;
+  font-size: 30px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+/* === Texte & Anzeige beim Start === */
+#text,
+#play {
+  display: none;
+  transition: 0.3s ease;
+  text-align: center;
+}
+
+#text.sichtbar,
+#play.sichtbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  font-weight: bold;
+}
+
+#textAdj {
+  display: none;
+  position: absolute;
+}
+
+#textAdj.sichtbar {
+transition: 0.3s ease;
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  /* dein bisheriges Styling */
+  display: block;
+  font-family: 'Sergio-UI', sans-serif;
+  border-radius: 30px;
+  width: 150px;
+  margin: 15% auto 0;
+  transition: 0.3s ease;
+  margin-top: 20%;
+  color: red;
+}
+
+/* === Timer-Karten === */
+
+#timer {
+  display: none;
+}
+
+#timer.sichtbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+  min-height: 30vh;
+}
+
+.card {
+  display: none;
+}
+
+.card.sichtbar {
+  display: flex;
+  width: 50px;
+  height: 70px;
+  background-color: white;
+  font-size: 30px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: 0.3s ease;
+  margin: 10px;
+}
+
+.points {
+  visibility: hidden;
+  opacity: 0;
+}
+.points.sichtbar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 400px;
+  background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
+  color: #00ffcc;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0, 255, 204, 0.3);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 1px;
+  line-height: 1.5;
+  animation: finalePop 0.6s ease-out forwards;
+  border: 2px solid #00ffcc;
+  text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc;
+  visibility: visible;
+  opacity: 1;
+  margin-top: 150px;
+}
+
+

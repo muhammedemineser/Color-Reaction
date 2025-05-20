@@ -1,0 +1,215 @@
+let anzahl; // globale Variable
+let startTime;
+let anzahlKurz = 0;
+let anzahlLang = 0;
+let reaktionszeitProFarbe = 0;
+let reaktionszeitProFarbeSec = 0;
+let anzahlZwei = 0;
+let startTimeZwei = 0;
+let spielGestartet = false;
+let ersterClickGetan = false;
+
+function frageNachAnnahme() {
+  let assume = prompt("Wieviele Farben kannst du in einer Minute erkennen und schreiben? Mache eine Einschätzung");
+  anzahl = Number(assume);
+  if (isNaN(anzahl)) {
+    alert("Bitte gib eine gültige Zahl ein.");
+    frageNachAnnahme();
+  } else if (anzahl === 0) {
+    alert("0 ist keine gültige Zahl für dieses Spiel.");
+    frageNachAnnahme();
+  } else {
+    alert("Du nimmst an, " + anzahl + " Wörter in 1 Minute zu schaffen. Let's Test!");
+  }
+}
+
+frageNachAnnahme();
+
+const anzeigeWrapper = document.querySelector(".anzeige-wrapper")
+const karte = document.querySelector(".colorchanger");
+const button = document.getElementById("gameBtn");
+const buttonSec = document.getElementById("gameBtnSec");
+const input = document.getElementById("input");
+const feedbackright = document.getElementById("feedbackRight");
+const feedbackfalse = document.getElementById("feedbackFalse");
+const stunden = document.getElementById("stunden");
+const minTens = document.getElementById("minTens");
+const min = document.getElementById("min");
+const sekTens = document.getElementById("sekTens");
+const sek = document.getElementById("sek");
+const msHundreds = document.getElementById("msHundreds");
+const msTens = document.getElementById("msTens");
+const cards = document.querySelectorAll(".card");
+const timer = document.getElementById("timer");
+const points = document.querySelector(".points");
+const punkteZeiger = document.querySelector(".punktezeiger");
+const introWrapper = document.querySelector(".intro-wrapper");
+const introTitle = document.querySelector(".intro-title");
+const introHighlights = document.querySelectorAll(".intro-highlight");
+const introTexts = document.querySelectorAll(".intro-text");
+const introSubtle = document.querySelector(".intro-subtle");
+const introList = document.querySelector(".intro-list");
+const introInfo = document.querySelector(".intro-info");
+const introCall = document.querySelector(".intro-call");
+const containerButton = document.querySelector(".containerNachClick");
+
+let zustand = 0;
+let korrektAnzahl = 0;
+let timerGestartet = false;
+
+function handleGameInput() {
+  if (!spielGestartet || !ersterClickGetan) return;
+
+  const antwort = input.value.toLowerCase().replace(/\s/g, "");
+  const korrekt =
+    (zustand === 1 && antwort === "blau") ||
+    (zustand === 2 && antwort === "rot") ||
+    (zustand === 3 && antwort === "grün") ||
+    (zustand === 4 && antwort === "gelb") ||
+    (zustand === 5 && antwort === "pink") ||
+    (zustand === 6 && antwort === "orange") ||
+    (zustand === 7 && (antwort === "violett" || antwort === "lila")) ||
+    (zustand === 8 && antwort === "braun") ||
+    (zustand === 9 && antwort === "grau") ||
+    (zustand === 10 && (antwort === "weiß" || antwort === "weiss"));
+
+  if (korrekt) {
+    korrektAnzahl++;
+    if (anzahlLang === 0)
+    punkteZeiger.textContent = korrektAnzahl;
+    feedbackright.classList.add("sichtbar");
+    setTimeout(() => feedbackright.classList.remove("sichtbar"), 1500);
+  } else {
+    korrektAnzahl = 0;
+    punkteZeiger.textContent = korrektAnzahl;
+    feedbackfalse.classList.add("sichtbar");
+    setTimeout(() => feedbackfalse.classList.remove("sichtbar"), 1500);
+  }
+
+// Unbekannter Reiz (erste Reaktion)
+if (
+  zustand === 10 &&
+  (antwort === "weiß" || antwort === "weiss") &&
+  anzahlKurz === 0
+) {
+  anzahlKurz = Date.now() - startTime; // Zeit für 10 Aufgaben in ms
+  reaktionszeitProFarbe = anzahlKurz / 10000; // = /10 (für 10 Aufgaben), /1000 (für Sekunden)
+
+  // Optional: setze neuen Startzeitpunkt für Phase 2
+  startTimeZwei = Date.now();
+}
+
+// Bekannter Reiz (zweite Reaktion)
+if (
+  zustand === 10 &&
+  (antwort === "weiß" || antwort === "weiss") &&
+  anzahlLang === 0 &&
+  anzahlZwei === 1
+) {
+  anzahlLang = Date.now() - startTimeZwei;
+  reaktionszeitProFarbeSec = anzahlLang / 10000;
+  anzahlZwei=0;
+}
+
+  if (korrekt) {
+    zustand = (zustand % 10) + 1;
+    const farben = ["blue", "red", "green", "yellow", "#FF10F0", "#FF8000", "#8B00FF", "#8B4513", "grey", "white"];
+    karte.style.backgroundColor = farben[zustand - 1];
+    if (zustand === 1) anzahlZwei = 1;
+    input.value = "";
+  }
+}
+
+button.addEventListener("click", () => {
+  [introWrapper, introTitle, introSubtle, introList, introInfo, introCall].forEach(el => el.classList.add("unsichtbar"));
+  introHighlights.forEach(el => el.classList.add("unsichtbar"));
+  introTexts.forEach(el => el.classList.add("unsichtbar"));
+
+  feedbackfalse.classList.remove("sichtbar");
+
+  timer.classList.add("sichtbar");
+  containerButton.classList.add("sichtbar");
+  buttonSec.classList.add("sichtbar");
+  cards.forEach(card => card.classList.add("sichtbar"));
+  punkteZeiger.classList.add("sichtbar");
+  punkteZeiger.textContent = korrektAnzahl;
+  alert("Let's Play!");
+  ersterClickGetan = true;
+  spielGestartet = true;
+  zustand = 1;
+
+  if (!timerGestartet) {
+    timerGestartet = true;
+    starteTimer();
+  }
+
+  input.style.display = "block";
+  input.focus();
+  anzeigeWrapper.classList.add("sichtbar");
+  anzeigeWrapper.style.display = "flex";
+  karte.classList.add("sichtbar");
+
+  setTimeout(() => {
+    input.style.display = "none";
+    karte.classList.remove("sichtbar");
+    timer.classList.remove("sichtbar");
+    buttonSec.classList.remove("sichtbar");
+    anzeigeWrapper.classList.remove("sichtbar");
+    points.textContent =
+      "Du hast " + korrektAnzahl +
+      " Punkte erreicht und Deine Reaktionszeit bei unbekanntem Reiz beträgt: " +
+      reaktionszeitProFarbe.toFixed(2) + " Sekunden inkl. deiner Reaktionswahl + Ausführung." +
+      " Deine Reaktionszeit auf bekannte Reize beträgt: " + reaktionszeitProFarbeSec.toFixed(2) + " Sekunden";
+    points.classList.add("sichtbar");
+  }, 60000);
+});
+
+buttonSec.addEventListener("click", handleGameInput);
+
+document.addEventListener("keydown", function(event) {
+  if (spielGestartet && ersterClickGetan && event.key === "Enter") {
+    handleGameInput();
+    input.value = "";
+  }
+});
+
+document.addEventListener("keydown", function(event) {
+  if (!spielGestartet && event.key === "Enter") {
+    button.click();
+  }
+});
+
+document.addEventListener("keydown", function(event) {
+  let timePassed = Date.now() - startTime;
+  if (timePassed > 60000 && event.key === "Enter") {
+    location.reload();
+  }
+});
+
+function starteTimer() {
+  startTime = Date.now();
+  const interval = setInterval(() => {
+    const elapsed = Date.now() - startTime;
+    const hours = Math.floor(elapsed / 3600000);
+    const minutes = Math.floor((elapsed % 3600000) / 60000);
+    const seconds = Math.floor((elapsed % 60000) / 1000);
+    const milliseconds = elapsed % 1000;
+
+    stunden.textContent = hours;
+    minTens.textContent = Math.floor(minutes / 10);
+    min.textContent = minutes % 10;
+    sekTens.textContent = Math.floor(seconds / 10);
+    sek.textContent = seconds % 10;
+    msHundreds.textContent = Math.floor(milliseconds / 100);
+    msTens.textContent = Math.floor((milliseconds % 100) / 10);
+
+    if (minutes === 1) {
+      clearInterval(interval);
+      timer.classList.remove("sichtbar");
+      alert("Time Over! " + "Deine Schätzung war  " + anzahl + " Punkte zu erreichen");
+    }
+  }, 10);
+}
+
+console.log(korrektAnzahl);
+
