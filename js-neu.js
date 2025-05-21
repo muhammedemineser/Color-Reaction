@@ -1,11 +1,15 @@
-let anzahl; // globale Variable
+
+let anzahl;
 let startTime;
 let anzahlKurz = 0;
-let anzahlLang = 0;
 let reaktionszeitProFarbe = 0;
 let reaktionszeitProFarbeSec = 0;
+let letzterStart = 0;
+let letzterEnde = 0;
+let letzteRundeGestartet = false;
 let anzahlZwei = 0;
 let startTimeZwei = 0;
+let anzahlLang = 0;
 let spielGestartet = false;
 let ersterClickGetan = false;
 
@@ -75,47 +79,39 @@ function handleGameInput() {
 
   if (korrekt) {
     korrektAnzahl++;
-    if (anzahlLang === 0)
     punkteZeiger.textContent = korrektAnzahl;
     feedbackright.classList.add("sichtbar");
     setTimeout(() => feedbackright.classList.remove("sichtbar"), 1500);
+
+    // === ERSTE RUNDE MESSUNG ===
+    if (zustand === 10 && anzahlKurz === 0) {
+      anzahlKurz = Date.now() - startTime;
+      reaktionszeitProFarbe = anzahlKurz / 10 / 1000;
+    }
+
+    // === LETZTE RUNDE START MERKEN ===
+    if (zustand === 1) {
+      letzterStart = Date.now();
+      letzteRundeGestartet = true;
+    }
+
+    // === LETZTE RUNDE ENDE MESSEN ===
+    if (zustand === 10 && letzteRundeGestartet) {
+      letzterEnde = Date.now();
+      let differenz = letzterEnde - letzterStart;
+      reaktionszeitProFarbeSec = differenz / 10 / 1000;
+      letzteRundeGestartet = false;
+    }
+
+    zustand = (zustand % 10) + 1;
+    const farben = ["blue", "red", "green", "yellow", "#FF10F0", "#FF8000", "#8B00FF", "#8B4513", "grey", "white"];
+    karte.style.backgroundColor = farben[zustand - 1];
+    input.value = "";
   } else {
     korrektAnzahl = 0;
     punkteZeiger.textContent = korrektAnzahl;
     feedbackfalse.classList.add("sichtbar");
     setTimeout(() => feedbackfalse.classList.remove("sichtbar"), 1500);
-  }
-
-// Unbekannter Reiz (erste Reaktion)
-if (
-  zustand === 10 &&
-  (antwort === "weiß" || antwort === "weiss") &&
-  anzahlKurz === 0
-) {
-  anzahlKurz = Date.now() - startTime; // Zeit für 10 Aufgaben in ms
-  reaktionszeitProFarbe = anzahlKurz / 10000; // = /10 (für 10 Aufgaben), /1000 (für Sekunden)
-
-  // Optional: setze neuen Startzeitpunkt für Phase 2
-  startTimeZwei = Date.now();
-}
-
-// Bekannter Reiz (zweite Reaktion)
-if (
-  zustand === 10 &&
-  (antwort === "weiß" || antwort === "weiss") &&
-  anzahlLang === 0 &&
-  anzahlZwei === 1
-) {
-  anzahlLang = Date.now() - startTimeZwei;
-  reaktionszeitProFarbeSec = anzahlLang / 10000;
-  anzahlZwei=0;
-}
-
-  if (korrekt) {
-    zustand = (zustand % 10) + 1;
-    const farben = ["blue", "red", "green", "yellow", "#FF10F0", "#FF8000", "#8B00FF", "#8B4513", "grey", "white"];
-    karte.style.backgroundColor = farben[zustand - 1];
-    if (zustand === 1) anzahlZwei = 1;
     input.value = "";
   }
 }
@@ -126,7 +122,6 @@ button.addEventListener("click", () => {
   introTexts.forEach(el => el.classList.add("unsichtbar"));
 
   feedbackfalse.classList.remove("sichtbar");
-
   timer.classList.add("sichtbar");
   containerButton.classList.add("sichtbar");
   buttonSec.classList.add("sichtbar");
@@ -161,6 +156,7 @@ button.addEventListener("click", () => {
       reaktionszeitProFarbe.toFixed(2) + " Sekunden inkl. deiner Reaktionswahl + Ausführung." +
       " Deine Reaktionszeit auf bekannte Reize beträgt: " + reaktionszeitProFarbeSec.toFixed(2) + " Sekunden";
     points.classList.add("sichtbar");
+    punkteZeiger.classList.remove("sichtbar");
   }, 60000);
 });
 
