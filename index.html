@@ -1,211 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meine Website</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="body" style="position: relative;">
+  
+  <div class="anzeige-wrapper">
+  <div class="colorchanger"></div>
+  <div class="punktezeiger"></div>
+</div>
 
-let anzahl;
-let startTime;
-let anzahlKurz = 0;
-let reaktionszeitProFarbe = 0;
-let reaktionszeitProFarbeSec = 0;
-let letzterStart = 0;
-let letzterEnde = 0;
-let letzteRundeGestartet = false;
-let anzahlZwei = 0;
-let startTimeZwei = 0;
-let anzahlLang = 0;
-let spielGestartet = false;
-let ersterClickGetan = false;
+  <div id="inputBlock">
+    <input id="input" type="text" placeholder="Gebe die Farbe ein..." style="display: none;" />
+  </div>
 
-function frageNachAnnahme() {
-  let assume = prompt("Wieviele Farben kannst du in einer Minute erkennen und schreiben? Mache eine Einschätzung");
-  anzahl = Number(assume);
-  if (isNaN(anzahl)) {
-    alert("Bitte gib eine gültige Zahl ein.");
-    frageNachAnnahme();
-  } else if (anzahl === 0) {
-    alert("0 ist keine gültige Zahl für dieses Spiel.");
-    frageNachAnnahme();
-  } else {
-    alert("Du nimmst an, " + anzahl + " Wörter in 1 Minute zu schaffen. Let's Test!");
-  }
-}
 
-frageNachAnnahme();
+<div id="platzhalterZwei"></div>
+<div class="intro-wrapper" style="display: static;"> <br><br>
+  <div class="intro-title">Willkommen zum Farb-Reaktionsspiel!</div> <br><br>
 
-const anzeigeWrapper = document.querySelector(".anzeige-wrapper")
-const karte = document.querySelector(".colorchanger");
-const button = document.getElementById("gameBtn");
-const buttonSec = document.getElementById("gameBtnSec");
-const input = document.getElementById("input");
-const feedbackright = document.getElementById("feedbackRight");
-const feedbackfalse = document.getElementById("feedbackFalse");
-const stunden = document.getElementById("stunden");
-const minTens = document.getElementById("minTens");
-const min = document.getElementById("min");
-const sekTens = document.getElementById("sekTens");
-const sek = document.getElementById("sek");
-const msHundreds = document.getElementById("msHundreds");
-const msTens = document.getElementById("msTens");
-const cards = document.querySelectorAll(".card");
-const timer = document.getElementById("timer");
-const points = document.querySelector(".points");
-const punkteZeiger = document.querySelector(".punktezeiger");
-const introWrapper = document.querySelector(".intro-wrapper");
-const introTitle = document.querySelector(".intro-title");
-const introHighlights = document.querySelectorAll(".intro-highlight");
-const introTexts = document.querySelectorAll(".intro-text");
-const introSubtle = document.querySelector(".intro-subtle");
-const introList = document.querySelector(".intro-list");
-const introInfo = document.querySelector(".intro-info");
-const introCall = document.querySelector(".intro-call");
-const containerButton = document.querySelector(".containerNachClick");
+  <div class="intro-highlight">
+    Was passiert in deinem Körper, wenn du reagierst?
+  </div><br>
 
-let zustand = 0;
-let korrektAnzahl = 0;
-let timerGestartet = false;
+  <div class="intro-text">
+    Deine Augen (Rezeptoren) erkennen Farben und senden die Info über <strong>afferente Nerven</strong> ans Gehirn.
+    Dort wird entschieden, was zu tun ist. Dann geht das Signal über <strong>efferente Bahnen</strong> zurück zu deinen Fingern – du tippst!
+    Das Gehirn überprüft über <strong>Reafferenzen</strong>, ob alles wie geplant ausgeführt wurde.
+  </div><br>
 
-function handleGameInput() {
-  if (!spielGestartet || !ersterClickGetan) return;
+  <div class="intro-subtle">
+    Dieses Zusammenspiel von Wahrnehmung und Handlung nennt man <strong>Sensomotorik</strong>.
+  </div>
 
-  const antwort = input.value.toLowerCase().replace(/\s/g, "");
-  const korrekt =
-    (zustand === 1 && antwort === "blau") ||
-    (zustand === 2 && antwort === "rot") ||
-    (zustand === 3 && antwort === "grün") ||
-    (zustand === 4 && antwort === "gelb") ||
-    (zustand === 5 && antwort === "pink") ||
-    (zustand === 6 && antwort === "orange") ||
-    (zustand === 7 && (antwort === "violett" || antwort === "lila")) ||
-    (zustand === 8 && antwort === "braun") ||
-    (zustand === 9 && antwort === "grau") ||
-    (zustand === 10 && (antwort === "weiß" || antwort === "weiss"));
 
-  if (korrekt) {
-    korrektAnzahl++;
-    punkteZeiger.textContent = korrektAnzahl;
-    feedbackright.classList.add("sichtbar");
-    setTimeout(() => feedbackright.classList.remove("sichtbar"), 1500);
 
-    // === ERSTE RUNDE MESSUNG ===
-    if (zustand === 10 && anzahlKurz === 0) {
-      anzahlKurz = Date.now() - startTime;
-      reaktionszeitProFarbe = anzahlKurz / 10 / 1000;
-    }
+  <div class="container">
+    <button id="gameBtn">Click me</button>
+  </div>
 
-    // === LETZTE RUNDE START MERKEN ===
-    if (zustand === 1) {
-      letzterStart = Date.now();
-      letzteRundeGestartet = true;
-    }
+    <div class="intro-highlight">
+    Wie funktioniert das Spiel?
+  </div>
 
-    // === LETZTE RUNDE ENDE MESSEN ===
-    if (zustand === 10 && letzteRundeGestartet) {
-      letzterEnde = Date.now();
-      let differenz = letzterEnde - letzterStart;
-      reaktionszeitProFarbeSec = differenz / 10 / 1000;
-      letzteRundeGestartet = false;
-    }
+  <div class="intro-list"> <br>
+    <ul>
+      <li>Eine Farbe erscheint</li><br>
+      <li>Du tippst blitzschnell den Namen ein</li> <br>
+      <li>Du wirst mit jeder Runde schneller</li><br>
+    </ul>
+  </div> <br><br>
 
-    zustand = (zustand % 10) + 1;
-    const farben = ["blue", "red", "green", "yellow", "#FF10F0", "#FF8000", "#8B00FF", "#8B4513", "grey", "white"];
-    karte.style.backgroundColor = farben[zustand - 1];
-    input.value = "";
-  } else {
-    korrektAnzahl = 0;
-    punkteZeiger.textContent = korrektAnzahl;
-    feedbackfalse.classList.add("sichtbar");
-    setTimeout(() => feedbackfalse.classList.remove("sichtbar"), 1500);
-    input.value = "";
-  }
-}
+    <div class="intro-info">
+    <ul>
+      <strong>Am Anfang gibst du an, wie viele Farben du in 1 Minute erkennst. Am Ende zeigen wir dir:</strong> <br><br>
+      <li>Deine wahre Leistung</li> <br>
+      <li>Deine Reaktionszeit auf unbekannte Reize</li> <br>
+      <li>Deine Reaktionszeit auf bekannte Reize</li><br>
+      <li>Die Geschwindigkeit deiner Rythmisierung</li><br>
+      <li>Wie gut du dich selbst einschätzen kannst</li><br>
+    </ul>
+  </div>
 
-button.addEventListener("click", () => {
-  [introWrapper, introTitle, introSubtle, introList, introInfo, introCall].forEach(el => el.classList.add("unsichtbar"));
-  introHighlights.forEach(el => el.classList.add("unsichtbar"));
-  introTexts.forEach(el => el.classList.add("unsichtbar"));
+  <div class="intro-text"> <br><br>
+   <strong>Wie schnell ist dein Gehirn wirklich?</strong> <br><br>
+   Wenn du im Spiel eine Farbe siehst und darauf reagierst, 
+   <em> passiert blitzschnell</em>
+    eine ganze Menge in deinem Körper 
+    <em>– und du merkst es kaum!</em> <br> <br>
 
-  feedbackfalse.classList.remove("sichtbar");
-  timer.classList.add("sichtbar");
-  containerButton.classList.add("sichtbar");
-  buttonSec.classList.add("sichtbar");
-  cards.forEach(card => card.classList.add("sichtbar"));
-  punkteZeiger.classList.add("sichtbar");
-  punkteZeiger.textContent = korrektAnzahl;
-  alert("Let's Play!");
-  ersterClickGetan = true;
-  spielGestartet = true;
-  zustand = 1;
+1. Reiz wahrnehmen (ca. 50–100 ms) <br> 
+Deine Augen erkennen die Farbe. Die Sinneszellen in der Netzhaut senden die Info über afferente Nervenbahnen ins Gehirn. <br> <br>
 
-  if (!timerGestartet) {
-    timerGestartet = true;
-    starteTimer();
-  }
+2. Farbe verarbeiten & erkennen (ca. 100–150 ms) <br>
+Dein Gehirn sagt: „Ah – das ist <span style="color: red; text-shadow: 0 0 10px #ffd0d0;">rot</span>!“ und gleicht es mit deinem Gedächtnis ab. <br> <br>
 
-  input.style.display = "block";
-  input.focus();
-  anzeigeWrapper.classList.add("sichtbar");
-  anzeigeWrapper.style.display = "flex";
-  karte.classList.add("sichtbar");
+3. Entscheidung treffen (ca. 70–100 ms) <br>
+Du wählst blitzschnell den passenden Handlungsplan: „Ich schreibe <span style="color: red; text-shadow: 0 0 10px #ffd0d0;">rot</span>!“ <br> <br>
 
-  setTimeout(() => {
-    input.style.display = "none";
-    karte.classList.remove("sichtbar");
-    timer.classList.remove("sichtbar");
-    buttonSec.classList.remove("sichtbar");
-    anzeigeWrapper.classList.remove("sichtbar");
-    points.textContent =
-      "Du hast " + korrektAnzahl +
-      " Punkte erreicht und Deine Reaktionszeit bei unbekanntem Reiz beträgt: " +
-      reaktionszeitProFarbe.toFixed(2) + " Sekunden inkl. deiner Reaktionswahl + Ausführung." +
-      " Deine Reaktionszeit auf bekannte Reize beträgt: " + reaktionszeitProFarbeSec.toFixed(2) + " Sekunden";
-    points.classList.add("sichtbar");
-    punkteZeiger.classList.remove("sichtbar");
-  }, 60000);
-});
+4. Aktion ausführen (ca. 100–150 ms) <br>
+<strong>Dein Befehl reist über efferente Bahnen zu deinen Fingern – du tippst los!</strong>
+<br> <br>
 
-buttonSec.addEventListener("click", handleGameInput);
+<em>
+Für all das braucht der Mensch im Durchschnitt ~ 1.000ms - Teste Dich! <strong> Wie gut bist Du ?</strong>
+</em>
+  </div>
 
-document.addEventListener("keydown", function(event) {
-  if (spielGestartet && ersterClickGetan && event.key === "Enter") {
-    handleGameInput();
-    input.value = "";
-  }
-});
+  <div class="intro-call">Bereit? Dann leg los und finde heraus, wie schnell dein Kopf wirklich ist!</div>
+</div>
+<div id="platzhalter"></div>
 
-document.addEventListener("keydown", function(event) {
-  if (!spielGestartet && event.key === "Enter") {
-    button.click();
-  }
-});
+<div class="containerNachClick">
+  <button id="gameBtnSec">Click me</button>
+</div>
 
-document.addEventListener("keydown", function(event) {
-  let timePassed = Date.now() - startTime;
-  if (timePassed > 60000 && event.key === "Enter") {
-    location.reload();
-  }
-});
 
-function starteTimer() {
-  startTime = Date.now();
-  const interval = setInterval(() => {
-    const elapsed = Date.now() - startTime;
-    const hours = Math.floor(elapsed / 3600000);
-    const minutes = Math.floor((elapsed % 3600000) / 60000);
-    const seconds = Math.floor((elapsed % 60000) / 1000);
-    const milliseconds = elapsed % 1000;
+  <div id="textAdj">
+    <p id="text"> </p>
+    <p id="play"> </p>
+  </div>
 
-    stunden.textContent = hours;
-    minTens.textContent = Math.floor(minutes / 10);
-    min.textContent = minutes % 10;
-    sekTens.textContent = Math.floor(seconds / 10);
-    sek.textContent = seconds % 10;
-    msHundreds.textContent = Math.floor(milliseconds / 100);
-    msTens.textContent = Math.floor((milliseconds % 100) / 10);
+  <div id="feedbackRight">Richtig!</div>
+  <div id="feedbackFalse">Falsch!</div>
 
-    if (minutes === 1) {
-      clearInterval(interval);
-      timer.classList.remove("sichtbar");
-      alert("Time Over! " + "Deine Schätzung war  " + anzahl + " Punkte zu erreichen");
-    }
-  }, 10);
-}
+  <div id="timer">
+    <div class="card" id="stunden">0</div>
+    <div class="card" id="minTens">0</div>
+    <div class="card" id="min">0</div>
+    <div class="card" id="sekTens">0</div>
+    <div class="card" id="sek">0</div>
+    <div class="card" id="msHundreds">0</div>
+    <div class="card" id="msTens">0</div>
+  </div>
+  <div class="points">0</div>
 
-console.log(korrektAnzahl);
-
+  <script src="script.js"></script>
+</body>
+</html>
