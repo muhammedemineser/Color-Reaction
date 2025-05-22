@@ -1,4 +1,5 @@
-
+let reaktionszeiten = [];     
+let letzteMessung = Date.now(); 
 let anzahl;
 let startTime;
 let anzahlKurz = 0;
@@ -77,6 +78,8 @@ function handleGameInput() {
     (zustand === 9 && antwort === "grau") ||
     (zustand === 10 && (antwort === "weiß" || antwort === "weiss"));
 
+let letzteReaktionszeit = 0;
+
   if (korrekt) {
     korrektAnzahl++;
     punkteZeiger.textContent = korrektAnzahl;
@@ -107,12 +110,22 @@ function handleGameInput() {
     const farben = ["blue", "red", "green", "yellow", "#FF10F0", "#FF8000", "#8B00FF", "#8B4513", "grey", "white"];
     karte.style.backgroundColor = farben[zustand - 1];
     input.value = "";
+    let jetzt = Date.now();
+let differenz = (jetzt - letzteMessung) / 1000; // in Sekunden
+reaktionszeiten.push(differenz);  // Speichern
+letzteMessung = jetzt;
   } else {
     korrektAnzahl = 0;
     punkteZeiger.textContent = korrektAnzahl;
     feedbackfalse.classList.add("sichtbar");
     setTimeout(() => feedbackfalse.classList.remove("sichtbar"), 1500);
     input.value = "";
+    const jetzt = Date.now();
+if (letzteReaktionszeit !== 0) {
+  let differenz = (jetzt - letzteReaktionszeit) / 1000; // Sekunden
+  reaktionszeiten.push(differenz);
+}
+letzteReaktionszeit = jetzt;
   }
 }
 
@@ -155,8 +168,64 @@ button.addEventListener("click", () => {
       " Punkte erreicht und Deine Reaktionszeit bei unbekanntem Reiz beträgt: " +
       reaktionszeitProFarbe.toFixed(2) + " Sekunden inkl. deiner Reaktionswahl + Ausführung." +
       " Deine Reaktionszeit auf bekannte Reize beträgt: " + reaktionszeitProFarbeSec.toFixed(2) + " Sekunden";
-    points.classList.add("sichtbar");
+    
     punkteZeiger.classList.remove("sichtbar");
+    points.classList.add("sichtbar");
+    
+    //diagramm//
+   const placemaker = document.getElementById("placemaker");
+   placemaker.classList.add("sichtbar");
+   reaktionsChart = document.getElementById("reaktionsChart").classList.add("sichtbar");
+    const ctx = document.getElementById("reaktionsChart").getContext("2d");
+    
+const chartData = {
+  labels: reaktionszeiten.map((_, i) => "Farbe " + (i + 1)),
+  datasets: [{
+    label: "Reaktionszeit (Sekunden)",
+    data: reaktionszeiten,
+    fill: false,
+    borderColor: "#00ffcc",
+    tension: 0.3
+  }]
+};
+
+const chartOptions = {
+  responsive: true,
+  scales: {
+    y: {
+      reverse: true,
+      min: 0,
+      max: 5,
+      ticks: {
+        color: 'white' // Y-Achsen-Beschriftung weiß
+      },
+      grid: {
+        color: 'white' // Y-Achsen-Linien weiß
+      }
+    },
+    x: {
+      ticks: {
+        color: 'white' // X-Achsen-Beschriftung weiß
+      },
+      grid: {
+        color: 'white' // X-Achsen-Linien weiß
+      }
+    }
+  },
+  plugins: {
+    legend: {
+      labels: {
+        color: 'white' // Beschriftung der Legende
+      }
+    }
+  }
+};
+
+new Chart(ctx, {
+  type: "line",
+  data: chartData,
+  options: chartOptions
+});
   }, 60000);
 });
 
@@ -209,3 +278,25 @@ function starteTimer() {
 
 console.log(korrektAnzahl);
 
+
+
+
+
+
+
+
+fetch("https://mockapi.io/projects/682f2058746f8ca4a47ff4a6#", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    name: "Spieler1",
+    reaktion: reaktionszeitProFarbe,
+    reaktionEnd: reaktionszeitProFarbeSec,
+    punkte: korrektAnzahl,
+    reaktionszeiten: reaktionszeiten
+  })
+});
+
+fetch("https://mockapi.io/projects/682f2058746f8ca4a47ff4a6#")
+  .then(res => res.json())
+  .then(data => console.log(data));
