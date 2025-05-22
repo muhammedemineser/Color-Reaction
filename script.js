@@ -285,7 +285,7 @@ console.log(korrektAnzahl);
 
 
 
-fetch("https://mockapi.io/projects/682f2058746f8ca4a47ff4a6#", {
+fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -297,6 +297,6 @@ fetch("https://mockapi.io/projects/682f2058746f8ca4a47ff4a6#", {
   })
 });
 
-fetch("https://mockapi.io/projects/682f2058746f8ca4a47ff4a6#")
+fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores")
   .then(res => res.json())
   .then(data => console.log(data));
