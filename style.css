@@ -409,7 +409,7 @@ transition: 0.3s ease;
 }
 .points.sichtbar {
   position: absolute;
-  top: 50%;
+  bottom: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
@@ -418,21 +418,18 @@ transition: 0.3s ease;
   color: rgb(0, 225, 255);
   padding: 40px 30px;
   border-radius: 20px;
-  box-shadow: 0 0 25px rgb(0, 225, 255));
+  box-shadow: 0 0 25px rgb(0, 225, 255);
   font-family: 'Orbitron', sans-serif;
   font-size: 24px;
   font-weight: 700;
   text-align: center;
   letter-spacing: 1px;
   line-height: 1.5;
-  animation: finalePop 0.6s ease-out forwards;
   border: 2px solid rgb(0, 225, 255);
   text-shadow: 0 0 5px rgb(0, 225, 255), 0 0 10px rgb(0, 225, 255);
   visibility: visible;
   opacity: 1;
-  margin-top: 200px;
   animation: pulse-card 2s infinite ease-in-out;
-  transition: transform 0.3s ease;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
 }
@@ -459,4 +456,33 @@ transition: 0.3s ease;
       0 0 20px rgb(0, 225, 255),
       inset 0 0 5px rgb(0, 225, 255);
   }
+}
+
+#placemaker {
+  display: block;
+}
+
+#placemaker.sichtbar {
+  bottom: 100%;
+  left: 50%;
+  right:50%;
+  transform: translate(-50%, -50%);
+  position: relative;
+  height: 20vh;
+  width: 20vh;
+  background-color: translate;
+}
+
+#reaktionsChart {
+  display: none;
+}
+
+
+#reaktionsChart.sichtbar {
+  display: block;
+  width: 90%;
+  max-width: 500px;
+  margin: 30px auto 60px auto;
+  z-index: 0;
+  position: static;
 }
