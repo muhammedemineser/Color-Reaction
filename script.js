@@ -291,7 +291,8 @@ fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/scores", {
   body: JSON.stringify({
     name: "Spieler1",
     punkte: korrektAnzahl,
-    reaktion: reaktionszeitProFarbe
+    reaktion: reaktionszeitProFarbe,
+    Selbsteinschätzung: anzahl
   })
 });
 
