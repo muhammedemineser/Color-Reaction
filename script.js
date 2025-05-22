@@ -285,18 +285,16 @@ console.log(korrektAnzahl);
 
 
 
-fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
+fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/scores", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
     name: "Spieler1",
-    reaktion: reaktionszeitProFarbe,
-    reaktionEnd: reaktionszeitProFarbeSec,
     punkte: korrektAnzahl,
-    reaktionszeiten: reaktionszeiten
+    reaktion: reaktionszeitProFarbe
   })
 });
 
-fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores")
+fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/scores")
   .then(res => res.json())
   .then(data => console.log(data));
