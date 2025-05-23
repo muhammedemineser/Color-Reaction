@@ -2,6 +2,8 @@
 .body {
   transition: 0.5s ease;
   background-color: #2a2a2a;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .container {
@@ -157,9 +159,8 @@
 .intro-subtle.unsichtbar {
 display: none;
 }
-.intro-subtle {
+.intro-subtle, #EingabeInfosTitle {
   font-size: 16px;
-  font-style: italic;
   color: rgb(0, 225, 255);
   margin-bottom: 20px;
     list-style-position: inside;
@@ -168,10 +169,10 @@ display: none;
   margin: 0 auto;
 }
 
-.intro-list ul.unsichtbar {
+.intro-list, ul.unsichtbar {
     display:none;
 }
-.intro-list ul {
+.intro-list, #EingabeInfosText, ul.sichtbar {
   padding-left: 20px;
   list-style-type: disc;
   margin-bottom: 20px;
@@ -179,7 +180,9 @@ display: none;
   text-align: center;
   padding: 0;
   margin: 0 auto;
+  color: white;
 }
+
 
 
 .intro-info ul.unsichtbar {
@@ -403,35 +406,74 @@ transition: 0.3s ease;
   margin: 10px;
 }
 
-.points {
-  visibility: hidden;
-  opacity: 0;
+.auswertung-box, .auswertung-item, .EingabeInfosContainer {
+  display: none;
 }
-.points.sichtbar {
+
+.auswertung-box.sichtbar {
   position: absolute;
+  bottom: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 80%;
+  max-width: 400px;
+  animation: pulse-card 2s infinite ease-in-out;
+  z-index: 10;
+  padding: 3px;
+  overflow: hidden;
+}
+
+.EingabeInfosContainer.sichtbar  {
+  transition: 0.9s ease;
+  position: relative;
   bottom: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   width: 80%;
   max-width: 400px;
-  background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
-  color: rgb(0, 225, 255);
-  padding: 40px 30px;
-  border-radius: 20px;
-  box-shadow: 0 0 25px rgb(0, 225, 255);
-  font-family: 'Orbitron', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  text-align: center;
-  letter-spacing: 1px;
-  line-height: 1.5;
-  border: 2px solid rgb(0, 225, 255);
-  text-shadow: 0 0 5px rgb(0, 225, 255), 0 0 10px rgb(0, 225, 255);
-  visibility: visible;
-  opacity: 1;
-  animation: pulse-card 2s infinite ease-in-out;
+  animation: pulse-card-rot 2s infinite ease-in-out;
+  z-index: 100;
+  margin-top: 250px;
+}
+
+
+.auswertung-item.sichtbar {
+  transition: 0.3s ease;
+  display: block;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
+  color: rgb(0, 225, 255);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  padding: 20px;
+  border-radius: 20px;
+  border: 2px solid rgb(0, 225, 255);
+  box-shadow: 0 0 25px rgb(0, 225, 255);
+  text-shadow: 0 0 5px rgb(0, 225, 255), 0 0 10px rgb(0, 225, 255);
+}
+
+@keyframes erscheinen-schrumpfen {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.auswertung-item.animate {
+  animation: erscheinen-schrumpfen 0.8s ease-in-out forwards;
+  transform-origin: center center;
 }
 
 @keyframes pulse-card {
@@ -458,6 +500,30 @@ transition: 0.3s ease;
   }
 }
 
+@keyframes pulse-card-rot {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow:
+      0 0 5px red,
+      0 0 10px red,
+      inset 0 0 5px red;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.02);
+    box-shadow:
+      0 0 10px red,
+      0 0 20px red,
+      inset 0 0 10px red;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow:
+      0 0 5px red,
+      0 0 10px red,
+      inset 0 0 5px red;
+  }
+}
+
 #placemaker {
   display: block;
 }
@@ -468,9 +534,23 @@ transition: 0.3s ease;
   right:50%;
   transform: translate(-50%, -50%);
   position: relative;
-  height: 20vh;
+  height: 2vh;
   width: 20vh;
-  background-color: translate;
+  background-color: transparent;
+}
+
+#platzmacher.sichtbar {
+  bottom: 100%;
+  left: 50%;
+  right:50%;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+  height: 200px;
+  width: 200px;
+  background-color: transparent;
 }
 
 #reaktionsChart {
