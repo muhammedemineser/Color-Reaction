@@ -229,11 +229,20 @@ const chart = new Chart(ctx, {
   options: chartOptions
 });
 
+let geschwindigkeit = 50;
+
+if (reaktionszeiten.length <= 10) {
+  geschwindigkeit = 250;
+} else if (reaktionszeiten.length <= 20) {
+  geschwindigkeit = 200;
+} else if (reaktionszeiten.length <= 30) {
+  geschwindigkeit = 100;
+}
+
 const interval = setInterval(() => {
   if (index < reaktionszeiten.length) {
     dataset.data.push(reaktionszeiten[index]);
 
-    // Animiertes Update
     chart.update({
       duration: 500,
       easing: 'easeOutQuad'
@@ -243,8 +252,8 @@ const interval = setInterval(() => {
   } else {
     clearInterval(interval);
   }
-}, 150);
-  }, 30000);
+}, geschwindigkeit);
+  }, 60000);
 });
 
 
