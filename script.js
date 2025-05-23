@@ -15,7 +15,7 @@ let spielGestartet = false;
 let ersterClickGetan = false;
 
 function frageNachAnnahme() {
-  let assume = prompt("Wieviele Farben kannst du in einer Minute erkennen und schreiben? Mache eine Einschätzung");
+let assume = prompt("Selbsteinschätzung:\nWieviele Farben kannst du, ohne einen Fehler zu machen, in einer Minute erkennen und schreiben? \nGebe eine Zahl ein");
   anzahl = Number(assume);
   if (isNaN(anzahl)) {
     alert("Bitte gib eine gültige Zahl ein.");
@@ -24,7 +24,7 @@ function frageNachAnnahme() {
     alert("0 ist keine gültige Zahl für dieses Spiel.");
     frageNachAnnahme();
   } else {
-    alert("Du nimmst an, " + anzahl + " Wörter in 1 Minute zu schaffen. Let's Test!");
+    alert("Let's Test!");
   }
 }
 
@@ -57,6 +57,7 @@ const introList = document.querySelector(".intro-list");
 const introInfo = document.querySelector(".intro-info");
 const introCall = document.querySelector(".intro-call");
 const containerButton = document.querySelector(".containerNachClick");
+const eingabeInfos = document.querySelectorAll(".EingabeInfosContainer");
 
 let zustand = 0;
 let korrektAnzahl = 0;
@@ -133,6 +134,7 @@ button.addEventListener("click", () => {
   [introWrapper, introTitle, introSubtle, introList, introInfo, introCall].forEach(el => el.classList.add("unsichtbar"));
   introHighlights.forEach(el => el.classList.add("unsichtbar"));
   introTexts.forEach(el => el.classList.add("unsichtbar"));
+  eingabeInfos.forEach(el => el.classList.remove("sichtbar"));
 
   feedbackfalse.classList.remove("sichtbar");
   timer.classList.add("sichtbar");
@@ -163,16 +165,33 @@ button.addEventListener("click", () => {
     timer.classList.remove("sichtbar");
     buttonSec.classList.remove("sichtbar");
     anzeigeWrapper.classList.remove("sichtbar");
-    points.textContent =
-      "Du hast " + korrektAnzahl +
-      " Punkte erreicht und Deine Reaktionszeit bei unbekanntem Reiz beträgt: " +
-      reaktionszeitProFarbe.toFixed(2) + " Sekunden inkl. deiner Reaktionswahl + Ausführung." +
-      " Deine Reaktionszeit auf bekannte Reize beträgt: " + reaktionszeitProFarbeSec.toFixed(2) + " Sekunden";
     
+    document.getElementById("platzmacher").classList.add("sichtbar");
+    document.getElementById("box-einschaetzung").textContent =
+  "Selbsteinschätzung: " + anzahl;
+
+document.getElementById("box-punkte").textContent =
+  "Punkte: " + korrektAnzahl;
+
+document.getElementById("box-reaktion-unbekannt").textContent =
+  "Reaktionszeit (unbekannter Reiz): " + reaktionszeitProFarbe.toFixed(2) + "s";
+
+document.getElementById("box-reaktion-bekannt").textContent =
+  "Reaktionszeit (bekannter Reiz): " + reaktionszeitProFarbeSec.toFixed(2) + "s";
+
+document.querySelector(".auswertung-box").classList.add("sichtbar");
+const items = document.querySelectorAll(".auswertung-item");
+items.forEach((item, i) => {
+  setTimeout(() => {
+    item.classList.add("sichtbar", "animate");
+  }, i * 900);
+});
+setTimeout(() => {
+  document.querySelector(".auswertung").style.height = "auto";
+}, items.length * 900);
+
     punkteZeiger.classList.remove("sichtbar");
-    points.classList.add("sichtbar");
     
-    //diagramm//
  // Diagramm //
 const placemaker = document.getElementById("placemaker");
 placemaker.classList.add("sichtbar");
@@ -299,7 +318,7 @@ function starteTimer() {
     if (minutes === 1) {
       clearInterval(interval);
       timer.classList.remove("sichtbar");
-      alert("Time Over! " + "Deine Schätzung war  " + anzahl + " Punkte zu erreichen");
+      alert("Time Over!");
     }
   }, 10);
 }
@@ -325,4 +344,4 @@ fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
 
 fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores")
   .then(res => res.json())
-  .then(data => console.log(data));
+  .then(data => console.log(data));s
