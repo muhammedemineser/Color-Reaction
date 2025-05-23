@@ -173,61 +173,80 @@ button.addEventListener("click", () => {
     points.classList.add("sichtbar");
     
     //diagramm//
-   const placemaker = document.getElementById("placemaker");
-   placemaker.classList.add("sichtbar");
-   reaktionsChart = document.getElementById("reaktionsChart").classList.add("sichtbar");
-    const ctx = document.getElementById("reaktionsChart").getContext("2d");
-    
+ // Diagramm //
+const placemaker = document.getElementById("placemaker");
+placemaker.classList.add("sichtbar");
+
+document.getElementById("reaktionsChart").classList.add("sichtbar");
+const ctx = document.getElementById("reaktionsChart").getContext("2d");
+
+let index = 0;
+const dataset = {
+  label: "Reaktionszeit (Sekunden)",
+  data: [],
+  fill: false,
+  borderColor: "#00ffcc",
+  tension: 0.3
+};
+
 const chartData = {
   labels: reaktionszeiten.map((_, i) => "Farbe " + (i + 1)),
-  datasets: [{
-    label: "Reaktionszeit (Sekunden)",
-    data: reaktionszeiten,
-    fill: false,
-    borderColor: "#00ffcc",
-    tension: 0.3
-  }]
+  datasets: [dataset]
 };
 
 const chartOptions = {
   responsive: true,
+  animations: {
+    tension: {
+      duration: 600,
+      easing: 'easeOutQuad',
+      from: 0.3,
+      to: 0.4,
+      loop: false
+    }
+  },
+  plugins: {
+    legend: { labels: { color: 'white' } }
+  },
   scales: {
     y: {
       reverse: true,
       min: 0,
       max: 5,
-      ticks: {
-        color: 'white' // Y-Achsen-Beschriftung weiß
-      },
-      grid: {
-        color: 'white' // Y-Achsen-Linien weiß
-      }
+      ticks: { color: 'white' },
+      grid: { color: 'white' }
     },
     x: {
-      ticks: {
-        color: 'white' // X-Achsen-Beschriftung weiß
-      },
-      grid: {
-        color: 'white' // X-Achsen-Linien weiß
-      }
-    }
-  },
-  plugins: {
-    legend: {
-      labels: {
-        color: 'white' // Beschriftung der Legende
-      }
+      ticks: { color: 'white' },
+      grid: { color: 'white' }
     }
   }
 };
 
-new Chart(ctx, {
+const chart = new Chart(ctx, {
   type: "line",
   data: chartData,
   options: chartOptions
 });
-  }, 60000);
+
+const interval = setInterval(() => {
+  if (index < reaktionszeiten.length) {
+    dataset.data.push(reaktionszeiten[index]);
+
+    // Animiertes Update
+    chart.update({
+      duration: 500,
+      easing: 'easeOutQuad'
+    });
+
+    index++;
+  } else {
+    clearInterval(interval);
+  }
+}, 150);
+  }, 30000);
 });
+
 
 buttonSec.addEventListener("click", handleGameInput);
 
@@ -283,19 +302,18 @@ console.log(korrektAnzahl);
 
 
 
-
-
-fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/scores", {
+fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
     name: "Spieler1",
-    punkte: korrektAnzahl,
     reaktion: reaktionszeitProFarbe,
-    Selbsteinschätzung: anzahl
+    reaktionEnd: reaktionszeitProFarbeSec,
+    punkte: korrektAnzahl,
+    reaktionszeiten: reaktionszeiten
   })
 });
 
-fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/scores")
+fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores")
   .then(res => res.json())
   .then(data => console.log(data));
