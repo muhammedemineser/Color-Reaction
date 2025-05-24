@@ -327,6 +327,7 @@ function starteTimer() {
     const seconds = Math.floor((elapsed % 60000) / 1000);
     const milliseconds = elapsed % 1000;
 
+
     sekTens.textContent = Math.floor(seconds / 10);
     sek.textContent = seconds % 10;
     msHundreds.textContent = Math.floor(milliseconds / 100);
