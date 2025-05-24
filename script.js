@@ -274,7 +274,7 @@ const interval = setInterval(() => {
     clearInterval(interval);
   }
 }, geschwindigkeit);
-  }, 60000);
+  }, 4000);
 });
 
 
