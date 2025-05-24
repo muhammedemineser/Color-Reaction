@@ -1,3 +1,4 @@
+
 let reaktionszeiten = [];     
 let letzteMessung = Date.now(); 
 let anzahl;
@@ -133,7 +134,6 @@ let differenz = (jetzt - letzteMessung) / 1000; // in Sekunden
 reaktionszeiten.push(differenz);  // Speichern
 letzteMessung = jetzt;
   } else {
-    korrektAnzahl = 0;
     punkteZeiger.textContent = korrektAnzahl;
     feedbackfalse.classList.add("sichtbar");
     setTimeout(() => feedbackfalse.classList.remove("sichtbar"), 1500);
@@ -209,7 +209,7 @@ setTimeout(() => {
 
     punkteZeiger.classList.remove("sichtbar");
     
-// Diagramm //
+ // Diagramm //
 const placemaker = document.getElementById("placemaker");
 placemaker.classList.add("sichtbar");
 
