@@ -323,46 +323,6 @@ function starteTimer() {
   }, 10);
 }
 
-console.log(korrektAnzahl);
-
-
-
-
-
-
-let reaktionszeiten = [];     
-let letzteMessung = Date.now(); 
-let anzahl;
-let startTime;
-let anzahlKurz = 0;
-let reaktionszeitProFarbe = 0;
-let reaktionszeitProFarbeSec = 0;
-let letzterStart = 0;
-let letzterEnde = 0;
-let letzteRundeGestartet = false;
-let anzahlZwei = 0;
-let startTimeZwei = 0;
-let anzahlLang = 0;
-let spielGestartet = false;
-let ersterClickGetan = false;
-
-function frageNachAnnahme() {
-let assume = prompt("Selbsteinschätzung:\nWieviele Farben kannst du, ohne einen Fehler zu machen, in einer Minute erkennen und schreiben? \nGebe eine Zahl ein");
-  anzahl = Number(assume);
-  if (isNaN(anzahl)) {
-    alert("Bitte gib eine gültige Zahl ein.");
-    frageNachAnnahme();
-  } else if (anzahl === 0) {
-    alert("0 ist keine gültige Zahl für dieses Spiel.");
-    frageNachAnnahme();
-  } else {
-    alert("Let's Test!");
-  }
-}
-
-frageNachAnnahme();
-
-// ... (restlicher Spielcode bleibt gleich)
 
 // === SPEICHERN NACH SPIELENDE ===
 function datenSpeichern() {
