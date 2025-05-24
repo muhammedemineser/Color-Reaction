@@ -209,7 +209,7 @@ setTimeout(() => {
 
     punkteZeiger.classList.remove("sichtbar");
     
- // Diagramm //
+// Diagramm //
 const placemaker = document.getElementById("placemaker");
 placemaker.classList.add("sichtbar");
 
@@ -219,18 +219,18 @@ const ctx = document.getElementById("reaktionsChart").getContext("2d");
 let index = 0;
 const dataset = {
   label: "Reaktionszeit (Sekunden)",
-  data: [],
+  data: [],  // kein Startwert mehr
   fill: false,
   borderColor: "#00ffcc",
   tension: 0.3
 };
 
 const chartData = {
-  labels: reaktionszeiten.map((_, i) => "Farbe " + (i + 1)),
+  labels: reaktionszeiten.slice(1).map((_, i) => "Farbe " + (i + 1)),  // ohne ersten Wert
   datasets: [dataset]
 };
 
-const maxY = Math.max(...reaktionszeiten) * 1.1;
+const maxY = Math.max(...reaktionszeiten.slice(1)) * 1.1;
 
 const chartOptions = {
   responsive: true,
@@ -255,6 +255,7 @@ const chartOptions = {
       grid: { color: 'white' }
     },
     x: {
+      beginAtZero: true,
       ticks: { color: 'white' },
       grid: { color: 'white' }
     }
@@ -278,8 +279,8 @@ if (reaktionszeiten.length <= 10) {
 }
 
 const interval = setInterval(() => {
-  if (index < reaktionszeiten.length) {
-    dataset.data.push(reaktionszeiten[index]);
+  if (index < reaktionszeiten.length - 1) {  // -1 weil wir reaktionszeiten[0] ignorieren
+    dataset.data.push(reaktionszeiten[index + 1]);  // +1 um ab index 1 zu starten
 
     chart.update({
       duration: 500,
