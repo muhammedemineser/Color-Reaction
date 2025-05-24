@@ -25,7 +25,7 @@ function datenSpeichern() {
       reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
       reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
       punkte: korrektAnzahl,
-      reaktionszeiten: Number(durchschnitt.toFixed(3))
+      reaktionszeiten: Number(durchschnitt.toFixed(3)),
       Einschaetzung: Number(anzahl)
     })
   })
@@ -327,9 +327,7 @@ function starteTimer() {
     const seconds = Math.floor((elapsed % 60000) / 1000);
     const milliseconds = elapsed % 1000;
 
-    stunden.textContent = hours;
-    minTens.textContent = Math.floor(minutes / 10);
-    min.textContent = minutes % 10;
+
     sekTens.textContent = Math.floor(seconds / 10);
     sek.textContent = seconds % 10;
     msHundreds.textContent = Math.floor(milliseconds / 100);
