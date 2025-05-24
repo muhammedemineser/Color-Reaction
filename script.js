@@ -1,4 +1,3 @@
-
 let reaktionszeiten = [];     
 let letzteMessung = Date.now(); 
 let anzahl;
