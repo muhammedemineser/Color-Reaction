@@ -327,7 +327,10 @@ function starteTimer() {
 
 console.log(korrektAnzahl);
 
-
+String(reaktionszeitProFarbe);
+String(reaktionszeitProFarbeSec);
+String(korrektAnzahl);
+String(reaktionszeiten);
 
 
 fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
