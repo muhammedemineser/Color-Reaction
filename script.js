@@ -177,6 +177,7 @@ button.addEventListener("click", () => {
   karte.classList.add("sichtbar");
 
   setTimeout(() => {
+    punkteZeiger.classList.remove("sichtbar");
     input.style.display = "none";
     karte.classList.remove("sichtbar");
     timer.classList.remove("sichtbar");
@@ -184,7 +185,7 @@ button.addEventListener("click", () => {
     anzeigeWrapper.classList.remove("sichtbar");
     
     document.getElementById("platzmacher").classList.add("sichtbar");
-    document.getElementById("box-einschaetzung").textContent =
+document.getElementById("box-einschaetzung").textContent =
   "Selbsteinschätzung: " + anzahl;
 
 document.getElementById("box-punkte").textContent =
@@ -196,102 +197,112 @@ document.getElementById("box-reaktion-unbekannt").textContent =
 document.getElementById("box-reaktion-bekannt").textContent =
   "Reaktionszeit (bekannter Reiz): " + reaktionszeitProFarbeSec.toFixed(2) + "s";
 
+const besteReaktion = Math.min(...reaktionszeiten.slice(1));
+document.getElementById("box-reaktion-beste").textContent =
+  "Beste Reaktionszeit: " + besteReaktion.toFixed(2) + "s";
+
+// Sichtbarkeit einleiten
 document.querySelector(".auswertung-box").classList.add("sichtbar");
 const items = document.querySelectorAll(".auswertung-item");
+
 items.forEach((item, i) => {
   setTimeout(() => {
     item.classList.add("sichtbar", "animate");
+
+    // Reaktions-Chart erst anzeigen, wenn er "dran ist"
+    if (item.id === "reaktionsChart") {
+      item.style.display = "block"; // Jetzt erst sichtbar
+
+      const ctx = item.getContext("2d");
+      let index = 0;
+      const dataset = {
+        label: "Reaktionszeit (Sekunden)",
+        data: [],
+        fill: false,
+        borderColor: "#00ffcc",
+        tension: 0.3
+      };
+
+      const chartData = {
+        labels: reaktionszeiten.slice(1).map((_, i) => "Farbe " + (i + 1)),
+        datasets: [dataset]
+      };
+
+      const maxY = Math.max(...reaktionszeiten.slice(1)) * 1.1;
+
+      const chartOptions = {
+        responsive: true,
+        animations: {
+          tension: {
+            duration: 600,
+            easing: 'easeOutQuad',
+            from: 0.3,
+            to: 0.4,
+            loop: false
+          }
+        },
+        plugins: {
+          legend: { labels: { color: 'white' ,
+            font:{
+              size:14
+            }
+          } }
+        },
+        scales: {
+          y: {
+            reverse: true,
+            min: 0,
+            max: maxY,
+            ticks: { color: 'white',
+            font:{
+              size:14
+              }
+             },
+            grid: { color: 'white' }
+          },
+          x: {
+            beginAtZero: true,
+            ticks: { color: 'white',
+                          font:{
+              size:14
+              } 
+             },
+            grid: { color: 'white' }
+          }
+        }
+      };
+
+      const chart = new Chart(ctx, {
+        type: "line",
+        data: chartData,
+        options: chartOptions
+      });
+
+      let geschwindigkeit = 50;
+      if (reaktionszeiten.length <= 10) geschwindigkeit = 250;
+      else if (reaktionszeiten.length <= 20) geschwindigkeit = 200;
+      else if (reaktionszeiten.length <= 30) geschwindigkeit = 100;
+
+      const interval = setInterval(() => {
+        if (index < reaktionszeiten.length - 1) {
+          dataset.data.push(reaktionszeiten[index + 1]);
+          chart.update({
+            duration: 500,
+            easing: 'easeOutQuad'
+          });
+          index++;
+        } else {
+          clearInterval(interval);
+        }
+      }, geschwindigkeit);
+    }
   }, i * 900);
 });
+
 setTimeout(() => {
   document.querySelector(".auswertung").style.height = "auto";
+  datenSpeichern();
 }, items.length * 900);
-
-    punkteZeiger.classList.remove("sichtbar");
-    
- // Diagramm //
-const placemaker = document.getElementById("placemaker");
-placemaker.classList.add("sichtbar");
-
-document.getElementById("reaktionsChart").classList.add("sichtbar");
-const ctx = document.getElementById("reaktionsChart").getContext("2d");
-
-let index = 0;
-const dataset = {
-  label: "Reaktionszeit (Sekunden)",
-  data: [],  // kein Startwert mehr
-  fill: false,
-  borderColor: "#00ffcc",
-  tension: 0.3
-};
-
-const chartData = {
-  labels: reaktionszeiten.slice(1).map((_, i) => "Farbe " + (i + 1)),  // ohne ersten Wert
-  datasets: [dataset]
-};
-
-const maxY = Math.max(...reaktionszeiten.slice(1)) * 1.1;
-
-const chartOptions = {
-  responsive: true,
-  animations: {
-    tension: {
-      duration: 600,
-      easing: 'easeOutQuad',
-      from: 0.3,
-      to: 0.4,
-      loop: false
-    }
-  },
-  plugins: {
-    legend: { labels: { color: 'white' } }
-  },
-  scales: {
-    y: {
-      reverse: true,
-      min: 0,
-      max: maxY,
-      ticks: { color: 'white' },
-      grid: { color: 'white' }
-    },
-    x: {
-      beginAtZero: true,
-      ticks: { color: 'white' },
-      grid: { color: 'white' }
-    }
-  }
-};
-
-const chart = new Chart(ctx, {
-  type: "line",
-  data: chartData,
-  options: chartOptions
-});
-
-let geschwindigkeit = 50;
-
-if (reaktionszeiten.length <= 10) {
-  geschwindigkeit = 250;
-} else if (reaktionszeiten.length <= 20) {
-  geschwindigkeit = 200;
-} else if (reaktionszeiten.length <= 30) {
-  geschwindigkeit = 100;
-}
-
-const interval = setInterval(() => {
-  if (index < reaktionszeiten.length - 1) {  // -1 weil wir reaktionszeiten[0] ignorieren
-    dataset.data.push(reaktionszeiten[index + 1]);  // +1 um ab index 1 zu starten
-
-    chart.update({
-      duration: 500,
-      easing: 'easeOutQuad'
-    });
-
-    index++;
-  } else {
-    clearInterval(interval);
-  }
-}, geschwindigkeit);
   datenSpeichern();
   }, 60000);
 });
