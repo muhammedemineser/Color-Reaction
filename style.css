@@ -424,6 +424,10 @@ transition: 0.3s ease;
   z-index: 10;
   padding: 3px;
   overflow: hidden;
+  top: 10vh;
+  margin-top: 250px;
+  padding: 15px;
+  height: fit-content;
 }
 
 .EingabeInfosContainer.sichtbar  {
@@ -555,14 +559,4 @@ transition: 0.3s ease;
 
 #reaktionsChart {
   display: none;
-}
-
-
-#reaktionsChart.sichtbar {
-  display: block;
-  width: 90%;
-  max-width: 500px;
-  margin: 30px auto 60px auto;
-  z-index: 0;
-  position: static;
 }
