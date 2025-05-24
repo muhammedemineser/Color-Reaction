@@ -1,4 +1,4 @@
-let reaktionszeiten = [];     
+[⚠️ Suspicious Content] let reaktionszeiten = [];     
 let letzteMessung = Date.now(); 
 let anzahl;
 let startTime;
@@ -14,8 +14,8 @@ let anzahlLang = 0;
 let spielGestartet = false;
 let ersterClickGetan = false;
 
-//datenweitergabe
 function datenSpeichern() {
+  if (reaktionszeiten.length === 0) return; // Schutz vor Division durch 0
   const durchschnitt = reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length;
 
   fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
@@ -33,15 +33,11 @@ function datenSpeichern() {
   .catch(err => console.error("Fehler:", err));
 }
 
-
 function frageNachAnnahme() {
-let assume = prompt("Selbsteinschätzung:\nWieviele Farben kannst du, ohne einen Fehler zu machen, in einer Minute erkennen und schreiben? \nGebe eine Zahl ein");
+  let assume = prompt("Selbsteinschätzung:\nWieviele Farben kannst du, ohne einen Fehler zu machen, in einer Minute erkennen und schreiben? \nGebe eine Zahl ein");
   anzahl = Number(assume);
-  if (isNaN(anzahl)) {
-    alert("Bitte gib eine gültige Zahl ein.");
-    frageNachAnnahme();
-  } else if (anzahl === 0) {
-    alert("0 ist keine gültige Zahl für dieses Spiel.");
+  if (isNaN(anzahl) || anzahl === 0) {
+    alert("Bitte gib eine gültige Zahl größer als 0 ein.");
     frageNachAnnahme();
   } else {
     alert("Let's Test!");
