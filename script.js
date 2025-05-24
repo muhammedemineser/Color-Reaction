@@ -330,7 +330,7 @@ console.log(korrektAnzahl);
 
 
 
-[⚠️ Suspicious Content] let reaktionszeiten = [];     
+let reaktionszeiten = [];     
 let letzteMessung = Date.now(); 
 let anzahl;
 let startTime;
