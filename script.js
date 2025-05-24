@@ -213,6 +213,8 @@ const chartData = {
   datasets: [dataset]
 };
 
+const maxY = Math.max(...reaktionszeiten) * 1.1;
+
 const chartOptions = {
   responsive: true,
   animations: {
@@ -231,7 +233,7 @@ const chartOptions = {
     y: {
       reverse: true,
       min: 0,
-      max: 5,
+      max: maxY,
       ticks: { color: 'white' },
       grid: { color: 'white' }
     },
@@ -328,13 +330,10 @@ console.log(korrektAnzahl);
 
 
 
-
-
 fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    name: "Spieler1",
     reaktion: reaktionszeitProFarbe,
     reaktionEnd: reaktionszeitProFarbeSec,
     punkte: korrektAnzahl,
