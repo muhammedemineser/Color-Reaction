@@ -213,6 +213,8 @@ const chartData = {
   datasets: [dataset]
 };
 
+const maxY = Math.max(...reaktionszeiten) * 1.1;
+
 const chartOptions = {
   responsive: true,
   animations: {
@@ -231,7 +233,7 @@ const chartOptions = {
     y: {
       reverse: true,
       min: 0,
-      max: 5,
+      max: maxY,
       ticks: { color: 'white' },
       grid: { color: 'white' }
     },
@@ -323,27 +325,19 @@ function starteTimer() {
   }, 10);
 }
 
+console.log(korrektAnzahl);
 
-// === SPEICHERN NACH SPIELENDE ===
-function datenSpeichern() {
-  fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
-      reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
-      punkte: korrektAnzahl,
-      reaktionszeiten: reaktionszeiten.map(rt => Number(rt.toFixed(3)))
-    })
+fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    reaktion: reaktionszeitProFarbe,
+    reaktionEnd: reaktionszeitProFarbeSec,
+    punkte: korrektAnzahl,
+    reaktionszeiten: reaktionszeiten
   })
-  .then(res => {
-    if (!res.ok) throw new Error("Fehler beim Speichern: " + res.status);
-    return res.json();
-  })
-  .then(data => console.log("Gespeichert:", data))
-  .catch(err => console.error("Fehler:", err));
-}
+});
 
-// Rufe datenSpeichern() am Ende des Spiels auf, z. B. direkt vor oder nach dem Chart:
-// datenSpeichern();
-
+fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores")
+  .then(res => res.json())
+  .then(data => console.log(data));
