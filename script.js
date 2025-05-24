@@ -274,7 +274,7 @@ const interval = setInterval(() => {
     clearInterval(interval);
   }
 }, geschwindigkeit);
-  datenSpeicher();
+  datenSpeichern();
   }, 4000);
 });
 
@@ -326,17 +326,21 @@ function starteTimer() {
   }, 10);
 }
 
-fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-body: JSON.stringify({
-  reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
-  reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
-  punkte: korrektAnzahl,
-  reaktionszeiten: Number((reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length).toFixed(3))
-})
-});
 
-fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores")
+function datenSpeichern() {
+  const durchschnitt = reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length;
+
+  fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
+      reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
+      punkte: korrektAnzahl,
+      reaktionszeiten: Number(durchschnitt.toFixed(3))
+    })
+  })
   .then(res => res.json())
-  .then(data => console.log(data));
+  .then(data => console.log("Gespeichert:", data))
+  .catch(err => console.error("Fehler:", err));
+}
