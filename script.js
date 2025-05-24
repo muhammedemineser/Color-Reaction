@@ -336,12 +336,12 @@ String(reaktionszeiten);
 fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    reaktion: reaktionszeitProFarbe,
-    reaktionEnd: reaktionszeitProFarbeSec,
-    punkte: korrektAnzahl,
-    reaktionszeiten: reaktionszeiten
-  })
+body: JSON.stringify({
+  reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
+  reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
+  punkte: korrektAnzahl,
+  reaktionszeiten: Number((reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length).toFixed(3))
+})
 });
 
 fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores")
