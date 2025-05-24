@@ -26,6 +26,7 @@ function datenSpeichern() {
       reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
       punkte: korrektAnzahl,
       reaktionszeiten: Number(durchschnitt.toFixed(3))
+      Einschaetzung: Number(anzahl)
     })
   })
   .then(res => res.json())
