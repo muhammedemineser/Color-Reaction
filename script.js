@@ -330,17 +330,25 @@ console.log(korrektAnzahl);
 
 
 
-fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    reaktion: reaktionszeitProFarbe,
-    reaktionEnd: reaktionszeitProFarbeSec,
-    punkte: korrektAnzahl,
-    reaktionszeiten: reaktionszeiten
+// === SPEICHERN NACH SPIELENDE ===
+function datenSpeichern() {
+  fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
+      reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
+      punkte: korrektAnzahl,
+      reaktionszeiten: reaktionszeiten.map(rt => Number(rt.toFixed(3)))
+    })
   })
-});
+  .then(res => {
+    if (!res.ok) throw new Error("Fehler beim Speichern: " + res.status);
+    return res.json();
+  })
+  .then(data => console.log("Gespeichert:", data))
+  .catch(err => console.error("Fehler:", err));
+}
 
-fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores")
-  .then(res => res.json())
-  .then(data => console.log(data));
+// Rufe datenSpeichern() am Ende des Spiels auf, z. B. direkt vor oder nach dem Chart:
+// datenSpeichern();
