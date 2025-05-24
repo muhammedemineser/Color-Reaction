@@ -14,6 +14,26 @@ let anzahlLang = 0;
 let spielGestartet = false;
 let ersterClickGetan = false;
 
+//datenweitergabe
+function datenSpeichern() {
+  const durchschnitt = reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length;
+
+  fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
+      reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
+      punkte: korrektAnzahl,
+      reaktionszeiten: Number(durchschnitt.toFixed(3))
+    })
+  })
+  .then(res => res.json())
+  .then(data => console.log("Gespeichert:", data))
+  .catch(err => console.error("Fehler:", err));
+}
+
+
 function frageNachAnnahme() {
 let assume = prompt("Selbsteinschätzung:\nWieviele Farben kannst du, ohne einen Fehler zu machen, in einer Minute erkennen und schreiben? \nGebe eine Zahl ein");
   anzahl = Number(assume);
@@ -327,20 +347,3 @@ function starteTimer() {
 }
 
 
-function datenSpeichern() {
-  const durchschnitt = reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length;
-
-  fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
-      reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
-      punkte: korrektAnzahl,
-      reaktionszeiten: Number(durchschnitt.toFixed(3))
-    })
-  })
-  .then(res => res.json())
-  .then(data => console.log("Gespeichert:", data))
-  .catch(err => console.error("Fehler:", err));
-}
