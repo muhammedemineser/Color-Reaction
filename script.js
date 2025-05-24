@@ -36,7 +36,7 @@ function datenSpeichern() {
 }
 
 function frageNachAnnahme() {
-  let assume = prompt("Selbsteinschätzung:\nWieviele Farben kannst du, ohne einen Fehler zu machen, in einer Minute erkennen und schreiben? \nGebe eine Zahl ein");
+  let assume = prompt("Selbsteinschätzung:\nWieviele Farben kannst du in einer Minute erkennen und schreiben? \nGebe eine Zahl ein");
   anzahl = Number(assume);
   if (isNaN(anzahl) || anzahl === 0) {
     alert("Bitte gib eine gültige Zahl größer als 0 ein.");
