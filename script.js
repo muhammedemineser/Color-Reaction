@@ -291,7 +291,7 @@ const interval = setInterval(() => {
   }
 }, geschwindigkeit);
   datenSpeichern();
-  }, 4000);
+  }, 60000);
 });
 
 
