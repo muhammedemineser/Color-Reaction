@@ -22,6 +22,16 @@ const bingLastSound = new Audio("bingLast.mp3");
 const buttonSound = new Audio("buttonSound.mp3");
 const bingBaseVolume = 0.2;
 const bingMaxVolume = 1; 
+const wuerfelAnimContainer = document.getElementById("wuerfelAnimation");
+
+const animationInstance = lottie.loadAnimation({
+  container: wuerfelAnimContainer,
+  renderer: 'svg',
+  loop: true,
+  autoplay: true,
+  path: 'wuerfelAnimation.json'
+});
+
 
 function playFixedSound(audio) {
   audio.pause();           
@@ -52,7 +62,15 @@ fetch("https://api.ipify.org?format=json")
   .then(res => res.json())
   .then(data => {
     spielerIP = data.ip;
-    checkeVorhandeneIP(spielerIP);
+    if (localStorage.getItem("angemeldet") === "true") {
+  document.getElementById("startbildschirm").style.display = "none";
+  document.getElementById("mainContent").style.display = "block";
+  playFixedSound(soundSignup);
+  startErfolgt = true;
+  localStorage.setItem("angemeldet", "true");
+} else {
+  checkeVorhandeneIP(spielerIP);
+}
   });
 
 function checkeVorhandeneIP(ip) {
@@ -304,6 +322,8 @@ document.getElementById("gameBtn").addEventListener("click", () => {
   introHighlights.forEach(el => el.classList.add("unsichtbar"));
   introTexts.forEach(el => el.classList.add("unsichtbar"));
   eingabeInfos.forEach(el => el.classList.remove("sichtbar"));
+  wuerfelAnimContainer.classList.add("unsichtbar");
+
 
   feedbackfalse.classList.remove("sichtbar");
   timer.classList.add("sichtbar");
@@ -327,6 +347,7 @@ document.getElementById("gameBtn").addEventListener("click", () => {
   anzeigeWrapper.classList.add("sichtbar");
   anzeigeWrapper.style.display = "flex";
   karte.classList.add("sichtbar");
+
 
   setTimeout(() => {
     punkteZeiger.classList.remove("sichtbar");
