@@ -27,30 +27,32 @@
 }
 
 /* === Button zentriert === */
+
+
 #gameBtn {
-  position: sticky;
-  top: 28%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 15px;
-  height: 50px;
-  width: 140px;
-  border-radius: 20px;
-  border: 1px solid rgb(175, 255, 246);
-  background-color: rgb(0, 225, 255);
-  font-family: 'Sergio-UI', sans-serif;
+  position: relative;
+  display: block;
+  margin: 40px auto;
+  padding: 15px 30px;
+  width: 180px;
+  height: 55px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
   font-weight: bold;
-  font-size: 13px;
-  display: flex;
-  justify-content: center;
-  transition: 0.3s ease;
-  top: 45%;
-  margin: 50px auto;
+  color: #00e1ff;
+  background-color: #111;
+  border: 2px solid #00e1ff;
+  border-radius: 25px;
+  box-shadow: 0 0 15px #00e1ff;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
 }
 
 #gameBtn:hover {
-  background-color: rgb(0, 255, 217);
-  color: #ffffff;
+  background-color: #00e1ff;
+  color: #000;
+  box-shadow: 0 0 25px #00e1ff, 0 0 50px #00e1ff;
 }
 
 #gameBtn.unsichtbar {
@@ -63,31 +65,36 @@
 
 
 #gameBtnSec.sichtbar {
-    position: sticky;
-  top: 28%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 15px;
-  height: 50px;
-  width: 140px;
-  border-radius: 20px;
-  border: 1px solid rgb(175, 255, 246);
-  background-color: rgb(0, 225, 255);
-  font-family: 'Sergio-UI', sans-serif;
+  position: relative;
+  display: block;
+  margin: 40px auto;
+  padding: 15px 30px;
+  width: 180px;
+  height: 55px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
   font-weight: bold;
-  font-size: 13px;
-  display: flex;
-  justify-content: center;
-  transition: 0.3s ease;
-  top: 45%;
-  margin: 50px auto;
+  color: #00e1ff;
+  background-color: #111;
+  border: 2px solid #00e1ff;
+  border-radius: 25px;
+  box-shadow: 0 0 15px #00e1ff;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+#gameBtn:hover {
+  background-color: #00e1ff;
+  color: #000;
+  box-shadow: 0 0 25px #00e1ff, 0 0 50px #00e1ff;
 }
 
 #gameBtnSec.sichtbar:hover {
-  background-color: rgb(0, 255, 217);
-  color: #ffffff;
+  background-color: #00e1ff;
+  color: #000;
+  box-shadow: 0 0 25px #00e1ff, 0 0 50px #00e1ff;
 }
-
 
 #platzhalterZwei {
   width: 100vw;
@@ -559,4 +566,143 @@ transition: 0.3s ease;
 
 #reaktionsChart {
   display: none;
+}
+
+#startbildschirm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #2a2a2a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  gap: 20px;
+  z-index: 10000;
+  display: none;
+}
+
+#startbildschirm input[type="text"],
+#startbildschirm input[type="number"] {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+  background: white;
+  color: black;
+  width: 250px;
+}
+
+#startbildschirm label {
+  color: rgb(0, 225, 255);
+  font-size: 14px;
+}
+
+.geschlecht-box {
+  display: flex;
+  gap: 20px;
+  color: rgb(0, 225, 255);
+  font-size: 14px;
+}
+
+#startWeiterBtn {
+  padding: 10px 20px;
+  font-size: 18px;
+  background: rgb(0, 225, 255);
+  color: black;
+  border: none;
+  border-radius: 20px;
+  width: 150px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.einschaetzungsBox {
+  background: #111;
+  padding: 30px;
+  border-radius: 20px;
+  border: 2px solid #00e1ff;
+  box-shadow: 0 0 20px #00e1ff;
+  text-align: center;
+  animation: pop 0.3s ease-out;
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.einschaetzungsBox input {
+  width: 80%;
+  padding: 10px;
+  margin: 15px 0;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+}
+
+.einschaetzungsBox button {
+  background: #00e1ff;
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.fehlerText {
+  color: red;
+  font-size: 14px;
+  height: 18px;
+  margin-bottom: 10px;
+}
+
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.overlay-content {
+  background: rgba(0, 225, 255, 0.2);
+  border: 2px solid #00ffcc;
+  border-radius: 20px;
+  padding: 30px 60px;
+  color: #00ffcc;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 24px;
+  text-align: center;
+  text-shadow: 0 0 10px #00ffcc;
+}
+
+.animate-popup {
+  animation: popup 0.6s ease-in-out;
+}
+
+@keyframes popup {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
 }
