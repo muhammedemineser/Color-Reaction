@@ -29,7 +29,7 @@ const animationInstance = lottie.loadAnimation({
   renderer: 'svg',
   loop: true,
   autoplay: true,
-  path: 'wuerfelAnimation.json'
+  path: 'WuerfelAnimation.json'
 });
 
 
