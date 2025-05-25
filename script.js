@@ -470,7 +470,7 @@ setTimeout(() => {
   document.querySelector(".auswertung").style.height = "auto";
   datenSpeichern();
 }, items.length * 900);
-  }, 3000);
+  }, 60000);
 });
 
 
