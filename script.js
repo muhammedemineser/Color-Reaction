@@ -1,3 +1,4 @@
+
 let reaktionszeiten = [];     
 let letzteMessung = Date.now(); 
 let anzahl;
@@ -13,39 +14,177 @@ let startTimeZwei = 0;
 let anzahlLang = 0;
 let spielGestartet = false;
 let ersterClickGetan = false;
+const soundCorrect = new Audio("correct-answer.mp3");
+const soundWrong = new Audio("wrong-answer.mp3");
+const soundSignup = new Audio("signed-up.mp3");
+const bingSound = new Audio("bing.mp3");
+const bingLastSound = new Audio("bingLast.mp3");
+const buttonSound = new Audio("buttonSound.mp3");
+const bingBaseVolume = 0.2;
+const bingMaxVolume = 1; 
 
-function datenSpeichern() {
-  if (reaktionszeiten.length === 0) return; // Schutz vor Division durch 0
-  const durchschnitt = reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length;
+function playFixedSound(audio) {
+  audio.pause();           
+  audio.currentTime = 0;  
+  audio.play();            
+}
 
-  fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores", {
+function zeigeLetsTest() {
+  const overlay = document.getElementById("letsTestOverlay");
+  overlay.style.display = "flex";
+
+  setTimeout(() => {
+    overlay.style.display = "none";
+  }, 2000);
+}
+
+
+let spielerName = "";
+let spielerAlter = 0;
+let spielerGeschlecht = "";
+let anonym = false;
+let spielerIP = "Unbekannt";
+let userId = ""; // NEU
+let startErfolgt = false;
+
+// IP-Adresse abrufen
+fetch("https://api.ipify.org?format=json")
+  .then(res => res.json())
+  .then(data => {
+    spielerIP = data.ip;
+    checkeVorhandeneIP(spielerIP);
+  });
+
+function checkeVorhandeneIP(ip) {
+  fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users")
+    .then(res => res.json())
+    .then(users => {
+      const user = users.find(u => u.ip === ip);
+      if (user) {
+        userId = user.id;
+        spielerName = user.name;
+        spielerAlter = user.alter;
+        spielerGeschlecht = user.geschlecht;
+        anonym = user.anonym;
+        document.getElementById("startbildschirm").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+        playFixedSound(soundSignup);
+        startErfolgt = true;
+      } else {
+        document.getElementById("startbildschirm").style.display = "flex";
+      }
+    });
+}
+
+// Eingabe prüfen und speichern
+document.getElementById("startWeiterBtn").addEventListener("click", () => {
+  const nameInput = document.getElementById("spielerName");
+  const alterInput = document.getElementById("spielerAlter");
+  const anonymInput = document.getElementById("anonym");
+  const geschlechtInput = document.querySelector("input[name='geschlecht']:checked");
+
+  anonym = anonymInput.checked;
+  spielerName = anonym ? "Anonym" : nameInput.value.trim();
+  spielerAlter = parseInt(alterInput.value);
+  spielerGeschlecht = geschlechtInput ? geschlechtInput.value : "";
+
+  if (
+    isNaN(spielerAlter) ||
+    spielerAlter < 1 || spielerAlter > 100 ||
+    !spielerGeschlecht ||
+    (!anonym && spielerName === "")
+  ) {
+    alert("Bitte fülle alle Felder korrekt aus");
+    return;
+  }
+
+  fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
+      name: spielerName,
+      alter: spielerAlter,
+      geschlecht: spielerGeschlecht,
+      anonym: anonym,
+      ip: spielerIP
+    })
+  })
+    .then(res => res.json())
+    .then(data => {
+      userId = data.id;
+      document.getElementById("startbildschirm").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+      soundSignup.play();
+      startErfolgt = true;
+    });
+});
+
+// Beim Klicken des Spielstart-Buttons:
+document.getElementById("gameBtn").addEventListener("click", () => {
+  if (!anzahl) {
+    frageNachAnnahme();
+    return;
+  }
+
+  // Hier Spielstart-Funktionen starten...
+});
+
+// Einschätzung abfragen (UI statt prompt)
+function frageNachAnnahme(callback) {
+  const overlay = document.getElementById("einschaetzungsOverlay");
+  const inputAs = document.getElementById("einschaetzungInput");
+  const fehler = document.getElementById("einschaetzungFehler");
+  const button = document.getElementById("einschaetzungBtn");
+
+  buttonSound.currentTime = 0;
+  buttonSound.play();
+  overlay.style.display = "flex";
+  inputAs.value = "";
+  fehler.textContent = "";
+   setTimeout(() => inputAs.focus(), 50);
+
+  button.onclick = () => {
+    const eingabe = Number(inputAs.value.trim());
+    if (isNaN(eingabe) || eingabe < 1 || eingabe > 100) {
+      fehler.textContent = "Bitte gib eine gültige Zahl zwischen 1 und 100 ein.";
+      return;
+    }
+
+    anzahl = eingabe;
+    overlay.style.display = "none";
+    callback(); 
+  };
+
+  inputAs.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      button.click();
+    }
+  });
+}
+
+
+
+// Spielstand speichern
+function datenSpeichern() {
+  if (reaktionszeiten.length === 0 || !userId) return;
+
+  const durchschnitt = reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length;
+
+  fetch(`https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users/${userId}/scores`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      punkte: korrektAnzahl,
       reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
       reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
-      punkte: korrektAnzahl,
       reaktionszeiten: Number(durchschnitt.toFixed(3)),
       Einschaetzung: Number(anzahl)
     })
   })
-  .then(res => res.json())
-  .then(data => console.log("Gespeichert:", data))
-  .catch(err => console.error("Fehler:", err));
+    .then(res => res.json())
+    .then(data => console.log("Score gespeichert:", data))
+    .catch(err => console.error("Fehler beim Speichern des Scores:", err));
 }
-
-function frageNachAnnahme() {
-  let assume = prompt("Selbsteinschätzung:\nWieviele Farben kannst du in einer Minute erkennen und schreiben? \nGebe eine Zahl ein");
-  anzahl = Number(assume);
-  if (isNaN(anzahl) || anzahl === 0) {
-    alert("Bitte gib eine gültige Zahl größer als 0 ein.");
-    frageNachAnnahme();
-  } else {
-    alert("Let's Test!");
-  }
-}
-
-frageNachAnnahme();
 
 const anzeigeWrapper = document.querySelector(".anzeige-wrapper")
 const karte = document.querySelector(".colorchanger");
@@ -99,6 +238,7 @@ function handleGameInput() {
 let letzteReaktionszeit = 0;
 
   if (korrekt) {
+    playFixedSound(soundCorrect);
     korrektAnzahl++;
     punkteZeiger.textContent = korrektAnzahl;
     feedbackright.classList.add("sichtbar");
@@ -133,7 +273,8 @@ let differenz = (jetzt - letzteMessung) / 1000; // in Sekunden
 reaktionszeiten.push(differenz);  // Speichern
 letzteMessung = jetzt;
   } else {
-    punkteZeiger.textContent = korrektAnzahl;
+    playFixedSound(soundWrong);
+    playSound("wrong-answer.mp3");
     feedbackfalse.classList.add("sichtbar");
     setTimeout(() => feedbackfalse.classList.remove("sichtbar"), 1500);
     input.value = "";
@@ -146,7 +287,19 @@ letzteReaktionszeit = jetzt;
   }
 }
 
-button.addEventListener("click", () => {
+let spielStartBereit = false;
+
+document.getElementById("gameBtn").addEventListener("click", () => {
+  if (!anzahl && !spielStartBereit) {
+    frageNachAnnahme(() => {
+      spielStartBereit = true;
+      buttonSound.currentTime = 0;
+      buttonSound.play();
+      zeigeLetsTest();
+    });
+    return;
+  }
+
   [introWrapper, introTitle, introSubtle, introList, introInfo, introCall].forEach(el => el.classList.add("unsichtbar"));
   introHighlights.forEach(el => el.classList.add("unsichtbar"));
   introTexts.forEach(el => el.classList.add("unsichtbar"));
@@ -159,7 +312,7 @@ button.addEventListener("click", () => {
   cards.forEach(card => card.classList.add("sichtbar"));
   punkteZeiger.classList.add("sichtbar");
   punkteZeiger.textContent = korrektAnzahl;
-  alert("Let's Play!");
+  //("Let's Play!");
   ersterClickGetan = true;
   spielGestartet = true;
   zustand = 1;
@@ -200,13 +353,28 @@ const besteReaktion = Math.min(...reaktionszeiten.slice(1));
 document.getElementById("box-reaktion-beste").textContent =
   "Beste Reaktionszeit: " + besteReaktion.toFixed(2) + "s";
 
-// Sichtbarkeit einleiten
+
 document.querySelector(".auswertung-box").classList.add("sichtbar");
 const items = document.querySelectorAll(".auswertung-item");
 
 items.forEach((item, i) => {
   setTimeout(() => {
     item.classList.add("sichtbar", "animate");
+
+    const isLast = i === items.length - 1;
+
+
+    const volume = isLast
+      ? bingMaxVolume + 0.1  
+      : bingBaseVolume + ((bingMaxVolume - bingBaseVolume) / items.length) * i;
+
+    const sound = isLast
+      ? bingLastSound.cloneNode()
+      : bingSound.cloneNode();
+
+    sound.volume = Math.min(volume, 1.0);
+    sound.play();
+
 
     // Reaktions-Chart erst anzeigen, wenn er "dran ist"
     if (item.id === "reaktionsChart") {
@@ -302,30 +470,42 @@ setTimeout(() => {
   document.querySelector(".auswertung").style.height = "auto";
   datenSpeichern();
 }, items.length * 900);
-  datenSpeichern();
-  }, 60000);
+  }, 3000);
 });
 
 
+// Spiel-Eingabe-Button
 buttonSec.addEventListener("click", handleGameInput);
 
+// Enter während des Spiels → Eingabe auslösen
 document.addEventListener("keydown", function(event) {
-  if (spielGestartet && ersterClickGetan && event.key === "Enter") {
+  if (
+    event.key === "Enter" &&
+    spielGestartet &&
+    ersterClickGetan &&
+    document.getElementById("startbildschirm").style.display === "none"
+  ) {
     handleGameInput();
     input.value = "";
   }
 });
 
+// Enter im Menü → Spiel starten
 document.addEventListener("keydown", function(event) {
-  if (!spielGestartet && event.key === "Enter") {
+  const startBildschirmSichtbar = document.getElementById("startbildschirm").style.display !== "none";
+
+  if (!spielGestartet && event.key === "Enter" && !startBildschirmSichtbar) {
     button.click();
   }
 });
 
+// Enter im Startbildschirm → Sign in auslösen
 document.addEventListener("keydown", function(event) {
-  let timePassed = Date.now() - startTime;
-  if (timePassed > 60000 && event.key === "Enter") {
-    location.reload();
+  if (
+    event.key === "Enter" &&
+    document.getElementById("startbildschirm").style.display !== "none"
+  ) {
+    document.getElementById("startWeiterBtn").click();
   }
 });
 
