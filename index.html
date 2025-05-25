@@ -6,138 +6,161 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Meine Website</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body class="body" style="position: relative;">
    
-  <div id="platzmacher"></div>
- <div id=placemaker></div> 
 
+<div id="startbildschirm" class="sichtbar">
+  <input id="spielerName" type="text" placeholder="Dein Name">
+  <label><input type="checkbox" id="anonym"> Ich möchte anonym bleiben</label>
+  <input id="spielerAlter" type="number" placeholder="Dein Alter" min="1" max="100">
+  <div class="geschlecht-box">
+    <label><input type="radio" name="geschlecht" value="m"> Männlich</label>
+    <label><input type="radio" name="geschlecht" value="w"> Weiblich</label>
+  </div>
+  <button id="startWeiterBtn">Sign in</button>
+</div>
+  
+<div id="mainContent" style="display: none;">
 
-  <div class="anzeige-wrapper">
-  <div class="colorchanger"></div>
-  <div class="punktezeiger"></div>
+<div id="einschaetzungsOverlay" class="overlay" style="display: none;">
+  <div class="einschaetzungsBox">
+    <p>Wie viele Farben schätzt du zu schaffen?</p>
+    <input type="number" type="text" id="einschaetzungInput" placeholder="Wie viele Farben in 1 Min?" min="1" max="100">
+    <div id="einschaetzungFehler" class="fehlerText"></div>
+    <button id="einschaetzungBtn">Bestätigen</button>
+  </div>
 </div>
 
-  <div id="inputBlock">
-    <input id="input" type="text" placeholder="Gebe die Farbe ein..." style="display: none;" />
+    <div id="platzmacher"></div>
+  <div id=placemaker></div> 
+
+
+    <div class="anzeige-wrapper">
+    <div class="colorchanger"></div>
+    <div class="punktezeiger"></div>
   </div>
 
+    <div id="inputBlock">
+      <input id="input" type="text" placeholder="Gebe die Farbe ein..." style="display: none;" />
+    </div>
 
-<div id="platzhalterZwei"></div>
-<div class="intro-wrapper" style="display: static;"> <br><br>
-  <div class="intro-title">Willkommen zum Farb-Reaktionsspiel!</div> <br><br>
 
-  <div class="intro-highlight">
-    Was passiert in deinem Körper, wenn du reagierst?
-  </div><br>
-
-  <div class="intro-text">
-    Deine Augen (Rezeptoren) erkennen Farben und senden die Info über <strong>afferente Nerven</strong> ans Gehirn.
-    Dort wird entschieden, was zu tun ist. Dann geht das Signal über <strong>efferente Bahnen</strong> zurück zu deinen Fingern – du tippst!
-    Das Gehirn überprüft über <strong>Reafferenzen</strong>, ob alles wie geplant ausgeführt wurde.
-  </div><br>
-
-  <div class="intro-subtle">
-    Dieses Zusammenspiel von Wahrnehmung und Handlung nennt man <strong>Sensomotorik</strong>.
-  </div>
-
-  <div class="container">
-    <button id="gameBtn">Click me</button>
-  </div>
+  <div id="platzhalterZwei"></div>
+  <div class="intro-wrapper" style="display: static;"> <br><br>
+    <div class="intro-title">Willkommen zum Farb-Reaktionsspiel!</div> <br><br>
 
     <div class="intro-highlight">
-    Wie funktioniert das Spiel?
+      Was passiert in deinem Körper, wenn du reagierst?
+    </div><br>
+
+    <div class="intro-text">
+      Deine Augen (Rezeptoren) erkennen Farben und senden die Info über <strong>afferente Nerven</strong> ans Gehirn.
+      Dort wird entschieden, was zu tun ist. Dann geht das Signal über <strong>efferente Bahnen</strong> zurück zu deinen Fingern – du tippst!
+      Das Gehirn überprüft über <strong>Reafferenzen</strong>, ob alles wie geplant ausgeführt wurde.
+    </div><br>
+
+    <div class="intro-subtle">
+      Dieses Zusammenspiel von Wahrnehmung und Handlung nennt man <strong>Sensomotorik</strong>.
+    </div>
+
+    <div class="container">
+      <button id="gameBtn">Click me</button>
+    </div>
+
+      <div class="intro-highlight">
+      Wie funktioniert das Spiel?
+    </div>
+
+    <div class="intro-list"> <br>
+      <ul>
+        <li>Eine Farbe erscheint</li><br>
+        <li>Du tippst blitzschnell den Namen ein</li> <br>
+        <li>Du wirst mit jeder Runde schneller</li><br>
+      </ul>
+    </div> <br><br>
+
+      <div class="intro-info">
+      <ul>
+        <strong>Am Anfang gibst du an, wie viele Farben du in 1 Minute erkennst. Am Ende zeigen wir dir:</strong> <br><br>
+        <li>Deine wahre Leistung</li> <br>
+        <li>Deine Reaktionszeit auf unbekannte Reize</li> <br>
+        <li>Deine Reaktionszeit auf bekannte Reize</li><br>
+        <li>Die Geschwindigkeit deiner Rythmisierung</li><br>
+        <li>Wie gut du dich selbst einschätzen kannst</li><br>
+      </ul>
+    </div>
+
+    <div class="intro-text"> <br><br>
+    <strong>Wie schnell ist dein Gehirn wirklich?</strong> <br><br>
+    Wenn du im Spiel eine Farbe siehst und darauf reagierst, 
+    <em> passiert blitzschnell</em>
+      eine ganze Menge in deinem Körper 
+      <em>– und du merkst es kaum!</em> <br> <br>
+
+  1. Reiz wahrnehmen (ca. 50–100 ms) <br> 
+  Deine Augen erkennen die Farbe. Die Sinneszellen in der Netzhaut senden die Info über afferente Nervenbahnen ins Gehirn. <br> <br>
+
+  2. Farbe verarbeiten & erkennen (ca. 100–150 ms) <br>
+  Dein Gehirn sagt: „Ah – das ist <span style="color: red; text-shadow: 0 0 10px #ffd0d0;">rot</span>!“ und gleicht es mit deinem Gedächtnis ab. <br> <br>
+
+  3. Entscheidung treffen (ca. 70–100 ms) <br>
+  Du wählst blitzschnell den passenden Handlungsplan: „Ich schreibe <span style="color: red; text-shadow: 0 0 10px #ffd0d0;">rot</span>!“ <br> <br>
+
+  4. Aktion ausführen (ca. 100–150 ms) <br>
+  <strong>Dein Befehl reist über efferente Bahnen zu deinen Fingern – du tippst los!</strong>
+  <br> <br>
+
+  <em>
+  Für all das braucht der Mensch im Durchschnitt ~ 1.000ms - Teste Dich! <strong> Wie gut bist Du ?</strong>
+  </em>
+    </div>
+
+    <div class="intro-call">Bereit? Dann leg los und finde heraus, wie schnell dein Kopf wirklich ist!</div>
+  </div>
+  <div id="platzhalter"></div>
+
+  <div class="containerNachClick">
+    <button id="gameBtnSec">Click me</button>
   </div>
 
-  <div class="intro-list"> <br>
-    <ul>
-      <li>Eine Farbe erscheint</li><br>
-      <li>Du tippst blitzschnell den Namen ein</li> <br>
-      <li>Du wirst mit jeder Runde schneller</li><br>
-    </ul>
-  </div> <br><br>
-
-    <div class="intro-info">
-    <ul>
-      <strong>Am Anfang gibst du an, wie viele Farben du in 1 Minute erkennst. Am Ende zeigen wir dir:</strong> <br><br>
-      <li>Deine wahre Leistung</li> <br>
-      <li>Deine Reaktionszeit auf unbekannte Reize</li> <br>
-      <li>Deine Reaktionszeit auf bekannte Reize</li><br>
-      <li>Die Geschwindigkeit deiner Rythmisierung</li><br>
-      <li>Wie gut du dich selbst einschätzen kannst</li><br>
-    </ul>
+  <div class="EingabeInfosContainer sichtbar">
+    <div id="EingabeInfosTitle" style="font-size:20px; font-weight: bold; padding: 7px; padding-top: 12px;color:red;">Game Hinweise</div>
+    <div id="EingabeInfosText" style="font-size:15px; padding: 15px;line-height: 24px;">
+  <li>Für eine vollständige Auswertung musst du mindestens 20 Farben pro Minute schaffen.</li>
+  <li>„Weiss“ und „Weiß“ zählen beide als richtig.</li>
+  <li>Leerzeichen werden automatisch ignoriert – tippe einfach los!</li>
+  <li>Für die Eingabe kannst du den Button oder die Eingabe-Taste auf deiner Tastatur nutzen</li> <br>
+  </div>
   </div>
 
-  <div class="intro-text"> <br><br>
-   <strong>Wie schnell ist dein Gehirn wirklich?</strong> <br><br>
-   Wenn du im Spiel eine Farbe siehst und darauf reagierst, 
-   <em> passiert blitzschnell</em>
-    eine ganze Menge in deinem Körper 
-    <em>– und du merkst es kaum!</em> <br> <br>
+    <div id="textAdj">
+      <p id="text"> </p>
+      <p id="play"> </p>
+    </div>
 
-1. Reiz wahrnehmen (ca. 50–100 ms) <br> 
-Deine Augen erkennen die Farbe. Die Sinneszellen in der Netzhaut senden die Info über afferente Nervenbahnen ins Gehirn. <br> <br>
+    <div id="feedbackRight">Richtig!</div>
+    <div id="feedbackFalse">Falsch!</div>
 
-2. Farbe verarbeiten & erkennen (ca. 100–150 ms) <br>
-Dein Gehirn sagt: „Ah – das ist <span style="color: red; text-shadow: 0 0 10px #ffd0d0;">rot</span>!“ und gleicht es mit deinem Gedächtnis ab. <br> <br>
+    <div id="timer">
+      <div class="card" id="sekTens">0</div>
+      <div class="card" id="sek">0</div>
+      <div class="card" id="msHundreds">0</div>
+      <div class="card" id="msTens">0</div>
+    </div>
 
-3. Entscheidung treffen (ca. 70–100 ms) <br>
-Du wählst blitzschnell den passenden Handlungsplan: „Ich schreibe <span style="color: red; text-shadow: 0 0 10px #ffd0d0;">rot</span>!“ <br> <br>
-
-4. Aktion ausführen (ca. 100–150 ms) <br>
-<strong>Dein Befehl reist über efferente Bahnen zu deinen Fingern – du tippst los!</strong>
-<br> <br>
-
-<em>
-Für all das braucht der Mensch im Durchschnitt ~ 1.000ms - Teste Dich! <strong> Wie gut bist Du ?</strong>
-</em>
+  <div class="auswertung" style="margin-top: 600px;">
+    <div class="auswertung-box">
+      <div class="auswertung-item" id="box-reaktion-beste"></div>
+      <div class="auswertung-item" id="box-einschaetzung"></div>
+      <div class="auswertung-item" id="box-punkte"></div>
+      <div class="auswertung-item" id="box-reaktion-unbekannt"></div>
+      <div class="auswertung-item" id="box-reaktion-bekannt"></div>
+      <canvas class="auswertung-item" id="reaktionsChart"></canvas>
+    </div>
   </div>
-
-  <div class="intro-call">Bereit? Dann leg los und finde heraus, wie schnell dein Kopf wirklich ist!</div>
 </div>
-<div id="platzhalter"></div>
-
-<div class="containerNachClick">
-  <button id="gameBtnSec">Click me</button>
-</div>
-
-<div class="EingabeInfosContainer sichtbar">
-  <div id="EingabeInfosTitle" style="font-size:20px; font-weight: bold; padding: 7px; padding-top: 12px;color:red;">Game Hinweise</div>
-  <div id="EingabeInfosText" style="font-size:15px; padding: 15px;line-height: 24px;">
- <li>Für eine vollständige Auswertung musst du mindestens 20 Farben pro Minute schaffen.</li>
-<li>„Weiss“ und „Weiß“ zählen beide als richtig.</li>
-<li>Leerzeichen werden automatisch ignoriert – tippe einfach los!</li>
-<li>Vertippt? Kein Problem – einfach Enter drücken und das Feld leert sich automatisch für deinen nächsten Versuch!</li>
-<li>Für die Eingabe kannst du den Button oder die Eingabe-Taste auf deiner Tastatur nutzen</li> <br>
-</div>
-</div>
-
-  <div id="textAdj">
-    <p id="text"> </p>
-    <p id="play"> </p>
-  </div>
-
-  <div id="feedbackRight">Richtig!</div>
-  <div id="feedbackFalse">Falsch!</div>
-
-  <div id="timer">
-    <div class="card" id="sekTens">0</div>
-    <div class="card" id="sek">0</div>
-    <div class="card" id="msHundreds">0</div>
-    <div class="card" id="msTens">0</div>
-  </div>
-
-<div class="auswertung" style="margin-top: 600px;">
-  <div class="auswertung-box">
-    <div class="auswertung-item" id="box-reaktion-beste"></div>
-    <div class="auswertung-item" id="box-einschaetzung"></div>
-    <div class="auswertung-item" id="box-punkte"></div>
-    <div class="auswertung-item" id="box-reaktion-unbekannt"></div>
-    <div class="auswertung-item" id="box-reaktion-bekannt"></div>
-    <canvas class="auswertung-item" id="reaktionsChart"></canvas>
-  </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js"></script>
 </body>
