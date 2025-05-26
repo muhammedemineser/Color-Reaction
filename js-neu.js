@@ -555,7 +555,7 @@ setTimeout(() => {
   document.querySelector(".auswertung").style.height = "auto";
   datenSpeichern();
 }, items.length * 900);
-  }, 5000);
+  }, 60000);
 });
 
 
