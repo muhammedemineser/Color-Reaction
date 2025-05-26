@@ -784,3 +784,41 @@ transition: 0.3s ease;
   100% { transform: scale(1); }
 }
 
+#timeOverContainer {
+    position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 80%;
+  max-width: 400px;
+  animation: pulse-card 2s infinite ease-in-out;
+  z-index: 10;
+  padding: 3px;
+  overflow: hidden;
+  top: 10vh;
+  margin-top: 250px;
+  padding: 15px;
+  height: fit-content;
+  z-index: 1000000;
+}
+
+#timeOver {
+    transition: 0.3s ease;
+    z-index: 10000000;
+  display: block;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  color: rgb(0, 225, 255);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  padding: 20px;
+  border-radius: 20px;
+  border: 2px solid rgb(0, 225, 255);
+  box-shadow: 0 0 25px rgb(0, 225, 255);
+  text-shadow: 0 0 5px rgb(0, 225, 255), 0 0 10px rgb(0, 225, 255);
+}
