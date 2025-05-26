@@ -1,5 +1,6 @@
 
 let reaktionszeiten = [];     
+let letzteReaktionszeit = 0;
 let letzteMessung = Date.now(); 
 let anzahl;
 let startTime;
@@ -20,21 +21,28 @@ const soundSignup = new Audio("signed-up.mp3");
 const bingSound = new Audio("bing.mp3");
 const bingLastSound = new Audio("bingLast.mp3");
 const buttonSound = new Audio("buttonSound.mp3");
+const countdownSound = new Audio("countdown.mp3");
+let counted = false;
+let countedNum = false;
+
 const bingBaseVolume = 0.2;
 const bingMaxVolume = 1; 
 const wuerfelAnimContainer = document.getElementById("wuerfelAnimation");
-const countdownSound = new Audio("countdown.mp3");
-const countdownSound = new Audio("countdown.mp3");
-let counted = false;
 
 const animationInstance = lottie.loadAnimation({
   container: wuerfelAnimContainer,
   renderer: 'svg',
   loop: true,
   autoplay: true,
-  path: 'WuerfelAnimation.json'
+  path: 'wuerfelAnimation.json'
 });
 
+function zeigeTimerOver() {
+  timeOver.style.display = "flex";
+  setTimeout(() => {
+    timeOver.style.display = "none";
+  }, 3000);
+}
 
 function playFixedSound(audio) {
   audio.pause();           
@@ -43,12 +51,11 @@ function playFixedSound(audio) {
 }
 
 function zeigeLetsTest() {
-  const overlay = document.getElementById("letsTestOverlay");
   overlay.style.display = "flex";
 
   setTimeout(() => {
     overlay.style.display = "none";
-  }, 2000);
+  }, 4000);
 }
 
 
@@ -235,6 +242,9 @@ const introInfo = document.querySelector(".intro-info");
 const introCall = document.querySelector(".intro-call");
 const containerButton = document.querySelector(".containerNachClick");
 const eingabeInfos = document.querySelectorAll(".EingabeInfosContainer");
+const overlay = document.getElementById("letsTestOverlay");
+const timeOver = document.getElementById("timeOverOverlay");
+
 
 let zustand = 0;
 let korrektAnzahl = 0;
@@ -256,7 +266,6 @@ function handleGameInput() {
     (zustand === 9 && antwort === "grau") ||
     (zustand === 10 && (antwort === "weiß" || antwort === "weiss"));
 
-let letzteReaktionszeit = 0;
 
   if (korrekt) {
     playFixedSound(soundCorrect);
@@ -295,11 +304,11 @@ reaktionszeiten.push(differenz);  // Speichern
 letzteMessung = jetzt;
   } else {
     playFixedSound(soundWrong);
-    playSound("wrong-answer.mp3");
     feedbackfalse.classList.add("sichtbar");
     setTimeout(() => feedbackfalse.classList.remove("sichtbar"), 1500);
     input.value = "";
     const jetzt = Date.now();
+    console.log("falsch");
 if (letzteReaktionszeit !== 0) {
   let differenz = (jetzt - letzteReaktionszeit) / 1000; // Sekunden
   reaktionszeiten.push(differenz);
@@ -320,7 +329,11 @@ document.querySelectorAll("body > *").forEach(el => {
     el.style.display = "none";
   }
 });
-const countdownContainer = document.createElement("div");
+
+  document.getElementById("timer").classList.add("sichtbar");
+  document.getElementById("wuerfelAnimation").style.display = "flex";
+
+  const countdownContainer = document.createElement("div");
   countdownContainer.id = "gameStart";
   document.body.appendChild(countdownContainer);
 
@@ -349,19 +362,18 @@ const countdownContainer = document.createElement("div");
     }
   }, 1000);
 }
+
+
 document.getElementById("gameBtn").addEventListener("click", () => {
   if (!anzahl && !spielStartBereit) {
     frageNachAnnahme(() => {
       spielStartBereit = true;
-      buttonSound.currentTime = 0;
-      buttonSound.play();
-      zeigeLetsTest();
     });
     return;
   }
-if (countedNum) return;
+
+  if (countedNum) return;
   countedNum=true;
-  
 starteCountdown(() => {
     [introWrapper, introTitle, introSubtle, introList, introInfo, introCall].forEach(el => el.classList.add("unsichtbar"));
     introHighlights.forEach(el => el.classList.add("unsichtbar"));
@@ -397,6 +409,7 @@ starteCountdown(() => {
 
 
   setTimeout(() => {
+    zeigeTimerOver();
     punkteZeiger.classList.remove("sichtbar");
     input.style.display = "none";
     karte.classList.remove("sichtbar");
@@ -420,7 +433,6 @@ document.getElementById("box-reaktion-bekannt").textContent =
 const besteReaktion = Math.min(...reaktionszeiten.slice(1));
 document.getElementById("box-reaktion-beste").textContent =
   "Beste Reaktionszeit: " + besteReaktion.toFixed(2) + "s";
-
 
 document.querySelector(".auswertung-box").classList.add("sichtbar");
 const items = document.querySelectorAll(".auswertung-item");
@@ -538,7 +550,7 @@ setTimeout(() => {
   document.querySelector(".auswertung").style.height = "auto";
   datenSpeichern();
 }, items.length * 900);
-  }, 60000);
+  }, 400);
 });
 
 
@@ -558,6 +570,18 @@ document.addEventListener("keydown", function(event) {
   }
 });
 
+document.addEventListener("keydown", function(event) {
+  if (
+    event.key === "Enter" &&
+    spielGestartet &&
+    ersterClickGetan &&
+    document.getElementById("input") === document.activeElement
+  ) {
+    handleGameInput();
+    document.getElementById("input").value = "";
+  }
+});
+
 // Enter im Menü → Spiel starten
 document.addEventListener("keydown", function(event) {
   const startBildschirmSichtbar = document.getElementById("startbildschirm").style.display !== "none";
@@ -569,9 +593,11 @@ document.addEventListener("keydown", function(event) {
 
 // Enter im Startbildschirm → Sign in auslösen
 document.addEventListener("keydown", function(event) {
+  const startBildschirm = document.getElementById("startbildschirm");
   if (
     event.key === "Enter" &&
-    document.getElementById("startbildschirm").style.display !== "none"
+    startBildschirm.style.display !== "none" &&
+    !spielGestartet
   ) {
     document.getElementById("startWeiterBtn").click();
   }
@@ -595,7 +621,6 @@ function starteTimer() {
     if (minutes === 1) {
       clearInterval(interval);
       timer.classList.remove("sichtbar");
-      alert("Time Over!");
     }
   }, 10);
 }
