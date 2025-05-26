@@ -34,15 +34,8 @@ const animationInstance = lottie.loadAnimation({
   renderer: 'svg',
   loop: true,
   autoplay: true,
-  path: 'WuerfelAnimation.json'
+  path: 'wuerfelAnimation.json'
 });
-
-function zeigeTimerOver() {
-  timeOver.style.display = "flex";
-  setTimeout(() => {
-    timeOver.style.display = "none";
-  }, 3000);
-}
 
 function playFixedSound(audio) {
   audio.pause();           
@@ -243,7 +236,8 @@ const introCall = document.querySelector(".intro-call");
 const containerButton = document.querySelector(".containerNachClick");
 const eingabeInfos = document.querySelectorAll(".EingabeInfosContainer");
 const overlay = document.getElementById("letsTestOverlay");
-const timeOver = document.getElementById("timeOverOverlay");
+const timeOver = document.getElementById("timeOver");
+const timeOverContainer=document.getElementById("timeOverContainer");
 
 
 let zustand = 0;
@@ -409,11 +403,22 @@ starteCountdown(() => {
 
 
   setTimeout(() => {
-    zeigeTimerOver();
     punkteZeiger.classList.remove("sichtbar");
     input.style.display = "none";
     karte.classList.remove("sichtbar");
     timer.classList.remove("sichtbar");
+    
+    function zeigeTimerOver() {
+      timeOverContainer.style.display = "flex";
+      timeOver.style.display = "block";
+      setTimeout(() => {
+        timeOver.style.display = "none";
+        timeOverContainer.style.display = "none";
+      }, 1000);
+    }
+
+    zeigeTimerOver();
+
     buttonSec.classList.remove("sichtbar");
     anzeigeWrapper.classList.remove("sichtbar");
     
@@ -550,7 +555,7 @@ setTimeout(() => {
   document.querySelector(".auswertung").style.height = "auto";
   datenSpeichern();
 }, items.length * 900);
-  }, 60000);
+  }, 5000);
 });
 
 
