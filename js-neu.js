@@ -373,7 +373,8 @@ starteCountdown(() => {
     introHighlights.forEach(el => el.classList.add("unsichtbar"));
     introTexts.forEach(el => el.classList.add("unsichtbar"));
     eingabeInfos.forEach(el => el.classList.remove("sichtbar"));
-    wuerfelAnimContainer.classList.add("unsichtbar");    
+    wuerfelAnimContainer.classList.add("unsichtbar");
+    wuerfelAnim.classList.add("unsichtbar");
     overlay.style.display="none";
 
     feedbackfalse.classList.remove("sichtbar");
