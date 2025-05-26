@@ -34,7 +34,7 @@ const animationInstance = lottie.loadAnimation({
   renderer: 'svg',
   loop: true,
   autoplay: true,
-  path: 'wuerfelAnimation.json'
+  path: 'WuerfelAnimation.json'
 });
 
 function zeigeTimerOver() {
@@ -550,7 +550,7 @@ setTimeout(() => {
   document.querySelector(".auswertung").style.height = "auto";
   datenSpeichern();
 }, items.length * 900);
-  }, 400);
+  }, 60000);
 });
 
 
