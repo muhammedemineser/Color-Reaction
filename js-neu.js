@@ -23,6 +23,9 @@ const buttonSound = new Audio("buttonSound.mp3");
 const bingBaseVolume = 0.2;
 const bingMaxVolume = 1; 
 const wuerfelAnimContainer = document.getElementById("wuerfelAnimation");
+const countdownSound = new Audio("countdown.mp3");
+const countdownSound = new Audio("countdown.mp3");
+let counted = false;
 
 const animationInstance = lottie.loadAnimation({
   container: wuerfelAnimContainer,
@@ -306,7 +309,46 @@ letzteReaktionszeit = jetzt;
 }
 
 let spielStartBereit = false;
+function starteCountdown(callback) {
+document.querySelectorAll("body > *").forEach(el => {
+  if (
+    el.id !== "gameStart" &&
+    el.id !== "timer" &&
+    el.id !== "wuerfelAnimation" &&
+    el.id !== "letsTestOverlay"
+  ) {
+    el.style.display = "none";
+  }
+});
+const countdownContainer = document.createElement("div");
+  countdownContainer.id = "gameStart";
+  document.body.appendChild(countdownContainer);
 
+  if (counted===false) {
+      playFixedSound(countdownSound);
+      counted=true;
+  }
+
+  zeigeLetsTest();
+  let count = 3;
+  countdownContainer.textContent = count;
+
+  const interval = setInterval(() => {
+    count--;
+    if (count >= 0) {
+      countdownContainer.textContent = count;
+    } else {
+      clearInterval(interval);
+      countdownContainer.remove();
+
+      document.querySelectorAll("body > *").forEach(el => {
+        el.style.display = "";
+      });
+
+      callback(); 
+    }
+  }, 1000);
+}
 document.getElementById("gameBtn").addEventListener("click", () => {
   if (!anzahl && !spielStartBereit) {
     frageNachAnnahme(() => {
@@ -317,36 +359,41 @@ document.getElementById("gameBtn").addEventListener("click", () => {
     });
     return;
   }
+if (countedNum) return;
+  countedNum=true;
+  
+starteCountdown(() => {
+    [introWrapper, introTitle, introSubtle, introList, introInfo, introCall].forEach(el => el.classList.add("unsichtbar"));
+    introHighlights.forEach(el => el.classList.add("unsichtbar"));
+    introTexts.forEach(el => el.classList.add("unsichtbar"));
+    eingabeInfos.forEach(el => el.classList.remove("sichtbar"));
+    wuerfelAnimContainer.classList.add("unsichtbar");    
+    overlay.style.display="none";
 
-  [introWrapper, introTitle, introSubtle, introList, introInfo, introCall].forEach(el => el.classList.add("unsichtbar"));
-  introHighlights.forEach(el => el.classList.add("unsichtbar"));
-  introTexts.forEach(el => el.classList.add("unsichtbar"));
-  eingabeInfos.forEach(el => el.classList.remove("sichtbar"));
-  wuerfelAnimContainer.classList.add("unsichtbar");
+    feedbackfalse.classList.remove("sichtbar");
+    timer.classList.add("sichtbar");
+    containerButton.classList.add("sichtbar");
+    buttonSec.classList.add("sichtbar");
+    cards.forEach(card => card.classList.add("sichtbar"));
+    punkteZeiger.classList.add("sichtbar");
+    punkteZeiger.textContent = korrektAnzahl;
 
+    ersterClickGetan = true;
+    spielGestartet = true;
+    zustand = 1;
+    
 
-  feedbackfalse.classList.remove("sichtbar");
-  timer.classList.add("sichtbar");
-  containerButton.classList.add("sichtbar");
-  buttonSec.classList.add("sichtbar");
-  cards.forEach(card => card.classList.add("sichtbar"));
-  punkteZeiger.classList.add("sichtbar");
-  punkteZeiger.textContent = korrektAnzahl;
-  //("Let's Play!");
-  ersterClickGetan = true;
-  spielGestartet = true;
-  zustand = 1;
+    if (!timerGestartet) {
+      timerGestartet = true;
+      starteTimer();
+    }
 
-  if (!timerGestartet) {
-    timerGestartet = true;
-    starteTimer();
-  }
-
-  input.style.display = "block";
-  input.focus();
-  anzeigeWrapper.classList.add("sichtbar");
-  anzeigeWrapper.style.display = "flex";
-  karte.classList.add("sichtbar");
+    input.style.display = "block";
+    input.focus();
+    anzeigeWrapper.classList.add("sichtbar");
+    anzeigeWrapper.style.display = "flex";
+    karte.classList.add("sichtbar");
+  });
 
 
   setTimeout(() => {
