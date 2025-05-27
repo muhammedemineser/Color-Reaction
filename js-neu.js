@@ -415,7 +415,7 @@ starteCountdown(() => {
       setTimeout(() => {
         timeOver.style.display = "none";
         timeOverContainer.style.display = "none";
-      }, 1000);
+      }, 900);
     }
 
     zeigeTimerOver();
