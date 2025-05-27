@@ -375,6 +375,8 @@ starteCountdown(() => {
     eingabeInfos.forEach(el => el.classList.remove("sichtbar"));
     wuerfelAnimContainer.classList.add("unsichtbar");
     overlay.style.display="none";
+    document.getElementById("wuerfelAnimation").style.display = "none";
+
 
     feedbackfalse.classList.remove("sichtbar");
     timer.classList.add("sichtbar");
