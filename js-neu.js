@@ -423,7 +423,8 @@ starteCountdown(() => {
     buttonSec.classList.remove("sichtbar");
     anzeigeWrapper.classList.remove("sichtbar");
     document.getElementById("wuerfelAnimation").style.display = "flex";
-    document.getElementById("wuerfelAnimation").style.top = "85%";
+    document.getElementById("wuerfelAnimation").style.position = "relative";
+    document.getElementById("wuerfelAnimation").style.top = "70vh";
     document.getElementById("platzmacher").classList.add("sichtbar");
 document.getElementById("box-einschaetzung").textContent =
   "Selbsteinschätzung: " + anzahl;
