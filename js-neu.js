@@ -192,20 +192,21 @@ function datenSpeichern() {
   const durchschnitt = reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length;
 
   fetch(`https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users/${userId}/scores`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      punkte: korrektAnzahl,
-      reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
-      reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
-      reaktionszeiten: Number(durchschnitt.toFixed(3)),
-      Einschaetzung: Number(anzahl)
-    })
+  fetch(`https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users/${userId}/scores`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    punkte: korrektAnzahl,
+    reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
+    reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
+    reaktionszeiten: Number(durchschnitt.toFixed(3)),
+    Einschaetzung: Number(anzahl),
+    diagrammDaten: reaktionszeiten.slice(1) // <-- neu: alle Einzelzeiten außer der ersten
   })
-    .then(res => res.json())
-    .then(data => console.log("Score gespeichert:", data))
-    .catch(err => console.error("Fehler beim Speichern des Scores:", err));
-}
+})
+  .then(res => res.json())
+  .then(data => console.log("Score & Diagramm gespeichert:", data))
+  .catch(err => console.error("Fehler beim Speichern des Scores:", err));
 
 const anzeigeWrapper = document.querySelector(".anzeige-wrapper")
 const karte = document.querySelector(".colorchanger");
