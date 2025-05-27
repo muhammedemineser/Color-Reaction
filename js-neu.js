@@ -200,12 +200,13 @@ fetch(`https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users/${userId}/scores`,
     reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
     reaktionszeiten: Number(durchschnitt.toFixed(3)),
     Einschaetzung: Number(anzahl),
-    diagrammDaten: reaktionszeiten.slice(1) // <-- hier wird ergänzt
+    diagrammDaten: reaktionszeiten.slice(1)
   })
 })
 .then(res => res.json())
 .then(data => console.log("Score gespeichert:", data))
 .catch(err => console.error("Fehler beim Speichern des Scores:", err));
+}
 
 const anzeigeWrapper = document.querySelector(".anzeige-wrapper")
 const karte = document.querySelector(".colorchanger");
