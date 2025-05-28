@@ -60,42 +60,12 @@ let spielerIP = "Unbekannt";
 let userId = ""; // NEU
 let startErfolgt = false;
 
-// IP-Adresse abrufen
 fetch("https://api.ipify.org?format=json")
   .then(res => res.json())
   .then(data => {
     spielerIP = data.ip;
-    if (localStorage.getItem("angemeldet") === "true") {
-  document.getElementById("startbildschirm").style.display = "none";
-  document.getElementById("mainContent").style.display = "block";
-  playFixedSound(soundSignup);
-  startErfolgt = true;
-  localStorage.setItem("angemeldet", "true");
-} else {
-  checkeVorhandeneIP(spielerIP);
-}
+    document.getElementById("startbildschirm").style.display = "flex";
   });
-
-function checkeVorhandeneIP(ip) {
-  fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users")
-    .then(res => res.json())
-    .then(users => {
-      const user = users.find(u => u.ip === ip);
-      if (user) {
-        userId = user.id;
-        spielerName = user.name;
-        spielerAlter = user.alter;
-        spielerGeschlecht = user.geschlecht;
-        anonym = user.anonym;
-        document.getElementById("startbildschirm").style.display = "none";
-        document.getElementById("mainContent").style.display = "block";
-        playFixedSound(soundSignup);
-        startErfolgt = true;
-      } else {
-        document.getElementById("startbildschirm").style.display = "flex";
-      }
-    });
-}
 
 // Eingabe prüfen und speichern
 document.getElementById("startWeiterBtn").addEventListener("click", () => {
