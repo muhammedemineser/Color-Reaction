@@ -529,7 +529,7 @@ setTimeout(() => {
   document.querySelector(".auswertung").style.height = "auto";
   datenSpeichern();
 }, items.length * 900);
-  }, 60000);
+  }, 64000);
 });
 
 
