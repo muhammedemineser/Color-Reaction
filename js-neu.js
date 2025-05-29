@@ -1,4 +1,5 @@
 
+
 let reaktionszeiten = [];     
 let letzteReaktionszeit = 0;
 let letzteMessung = Date.now(); 
@@ -60,13 +61,46 @@ let spielerIP = "Unbekannt";
 let userId = ""; // NEU
 let startErfolgt = false;
 
+// IP-Adresse abrufen
 fetch("https://api.ipify.org?format=json")
   .then(res => res.json())
   .then(data => {
     spielerIP = data.ip;
-    document.getElementById("startbildschirm").style.display = "flex";
+    if (localStorage.getItem("angemeldet") === "true") {
+  document.getElementById("startbildschirm").style.display = "none";
+  document.getElementById("mainContent").style.display = "block";
+  playFixedSound(soundSignup);
+  startErfolgt = true;
+  localStorage.setItem("angemeldet", "true");
+} else {
+  checkeVorhandeneIP(spielerIP);
+}
   });
 
+
+
+function checkeVorhandeneIP(ip) {
+  fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users")
+    .then(res => res.json())
+    .then(users => {
+      const user = users.find(u => u.ip === ip);
+      if (user) {
+        userId = user.id;
+        spielerName = user.name;
+        spielerAlter = user.alter;
+        spielerGeschlecht = user.geschlecht;
+        anonym = user.anonym;
+        document.getElementById("startbildschirm").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+        playFixedSound(soundSignup);
+        startErfolgt = true;
+      } else {
+        document.getElementById("startbildschirm").style.display = "flex";
+      }
+    });
+}
+
+  
 // Eingabe prüfen und speichern
 document.getElementById("startWeiterBtn").addEventListener("click", () => {
   const nameInput = document.getElementById("spielerName");
@@ -154,11 +188,16 @@ function frageNachAnnahme(callback) {
 }
 
 
+async function ladeAlleScores() {
+  const res = await fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores");
+  const daten = await res.json();
+  return daten.filter(d => d.besteReaktion); // nur Einträge mit gültiger Reaktion
+}
 
 // Spielstand speichern
 function datenSpeichern() {
   if (reaktionszeiten.length === 0 || !userId) return;
-
+  const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);
   const durchschnitt = reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length;
 
 fetch(`https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users/${userId}/scores`, {
@@ -170,7 +209,8 @@ fetch(`https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users/${userId}/scores`,
     reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
     reaktionszeiten: Number(durchschnitt.toFixed(3)),
     Einschaetzung: Number(anzahl),
-    diagrammDaten: reaktionszeiten.slice(1)
+    diagrammDaten: bereinigteDaten,
+    besteReaktion: Number(besteReaktion.toFixed(2))
   })
 })
 .then(res => res.json())
@@ -352,6 +392,7 @@ starteCountdown(() => {
     timer.classList.add("sichtbar");
     containerButton.classList.add("sichtbar");
     buttonSec.classList.add("sichtbar");
+    button.style.display = "none";
     cards.forEach(card => card.classList.add("sichtbar"));
     punkteZeiger.classList.add("sichtbar");
     punkteZeiger.textContent = korrektAnzahl;
@@ -526,10 +567,68 @@ items.forEach((item, i) => {
 });
 
 setTimeout(() => {
-  document.querySelector(".auswertung").style.height = "auto";
   datenSpeichern();
+  ladeAlleScores().then(scores => {
+  // nach Reaktionszeit sortieren (aufsteigend)
+  const sortiert = scores.sort((a, b) => a.besteReaktion - b.besteReaktion);
+
+  // Top 3 extrahieren
+  const top3 = sortiert.slice(0, 3);
+
+  // Aktueller Spieler
+  const aktuellerEintrag = {
+    name: spielerName,
+    besteReaktion: Number(besteReaktion.toFixed(2)),
+    punkte: korrektAnzahl
+  };
+
+  // Rang des aktuellen Spielers ermitteln
+  const rang = sortiert.findIndex(s => s.userId === userId && s.besteReaktion === aktuellerEintrag.besteReaktion) + 1;
+
+  // Wenn nicht in Top 3, hinzufügen
+  if (rang > 3) {
+    top3.push({ ...aktuellerEintrag, rang });
+  }
+
+  zeigeRangliste(top3);
+});
+function zeigeRangliste(topSpieler) {
+  const ul = document.getElementById("ranglisteContainer");
+  ul.innerHTML = ""; // vor Befüllung leeren
+
+  topSpieler.forEach((spieler, index) => {
+    const li = document.createElement("li");
+    li.classList.add("ranglisten-eintrag");
+
+    // Besondere Farben für Platz 1–3
+    if (index === 0) {
+      li.style.boxShadow = "0 0 25px gold";
+    } else if (index === 1) {
+      li.style.boxShadow = "0 0 25px silver";
+    } else if (index === 2) {
+      li.style.boxShadow = "0 0 25px #cd7f32"; // Bronze
+    }
+
+    // Spielername evtl. kürzen
+    const name = spieler.name.length > 12 ? spieler.name.slice(0, 12) + "…" : spieler.name;
+
+    li.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:22px;">#${spieler.rang || index + 1}</span>
+        <span style="flex:1; text-align:center;">${name}</span>
+        <span>
+          <div style="font-size:12px;">Punkte</div>${spieler.punkte}<br>
+          <div style="font-size:12px;">Zeit</div>${spieler.besteReaktion.toFixed(2)}s
+        </span>
+      </div>
+    `;
+
+    ul.appendChild(li);
+  });
+}
+  document.querySelector(".auswertung").style.height = "auto";
 }, items.length * 900);
-  }, 64000);
+  }, 8000);
 });
 
 
