@@ -824,3 +824,28 @@ transition: 0.3s ease;
   box-shadow: 0 0 25px rgb(0, 225, 255);
   text-shadow: 0 0 5px rgb(0, 225, 255), 0 0 10px rgb(0, 225, 255);
 }
+
+.rang-eintrag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 15px 20px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  border: 2px solid rgb(0, 225, 255);
+  background: rgba(0, 0, 0, 0.6);
+  color: rgb(0, 225, 255);
+  box-shadow: 0 0 25px rgb(0, 225, 255);
+  text-shadow: 0 0 5px rgb(0, 225, 255), 0 0 10px rgb(0, 225, 255);
+}
+
+.rang-gold   { border-color: gold;   box-shadow: 0 0 25px gold;   color: gold;   }
+.rang-silber { border-color: silver; box-shadow: 0 0 25px silver; color: silver; }
+.rang-bronze { border-color: peru;   box-shadow: 0 0 25px peru;   color: peru;   }
+
+.rang-highlight {
+  animation: pulse-card 1s ease-in-out infinite;
+}
