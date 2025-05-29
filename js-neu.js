@@ -1,5 +1,3 @@
-
-
 let reaktionszeiten = [];     
 let letzteReaktionszeit = 0;
 let letzteMessung = Date.now(); 
@@ -61,7 +59,7 @@ let spielerIP = "Unbekannt";
 let userId = ""; // NEU
 let startErfolgt = false;
 
-// IP-Adresse abrufen
+/*// IP-Adresse abrufen
 fetch("https://api.ipify.org?format=json")
   .then(res => res.json())
   .then(data => {
@@ -75,11 +73,18 @@ fetch("https://api.ipify.org?format=json")
 } else {
   checkeVorhandeneIP(spielerIP);
 }
+  });*/
+
+fetch("https://api.ipify.org?format=json")
+  .then(res => res.json())
+  .then(data => {
+    spielerIP = data.ip;
+    document.getElementById("startbildschirm").style.display = "flex";
   });
 
 
 
-function checkeVorhandeneIP(ip) {
+/*function checkeVorhandeneIP(ip) {
   fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users")
     .then(res => res.json())
     .then(users => {
@@ -98,7 +103,7 @@ function checkeVorhandeneIP(ip) {
         document.getElementById("startbildschirm").style.display = "flex";
       }
     });
-}
+}*/
 
   
 // Eingabe prüfen und speichern
@@ -188,16 +193,16 @@ function frageNachAnnahme(callback) {
 }
 
 
-async function ladeAlleScores() {
+/*async function ladeAlleScores() {
   const res = await fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores");
   const daten = await res.json();
   return daten.filter(d => d.besteReaktion); // nur Einträge mit gültiger Reaktion
-}
+}*/
 
 // Spielstand speichern
 function datenSpeichern() {
   if (reaktionszeiten.length === 0 || !userId) return;
-  const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);
+  /*const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);*/
   const durchschnitt = reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length;
 
 fetch(`https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users/${userId}/scores`, {
@@ -209,7 +214,7 @@ fetch(`https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users/${userId}/scores`,
     reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
     reaktionszeiten: Number(durchschnitt.toFixed(3)),
     Einschaetzung: Number(anzahl),
-    diagrammDaten: bereinigteDaten,
+    diagrammDaten: /*bereinigteDaten*/reaktionszeiten.slice(1),
     besteReaktion: Number(besteReaktion.toFixed(2))
   })
 })
@@ -568,7 +573,7 @@ items.forEach((item, i) => {
 
 setTimeout(() => {
   datenSpeichern();
-  ladeAlleScores().then(scores => {
+  /*ladeAlleScores().then(scores => {
   // nach Reaktionszeit sortieren (aufsteigend)
   const sortiert = scores.sort((a, b) => a.besteReaktion - b.besteReaktion);
 
@@ -625,10 +630,10 @@ function zeigeRangliste(topSpieler) {
 
     ul.appendChild(li);
   });
-}
+}*/
   document.querySelector(".auswertung").style.height = "auto";
 }, items.length * 900);
-  }, 8000);
+  }, 64000);
 });
 
 
@@ -702,5 +707,3 @@ function starteTimer() {
     }
   }, 10);
 }
-
-
