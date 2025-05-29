@@ -205,6 +205,7 @@ function datenSpeichern() {
   /*const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);*/
   const durchschnitt = reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length;
 
+const besteReaktion = Math.min(...reaktionszeiten.slice(1))
 fetch(`https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users/${userId}/scores`, {
   method: "POST",
   headers: { "Content-Type": "application/json" },
