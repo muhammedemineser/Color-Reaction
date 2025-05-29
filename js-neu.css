@@ -841,11 +841,3 @@ transition: 0.3s ease;
   box-shadow: 0 0 25px rgb(0, 225, 255);
   text-shadow: 0 0 5px rgb(0, 225, 255), 0 0 10px rgb(0, 225, 255);
 }
-
-.rang-gold   { border-color: gold;   box-shadow: 0 0 25px gold;   color: gold;   }
-.rang-silber { border-color: silver; box-shadow: 0 0 25px silver; color: silver; }
-.rang-bronze { border-color: peru;   box-shadow: 0 0 25px peru;   color: peru;   }
-
-.rang-highlight {
-  animation: pulse-card 1s ease-in-out infinite;
-}
