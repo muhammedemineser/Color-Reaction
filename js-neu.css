@@ -825,6 +825,26 @@ transition: 0.3s ease;
   text-shadow: 0 0 5px rgb(0, 225, 255), 0 0 10px rgb(0, 225, 255);
 }
 
+#ranglisteContainer {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.ranglisten-eintrag {
+  margin: 10px 0;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  border: 2px solid rgb(0, 225, 255);
+  box-shadow: 0 0 25px rgb(0, 225, 255);
+  color: rgb(0, 225, 255);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  animation: erscheinen-schrumpfen 0.8s ease-in-out forwards;
+}
+
 .rang-eintrag {
   display: flex;
   justify-content: space-between;
@@ -840,4 +860,12 @@ transition: 0.3s ease;
   color: rgb(0, 225, 255);
   box-shadow: 0 0 25px rgb(0, 225, 255);
   text-shadow: 0 0 5px rgb(0, 225, 255), 0 0 10px rgb(0, 225, 255);
+}
+
+.rang-gold   { border-color: gold;   box-shadow: 0 0 25px gold;   color: gold;   }
+.rang-silber { border-color: silver; box-shadow: 0 0 25px silver; color: silver; }
+.rang-bronze { border-color: peru;   box-shadow: 0 0 25px peru;   color: peru;   }
+
+.rang-highlight {
+  animation: pulse-card 1s ease-in-out infinite;
 }
