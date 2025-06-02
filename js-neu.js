@@ -86,7 +86,7 @@ fetch("https://api.ipify.org?format=json")
 
 
 /*function checkeVorhandeneIP(ip) {
-  fetch("https://683dbe19199a0039e9e6b6d6.mockapi.io/game/users")
+  fetch("https://683dbe19199a0039e9e6b6d6.mockapi.io/users")
     .then(res => res.json())
     .then(users => {
       const user = users.find(u => u.ip === ip);
@@ -129,7 +129,7 @@ document.getElementById("startWeiterBtn").addEventListener("click", () => {
     return;
   }
 
-  fetch("https://683dbe19199a0039e9e6b6d6.mockapi.io/game/users", {
+  fetch("https://683dbe19199a0039e9e6b6d6.mockapi.io/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -195,20 +195,46 @@ function frageNachAnnahme(callback) {
 
 
 async function ladeAlleScores() {
-  const res = await fetch("https://683dbe19199a0039e9e6b6d6.mockapi.io/game/scores");
+  const res = await fetch("https://683dbe19199a0039e9e6b6d7.mockapi.io/scores");
   const daten = await res.json();
-  return daten.filter(d => d.besteReaktion); // nur Einträge mit gültiger Reaktion
+  return daten.filter(d => d.besteReaktion);
 }
 
 // Spielstand speichern
 function datenSpeichern() {
+  if (reaktionszeiten.length === 0) return;
+
+  const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);
+  const durchschnitt = bereinigteDaten.reduce((a, b) => a + b, 0) / bereinigteDaten.length;
+  const besteReaktion = Math.min(...bereinigteDaten);
+
+  fetch("https://683dbe19199a0039e9e6b6d7.mockapi.io/scores", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: spielerName,
+      userId: userId,
+      punkte: korrektAnzahl,
+      reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
+      reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
+      reaktionszeiten: Number(durchschnitt.toFixed(3)),
+      Einschaetzung: Number(anzahl),
+      diagrammDaten: bereinigteDaten,
+      besteReaktion: Number(besteReaktion.toFixed(2))
+    })
+  })
+  .then(res => res.json())
+  .then(data => console.log("Score gespeichert:", data))
+  .catch(err => console.error("Fehler beim Speichern des Scores:", err));
+}
+ /*function datenSpeichern() {
   if (reaktionszeiten.length === 0 || !userId) return;
 
   const durchschnitt = reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length;
   const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);
   const besteReaktion = Math.min(...bereinigteDaten);
 
-  fetch(`https://683dbe19199a0039e9e6b6d6.mockapi.io/game/users/${userId}/scores`, {
+ fetch(`https://683dbe19199a0039e9e6b6d6.mockapi.io/scores`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -225,7 +251,7 @@ function datenSpeichern() {
   .then(res => res.json())
   .then(data => console.log("Score gespeichert:", data))
   .catch(err => console.error("Fehler beim Speichern des Scores:", err));
-}
+}*/
 
 const anzeigeWrapper = document.querySelector(".anzeige-wrapper")
 const karte = document.querySelector(".colorchanger");
