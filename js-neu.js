@@ -1,4 +1,5 @@
 let reaktionszeiten = [];     
+let bereinigteDaten= [];
 let letzteReaktionszeit = 0;
 let letzteMessung = Date.now(); 
 let anzahl;
@@ -85,7 +86,7 @@ fetch("https://api.ipify.org?format=json")
 
 
 /*function checkeVorhandeneIP(ip) {
-  fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users")
+  fetch("https://683dbe19199a0039e9e6b6d6.mockapi.io/game/users")
     .then(res => res.json())
     .then(users => {
       const user = users.find(u => u.ip === ip);
@@ -128,7 +129,7 @@ document.getElementById("startWeiterBtn").addEventListener("click", () => {
     return;
   }
 
-  fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users", {
+  fetch("https://683dbe19199a0039e9e6b6d6.mockapi.io/game/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -193,35 +194,37 @@ function frageNachAnnahme(callback) {
 }
 
 
-/*async function ladeAlleScores() {
-  const res = await fetch("https://682f2058746f8ca4a47ff4a5.mockapi.io/game/scores");
+async function ladeAlleScores() {
+  const res = await fetch("https://683dbe19199a0039e9e6b6d6.mockapi.io/game/scores");
   const daten = await res.json();
   return daten.filter(d => d.besteReaktion); // nur Einträge mit gültiger Reaktion
-}*/
+}
 
 // Spielstand speichern
 function datenSpeichern() {
   if (reaktionszeiten.length === 0 || !userId) return;
-  /*const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);*/
-  const durchschnitt = reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length;
 
-const besteReaktion = Math.min(...reaktionszeiten.slice(1))
-fetch(`https://682f2058746f8ca4a47ff4a5.mockapi.io/game/users/${userId}/scores`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    punkte: korrektAnzahl,
-    reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
-    reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
-    reaktionszeiten: Number(durchschnitt.toFixed(3)),
-    Einschaetzung: Number(anzahl),
-    diagrammDaten: /*bereinigteDaten*/reaktionszeiten.slice(1),
-    besteReaktion: Number(besteReaktion.toFixed(2))
+  const durchschnitt = reaktionszeiten.reduce((a, b) => a + b, 0) / reaktionszeiten.length;
+  const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);
+  const besteReaktion = Math.min(...bereinigteDaten);
+
+  fetch(`https://683dbe19199a0039e9e6b6d6.mockapi.io/game/users/${userId}/scores`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      punkte: korrektAnzahl,                             // z.B. 41
+      reaktion: Number(reaktionszeitProFarbe.toFixed(2)),
+      reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
+      reaktionszeiten: Number(durchschnitt.toFixed(3)),
+      Einschaetzung: Number(anzahl),
+      diagrammDaten: bereinigteDaten,
+      besteReaktion: Number(besteReaktion.toFixed(2)),   // z.B. 0.84
+      name: spielerName                                   // wichtig für Rangliste!
+    })
   })
-})
-.then(res => res.json())
-.then(data => console.log("Score gespeichert:", data))
-.catch(err => console.error("Fehler beim Speichern des Scores:", err));
+  .then(res => res.json())
+  .then(data => console.log("Score gespeichert:", data))
+  .catch(err => console.error("Fehler beim Speichern des Scores:", err));
 }
 
 const anzeigeWrapper = document.querySelector(".anzeige-wrapper")
@@ -374,6 +377,41 @@ document.querySelectorAll("body > *").forEach(el => {
   }, 1000);
 }
 
+function zeigeRangliste(topSpieler) {
+  const ul = document.getElementById("ranglisteContainer");
+  ul.innerHTML = ""; // vor Befüllung leeren
+
+  topSpieler.forEach((spieler, index) => {
+    const li = document.createElement("li");
+    li.classList.add("ranglisten-eintrag");
+
+    // Besondere Farben für Platz 1–3
+    if (index === 0) {
+      li.style.boxShadow = "0 0 25px gold";
+    } else if (index === 1) {
+      li.style.boxShadow = "0 0 25px silver";
+    } else if (index === 2) {
+      li.style.boxShadow = "0 0 25px #cd7f32"; // Bronze
+    }
+
+    // Spielername evtl. kürzen
+    const name = spieler.name.length > 12 ? spieler.name.slice(0, 12) + "…" : spieler.name;
+
+    li.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:22px;">#${spieler.rang || index + 1}</span>
+        <span style="flex:1; text-align:center;">${name}</span>
+        <span>
+          <div style="font-size:12px;">Punkte</div>${spieler.punkte}<br>
+          <div style="font-size:12px;">Zeit</div>${spieler.besteReaktion.toFixed(2)}s
+        </span>
+      </div>
+    `;
+
+    ul.appendChild(li);
+  });
+}
+
 
 document.getElementById("gameBtn").addEventListener("click", () => {
   if (!anzahl && !spielStartBereit) {
@@ -484,6 +522,7 @@ items.forEach((item, i) => {
 
     // Reaktions-Chart erst anzeigen, wenn er "dran ist"
     if (item.id === "reaktionsChart") {
+        const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);
       item.style.display = "block"; // Jetzt erst sichtbar
 
       const ctx = item.getContext("2d");
@@ -497,11 +536,11 @@ items.forEach((item, i) => {
       };
 
       const chartData = {
-        labels: reaktionszeiten.slice(1).map((_, i) => "Farbe " + (i + 1)),
+        labels: bereinigteDaten.map((_, i) => "Farbe " + (i + 1)),
         datasets: [dataset]
       };
 
-      const maxY = Math.max(...reaktionszeiten.slice(1)) * 1.1;
+      const maxY = Math.max(...bereinigteDaten) * 1.1;
 
       const chartOptions = {
         responsive: true,
@@ -557,8 +596,8 @@ items.forEach((item, i) => {
       else if (reaktionszeiten.length <= 30) geschwindigkeit = 100;
 
       const interval = setInterval(() => {
-        if (index < reaktionszeiten.length - 1) {
-          dataset.data.push(reaktionszeiten[index + 1]);
+        if (index < bereinigteDaten.length - 1) {
+          dataset.data.push(bereinigteDaten[index + 1]);
           chart.update({
             duration: 500,
             easing: 'easeOutQuad'
@@ -574,7 +613,7 @@ items.forEach((item, i) => {
 
 setTimeout(() => {
   datenSpeichern();
-  /*ladeAlleScores().then(scores => {
+  ladeAlleScores().then(scores => {
   // nach Reaktionszeit sortieren (aufsteigend)
   const sortiert = scores.sort((a, b) => a.besteReaktion - b.besteReaktion);
 
@@ -598,43 +637,10 @@ setTimeout(() => {
 
   zeigeRangliste(top3);
 });
-function zeigeRangliste(topSpieler) {
-  const ul = document.getElementById("ranglisteContainer");
-  ul.innerHTML = ""; // vor Befüllung leeren
 
-  topSpieler.forEach((spieler, index) => {
-    const li = document.createElement("li");
-    li.classList.add("ranglisten-eintrag");
-
-    // Besondere Farben für Platz 1–3
-    if (index === 0) {
-      li.style.boxShadow = "0 0 25px gold";
-    } else if (index === 1) {
-      li.style.boxShadow = "0 0 25px silver";
-    } else if (index === 2) {
-      li.style.boxShadow = "0 0 25px #cd7f32"; // Bronze
-    }
-
-    // Spielername evtl. kürzen
-    const name = spieler.name.length > 12 ? spieler.name.slice(0, 12) + "…" : spieler.name;
-
-    li.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-size:22px;">#${spieler.rang || index + 1}</span>
-        <span style="flex:1; text-align:center;">${name}</span>
-        <span>
-          <div style="font-size:12px;">Punkte</div>${spieler.punkte}<br>
-          <div style="font-size:12px;">Zeit</div>${spieler.besteReaktion.toFixed(2)}s
-        </span>
-      </div>
-    `;
-
-    ul.appendChild(li);
-  });
-}*/
   document.querySelector(".auswertung").style.height = "auto";
 }, items.length * 900);
-  }, 64000);
+  }, 60000);
 });
 
 
