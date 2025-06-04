@@ -715,7 +715,7 @@ ladeAlleScores().then(scores => {
 
 datenSpeichern();
 
-  }, 9000);
+  }, 60000);
 });
 
 
