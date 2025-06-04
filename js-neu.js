@@ -51,6 +51,28 @@ function zeigeLetsTest() {
   }, 4000);
 }
 
+function passeAuswertungBoxAn() {
+  const box = document.querySelector(".auswertung-box");
+  const screenWidth = window.innerWidth;
+
+  if (screenWidth <= 480) {
+    // Smartphones
+    box.style.maxWidth = "280px";
+    box.style.padding = "10px";
+    box.style.gap = "10px";
+  } else if (screenWidth <= 768) {
+    // Tablets
+    box.style.maxWidth = "340px";
+    box.style.padding = "12px";
+    box.style.gap = "12px";
+  } else {
+    // Desktop
+    box.style.maxWidth = "400px";
+    box.style.padding = "15px";
+    box.style.gap = "15px";
+  }
+}
+
 
 let spielerName = "";
 let spielerAlter = 0;
@@ -195,7 +217,7 @@ function frageNachAnnahme(callback) {
 
 
 async function ladeAlleScores() {
-  const res = await fetch("https://683dbe19199a0039e9e6b6d7.mockapi.io/scores");
+  const res = await fetch("https://683dbe19199a0039e9e6b6d6.mockapi.io/scores");
   const daten = await res.json();
   return daten.filter(d => d.besteReaktion);
 }
@@ -208,7 +230,7 @@ function datenSpeichern() {
   const durchschnitt = bereinigteDaten.reduce((a, b) => a + b, 0) / bereinigteDaten.length;
   const besteReaktion = Math.min(...bereinigteDaten);
 
-  fetch("https://683dbe19199a0039e9e6b6d7.mockapi.io/scores", {
+  fetch("https://683dbe19199a0039e9e6b6d6.mockapi.io/scores", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -219,7 +241,7 @@ function datenSpeichern() {
       reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
       reaktionszeiten: Number(durchschnitt.toFixed(3)),
       Einschaetzung: Number(anzahl),
-      diagrammDaten: bereinigteDaten,
+      diagrammDaten: Array(bereinigteDaten),
       besteReaktion: Number(besteReaktion.toFixed(2))
     })
   })
@@ -526,147 +548,174 @@ document.getElementById("box-reaktion-beste").textContent =
 
 document.querySelector(".auswertung-box").classList.add("sichtbar");
 const items = document.querySelectorAll(".auswertung-item");
+ladeAlleScores().then(scores => {
+  const EPSILON = 0.01;
 
-items.forEach((item, i) => {
-  setTimeout(() => {
-    item.classList.add("sichtbar", "animate");
+  const sortiert = scores
+    .map(s => ({ ...s, besteReaktion: Number(s.besteReaktion) }))
+    .filter(s => !isNaN(s.besteReaktion))
+    .sort((a, b) => a.besteReaktion - b.besteReaktion);
 
-    const isLast = i === items.length - 1;
-
-
-    const volume = isLast
-      ? bingMaxVolume + 0.1  
-      : bingBaseVolume + ((bingMaxVolume - bingBaseVolume) / items.length) * i;
-
-    const sound = isLast
-      ? bingLastSound.cloneNode()
-      : bingSound.cloneNode();
-
-    sound.volume = Math.min(volume, 1.0);
-    sound.play();
-
-
-    // Reaktions-Chart erst anzeigen, wenn er "dran ist"
-    if (item.id === "reaktionsChart") {
-        const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);
-      item.style.display = "block"; // Jetzt erst sichtbar
-
-      const ctx = item.getContext("2d");
-      let index = 0;
-      const dataset = {
-        label: "Reaktionszeit (Sekunden)",
-        data: [],
-        fill: false,
-        borderColor: "#00ffcc",
-        tension: 0.3
-      };
-
-      const chartData = {
-        labels: bereinigteDaten.map((_, i) => "Farbe " + (i + 1)),
-        datasets: [dataset]
-      };
-
-      const maxY = Math.max(...bereinigteDaten) * 1.1;
-
-      const chartOptions = {
-        responsive: true,
-        animations: {
-          tension: {
-            duration: 600,
-            easing: 'easeOutQuad',
-            from: 0.3,
-            to: 0.4,
-            loop: false
-          }
-        },
-        plugins: {
-          legend: { labels: { color: 'white' ,
-            font:{
-              size:14
-            }
-          } }
-        },
-        scales: {
-          y: {
-            reverse: true,
-            min: 0,
-            max: maxY,
-            ticks: { color: 'white',
-            font:{
-              size:14
-              }
-             },
-            grid: { color: 'white' }
-          },
-          x: {
-            beginAtZero: true,
-            ticks: { color: 'white',
-                          font:{
-              size:14
-              } 
-             },
-            grid: { color: 'white' }
-          }
-        }
-      };
-
-      const chart = new Chart(ctx, {
-        type: "line",
-        data: chartData,
-        options: chartOptions
-      });
-
-      let geschwindigkeit = 50;
-      if (reaktionszeiten.length <= 10) geschwindigkeit = 250;
-      else if (reaktionszeiten.length <= 20) geschwindigkeit = 200;
-      else if (reaktionszeiten.length <= 30) geschwindigkeit = 100;
-
-      const interval = setInterval(() => {
-        if (index < bereinigteDaten.length - 1) {
-          dataset.data.push(bereinigteDaten[index + 1]);
-          chart.update({
-            duration: 500,
-            easing: 'easeOutQuad'
-          });
-          index++;
-        } else {
-          clearInterval(interval);
-        }
-      }, geschwindigkeit);
-    }
-  }, i * 900);
-});
-
-setTimeout(() => {
-  datenSpeichern();
-  ladeAlleScores().then(scores => {
-  // nach Reaktionszeit sortieren (aufsteigend)
-  const sortiert = scores.sort((a, b) => a.besteReaktion - b.besteReaktion);
-
-  // Top 3 extrahieren
   const top3 = sortiert.slice(0, 3);
 
-  // Aktueller Spieler
   const aktuellerEintrag = {
     name: spielerName,
+    userId,
     besteReaktion: Number(besteReaktion.toFixed(2)),
     punkte: korrektAnzahl
   };
 
-  // Rang des aktuellen Spielers ermitteln
-  const rang = sortiert.findIndex(s => s.userId === userId && s.besteReaktion === aktuellerEintrag.besteReaktion) + 1;
+  const rang = sortiert.findIndex(
+    s =>
+      s.userId === userId &&
+      Math.abs(s.besteReaktion - aktuellerEintrag.besteReaktion) < EPSILON
+  ) + 1;
 
-  // Wenn nicht in Top 3, hinzufügen
-  if (rang > 3) {
-    top3.push({ ...aktuellerEintrag, rang });
+  const topMitAktuellem = [...top3];
+  if (!top3.some(s => s.userId === userId)) {
+    topMitAktuellem.push({ ...aktuellerEintrag, rang });
   }
 
-  zeigeRangliste(top3);
-});
+  const box = document.querySelector(".auswertung-box");
+  const rangDivs = topMitAktuellem.map((spieler, index) => {
+    const div = document.createElement("div");
+    div.className = "auswertung-item ranglisten-eintrag";
+
+    if (index === 0) div.style.boxShadow = "0 0 25px gold";
+    else if (index === 1) div.style.boxShadow = "0 0 25px silver";
+    else if (index === 2) div.style.boxShadow = "0 0 25px #cd7f32";
+    if (spieler.rang) div.classList.add("rang-highlight");
+
+    const name = spieler.name.length > 12 ? spieler.name.slice(0, 12) + "…" : spieler.name;
+
+    div.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:22px;">#${spieler.rang || index + 1}</span>
+        <span style="flex:1; text-align:center;">${name}</span>
+        <span>
+          <div style="font-size:12px;">Punkte</div>${spieler.punkte}<br>
+          <div style="font-size:12px;">Zeit</div>${spieler.besteReaktion.toFixed(2)}s
+        </span>
+      </div>
+    `;
+
+    return div;
+  });
+
+  const weitereItems = document.querySelectorAll(".auswertung-item:not(.ranglisten-eintrag)");
+  const items = [...rangDivs, ...weitereItems];
+
+  items.forEach(div => box.appendChild(div));
+
+  let aktuelleTopPosition = 10;
+
+  setTimeout(() => {
+    items.forEach((item, i) => {
+      setTimeout(() => {
+        item.classList.add("sichtbar", "animate");
+
+        aktuelleTopPosition += 3;
+        box.style.top = `${aktuelleTopPosition}%`;
+        box.style.bottom = `${aktuelleTopPosition}%`;
+
+
+        const isLast = i === items.length - 1;
+        const volume = isLast
+          ? bingMaxVolume + 0.1
+          : bingBaseVolume + ((bingMaxVolume - bingBaseVolume) / items.length) * i;
+
+        const sound = isLast ? bingLastSound.cloneNode() : bingSound.cloneNode();
+        sound.volume = Math.min(volume, 1.0);
+        sound.play();
+
+        if (item.id === "reaktionsChart") {
+          const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);
+          item.style.display = "block";
+
+          const ctx = item.getContext("2d");
+          let index = 0;
+          const dataset = {
+            label: "Reaktionszeit (Sekunden)",
+            data: [],
+            fill: false,
+            borderColor: "#00ffcc",
+            tension: 0.3
+          };
+
+          const chartData = {
+            labels: bereinigteDaten.map((_, i) => "Farbe " + (i + 1)),
+            datasets: [dataset]
+          };
+
+          const maxY = Math.max(...bereinigteDaten) * 1.1;
+
+          const chartOptions = {
+            responsive: true,
+            animations: {
+              tension: {
+                duration: 600,
+                easing: 'easeOutQuad',
+                from: 0.3,
+                to: 0.4,
+                loop: false
+              }
+            },
+            plugins: {
+              legend: { labels: { color: 'white', font:{ size:14 } } }
+            },
+            scales: {
+              y: {
+                reverse: true,
+                min: 0,
+                max: maxY,
+                ticks: { color: 'white', font:{ size:14 } },
+                grid: { color: 'white' }
+              },
+              x: {
+                beginAtZero: true,
+                ticks: { color: 'white', font:{ size:14 } },
+                grid: { color: 'white' }
+              }
+            }
+          };
+
+          const chart = new Chart(ctx, {
+            type: "line",
+            data: chartData,
+            options: chartOptions
+          });
+
+          let geschwindigkeit = 50;
+          if (reaktionszeiten.length <= 10) geschwindigkeit = 250;
+          else if (reaktionszeiten.length <= 20) geschwindigkeit = 200;
+          else if (reaktionszeiten.length <= 30) geschwindigkeit = 100;
+
+          const interval = setInterval(() => {
+            if (index < bereinigteDaten.length - 1) {
+              dataset.data.push(bereinigteDaten[index + 1]);
+              chart.update({
+                duration: 500,
+                easing: 'easeOutQuad'
+              });
+              index++;
+            } else {
+              clearInterval(interval);
+            }
+          }, geschwindigkeit);
+        }
+      }, i * 900);
+    });
+  }, 100);
 
   document.querySelector(".auswertung").style.height = "auto";
-}, items.length * 900);
-  }, 60000);
+  window.addEventListener("resize", passeAuswertungBoxAn);
+  passeAuswertungBoxAn();
+});
+
+
+datenSpeichern();
+
+  }, 9000);
 });
 
 
