@@ -224,13 +224,13 @@ async function ladeAlleScores() {
 
 // Spielstand speichern
 function datenSpeichern() {
-  if (reaktionszeiten.length === 0) return;
+  if (reaktionszeiten.length === 0) return Promise.resolve();
 
   const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);
   const durchschnitt = bereinigteDaten.reduce((a, b) => a + b, 0) / bereinigteDaten.length;
   const besteReaktion = Math.min(...bereinigteDaten);
 
-  fetch("https://683dbe19199a0039e9e6b6d6.mockapi.io/scores", {
+  return fetch("https://683dbe19199a0039e9e6b6d6.mockapi.io/scores", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -246,8 +246,14 @@ function datenSpeichern() {
     })
   })
   .then(res => res.json())
-  .then(data => console.log("Score gespeichert:", data))
-  .catch(err => console.error("Fehler beim Speichern des Scores:", err));
+  .then(data => {
+    console.log("Score gespeichert:", data);
+    return data;
+  })
+  .catch(err => {
+    console.error("Fehler beim Speichern des Scores:", err);
+    throw err;
+  });
 }
  /*function datenSpeichern() {
   if (reaktionszeiten.length === 0 || !userId) return;
@@ -548,32 +554,28 @@ document.getElementById("box-reaktion-beste").textContent =
 
 document.querySelector(".auswertung-box").classList.add("sichtbar");
 const items = document.querySelectorAll(".auswertung-item");
-ladeAlleScores().then(scores => {
+
+datenSpeichern()
+  .then(() => ladeAlleScores())
+  .then(scores => {
   const EPSILON = 0.01;
 
   const sortiert = scores
     .map(s => ({ ...s, besteReaktion: Number(s.besteReaktion) }))
     .filter(s => !isNaN(s.besteReaktion))
-    .sort((a, b) => a.besteReaktion - b.besteReaktion);
+    .sort((a, b) => a.besteReaktion - b.besteReaktion)
+    .map((s, i) => ({ ...s, rang: i + 1 }));
+
+  const currentBest = Number(besteReaktion.toFixed(2));
+  const aktuellerEintrag = sortiert.find(
+    s => s.userId === userId && Math.abs(s.besteReaktion - currentBest) < EPSILON
+  );
 
   const top3 = sortiert.slice(0, 3);
 
-  const aktuellerEintrag = {
-    name: spielerName,
-    userId,
-    besteReaktion: Number(besteReaktion.toFixed(2)),
-    punkte: korrektAnzahl
-  };
-
-  const rang = sortiert.findIndex(
-    s =>
-      s.userId === userId &&
-      Math.abs(s.besteReaktion - aktuellerEintrag.besteReaktion) < EPSILON
-  ) + 1;
-
   const topMitAktuellem = [...top3];
-  if (!top3.some(s => s.userId === userId)) {
-    topMitAktuellem.push({ ...aktuellerEintrag, rang });
+  if (aktuellerEintrag && !top3.some(s => s.userId === userId)) {
+    topMitAktuellem.push(aktuellerEintrag);
   }
 
   const box = document.querySelector(".auswertung-box");
@@ -584,7 +586,7 @@ ladeAlleScores().then(scores => {
     if (index === 0) div.style.boxShadow = "0 0 25px gold";
     else if (index === 1) div.style.boxShadow = "0 0 25px silver";
     else if (index === 2) div.style.boxShadow = "0 0 25px #cd7f32";
-    if (spieler.rang) div.classList.add("rang-highlight");
+    if (spieler.userId === userId) div.classList.add("rang-highlight");
 
     const name = spieler.name.length > 12 ? spieler.name.slice(0, 12) + "…" : spieler.name;
 
@@ -712,8 +714,6 @@ ladeAlleScores().then(scores => {
   passeAuswertungBoxAn();
 });
 
-
-datenSpeichern();
 
   }, 64000);
 });
