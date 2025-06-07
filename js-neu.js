@@ -313,6 +313,28 @@ const overlay = document.getElementById("letsTestOverlay");
 const timeOver = document.getElementById("timeOver");
 const timeOverContainer=document.getElementById("timeOverContainer");
 
+// Karten im Startmenü
+const startCards = document.querySelectorAll('.aspect-card');
+startCards.forEach(card => {
+  const header = card.querySelector('.aspect-header');
+  let fixedOpen = false;
+
+  header.addEventListener('click', () => {
+    fixedOpen = !fixedOpen;
+    card.classList.toggle('open', fixedOpen);
+  });
+
+  card.addEventListener('mouseenter', () => {
+    card.classList.add('hovering');
+  });
+
+  card.addEventListener('mouseleave', () => {
+    if (!fixedOpen) {
+      card.classList.remove('hovering');
+    }
+  });
+});
+
 
 let zustand = 0;
 let korrektAnzahl = 0;

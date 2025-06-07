@@ -869,3 +869,54 @@ transition: 0.3s ease;
 .rang-highlight {
   animation: pulse-card 1s ease-in-out infinite;
 }
+
+/* === Startmenü Karten === */
+#startCards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.aspect-card {
+  width: 90%;
+  max-width: 600px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid rgb(0, 225, 255);
+  border-radius: 15px;
+  overflow: hidden;
+  color: white;
+  cursor: pointer;
+  transition: max-height 0.6s ease;
+  max-height: 50px;
+  padding: 10px;
+}
+
+.aspect-card.hovering,
+.aspect-card.open {
+  max-height: 1000px;
+}
+
+.aspect-header {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+  color: rgb(0, 225, 255);
+}
+
+.aspect-content {
+  display: none;
+}
+
+.aspect-card.hovering .aspect-content,
+.aspect-card.open .aspect-content {
+  display: block;
+  animation: scroll-open 0.5s ease;
+}
+
+@keyframes scroll-open {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
