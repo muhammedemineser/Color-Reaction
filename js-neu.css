@@ -147,7 +147,7 @@
 
 .intro-highlight {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 800;
   color: black;
   margin-top: 15px;
   margin-bottom: 15px;
@@ -155,11 +155,12 @@
   text-align: center;
   padding: 0;
   margin: 0 auto;
+ font-family: 'Segoe UI', sans-serif;
 }
-=======
+
 .intro-highlight {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 800;
   color: black;
   margin-top: 15px;
   margin-bottom: 15px;
@@ -167,6 +168,7 @@
   text-align: center;
   padding: 0;
   margin: 0 auto;
+ font-family: 'Segoe UI', sans-serif;
 }
 
 .intro-text.unsichtbar {
@@ -174,23 +176,27 @@
 }
 
 .intro-text {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.8;
   margin-bottom: 20px;
     list-style-position: inside;
   text-align: center;
   padding: 0;
   margin: 0 auto;
+ font-weight:500;
+ font-family: 'Segoe UI', sans-serif;
 }
 
 .intro-text {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.8;
   margin-bottom: 20px;
     list-style-position: inside;
   text-align: center;
   padding: 0;
   margin: 0 auto;
+ font-weight:500;
+ font-family: 'Segoe UI', sans-serif;
 }
 
 .intro-subtle.unsichtbar {
@@ -198,23 +204,27 @@ display: none;
 }
 
 .intro-subtle, #EingabeInfosTitle {
-  font-size: 14px;
+  font-size: 20px;
   color: rgb(100, 240, 255);
   margin-bottom: 20px;
     list-style-position: inside;
   text-align: center;
   padding: 0;
   margin: 0 auto;
+ font-weight:500;
+ font-family: 'Segoe UI', sans-serif;
 }
 
 .intro-subtle, #EingabeInfosTitle {
-  font-size: 14px;
+  font-size: 20px;
   color: rgb(100, 240, 255);
   margin-bottom: 20px;
     list-style-position: inside;
   text-align: center;
+ font-weight:500;
   padding: 0;
   margin: 0 auto;
+ font-family: 'Segoe UI', sans-serif;
 }
 
 .intro-list, ul.unsichtbar {
@@ -229,6 +239,7 @@ display: none;
   padding: 0;
   margin: 0 auto;
   color: #00e1ff;
+ font-family: 'Segoe UI', sans-serif;
 }
 
 
@@ -244,6 +255,7 @@ display: none;
   text-align: center;
   padding: 0;
   margin: 0 auto;
+ font-family: 'Segoe UI', sans-serif;
 }
 
 .intro-call.unsichtbar {
