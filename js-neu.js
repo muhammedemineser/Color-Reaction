@@ -322,6 +322,10 @@ startCards.forEach(card => {
   header.addEventListener('click', () => {
     fixedOpen = !fixedOpen;
     card.classList.toggle('open', fixedOpen);
+    card.classList.add('clicked');
+    setTimeout(() => {
+      card.classList.remove('clicked');
+    }, 200);
   });
 
   card.addEventListener('mouseenter', () => {
@@ -329,8 +333,9 @@ startCards.forEach(card => {
   });
 
   card.addEventListener('mouseleave', () => {
+    card.classList.remove('hovering');
     if (!fixedOpen) {
-      card.classList.remove('hovering');
+      card.classList.remove('open');
     }
   });
 });
