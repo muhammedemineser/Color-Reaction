@@ -1,7 +1,7 @@
-let reaktionszeiten = [];     
+let reaktionszeiten = [];
 let bereinigteDaten= [];
 let letzteReaktionszeit = 0;
-let letzteMessung = Date.now(); 
+let letzteMessung = performance.now();
 let anzahl;
 let startTime;
 let anzahlKurz = 0;
@@ -241,7 +241,7 @@ function datenSpeichern() {
       reaktionEnd: Number(reaktionszeitProFarbeSec.toFixed(2)),
       reaktionszeiten: Number(durchschnitt.toFixed(3)),
       Einschaetzung: Number(anzahl),
-      diagrammDaten: Array(bereinigteDaten),
+      diagrammDaten: bereinigteDaten,
       besteReaktion: Number(besteReaktion.toFixed(2))
     })
   })
@@ -401,19 +401,19 @@ function handleGameInput() {
 
     // === ERSTE RUNDE MESSUNG ===
     if (zustand === 10 && anzahlKurz === 0) {
-      anzahlKurz = Date.now() - startTime;
+      anzahlKurz = performance.now() - startTime;
       reaktionszeitProFarbe = anzahlKurz / 10 / 1000;
     }
 
     // === LETZTE RUNDE START MERKEN ===
     if (zustand === 1) {
-      letzterStart = Date.now();
+      letzterStart = performance.now();
       letzteRundeGestartet = true;
     }
 
     // === LETZTE RUNDE ENDE MESSEN ===
     if (zustand === 10 && letzteRundeGestartet) {
-      letzterEnde = Date.now();
+      letzterEnde = performance.now();
       let differenz = letzterEnde - letzterStart;
       reaktionszeitProFarbeSec = differenz / 10 / 1000;
       letzteRundeGestartet = false;
@@ -423,7 +423,7 @@ function handleGameInput() {
     const farben = ["blue", "red", "green", "yellow", "#FF10F0", "#FF8000", "#8B00FF", "#8B4513", "grey", "white"];
     karte.style.backgroundColor = farben[zustand - 1];
     input.value = "";
-    let jetzt = Date.now();
+    let jetzt = performance.now();
 let differenz = (jetzt - letzteMessung) / 1000; // in Sekunden
 reaktionszeiten.push(differenz);  // Speichern
 letzteMessung = jetzt;
@@ -432,7 +432,7 @@ letzteMessung = jetzt;
     feedbackfalse.classList.add("sichtbar");
     setTimeout(() => feedbackfalse.classList.remove("sichtbar"), 1500);
     input.value = "";
-    const jetzt = Date.now();
+    const jetzt = performance.now();
     console.log("falsch");
 if (letzteReaktionszeit !== 0) {
   let differenz = (jetzt - letzteReaktionszeit) / 1000; // Sekunden
@@ -555,6 +555,9 @@ starteCountdown(() => {
     ersterClickGetan = true;
     spielGestartet = true;
     zustand = 1;
+    reaktionszeiten = [];
+    letzteMessung = performance.now();
+    letzteReaktionszeit = letzteMessung;
     
 
     if (!timerGestartet) {
@@ -785,18 +788,6 @@ document.addEventListener("keydown", function(event) {
     event.key === "Enter" &&
     spielGestartet &&
     ersterClickGetan &&
-    document.getElementById("startbildschirm").style.display === "none"
-  ) {
-    handleGameInput();
-    input.value = "";
-  }
-});
-
-document.addEventListener("keydown", function(event) {
-  if (
-    event.key === "Enter" &&
-    spielGestartet &&
-    ersterClickGetan &&
     document.getElementById("input") === document.activeElement
   ) {
     handleGameInput();
@@ -826,9 +817,9 @@ document.addEventListener("keydown", function(event) {
 });
 
 function starteTimer() {
-  startTime = Date.now();
+  startTime = performance.now();
   const interval = setInterval(() => {
-    const elapsed = Date.now() - startTime;
+    const elapsed = performance.now() - startTime;
     const hours = Math.floor(elapsed / 3600000);
     const minutes = Math.floor((elapsed % 3600000) / 60000);
     const seconds = Math.floor((elapsed % 60000) / 1000);
