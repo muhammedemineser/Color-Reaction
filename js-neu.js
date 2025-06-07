@@ -26,8 +26,14 @@ let counted = false;
 let countedNum = false;
 
 const bingBaseVolume = 0.2;
-const bingMaxVolume = 1; 
+const bingMaxVolume = 1;
 const wuerfelAnimContainer = document.getElementById("wuerfelAnimation");
+
+function bereinigeReaktionsDaten(daten) {
+  return daten.filter(
+    wert => typeof wert === "number" && isFinite(wert) && wert > 0 && wert <= 10
+  );
+}
 
 const animationInstance = lottie.loadAnimation({
   container: wuerfelAnimContainer,
@@ -226,8 +232,11 @@ async function ladeAlleScores() {
 function datenSpeichern() {
   if (reaktionszeiten.length === 0) return Promise.resolve();
 
-  const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);
-  const durchschnitt = bereinigteDaten.reduce((a, b) => a + b, 0) / bereinigteDaten.length;
+  const bereinigteDaten = bereinigeReaktionsDaten(reaktionszeiten.slice(1));
+  if (bereinigteDaten.length === 0) return Promise.resolve();
+
+  const durchschnitt =
+    bereinigteDaten.reduce((a, b) => a + b, 0) / bereinigteDaten.length;
   const besteReaktion = Math.min(...bereinigteDaten);
 
   return fetch("https://683dbe19199a0039e9e6b6d6.mockapi.io/scores", {
@@ -434,11 +443,10 @@ letzteMessung = jetzt;
     input.value = "";
     const jetzt = performance.now();
     console.log("falsch");
-if (letzteReaktionszeit !== 0) {
-  let differenz = (jetzt - letzteReaktionszeit) / 1000; // Sekunden
-  reaktionszeiten.push(differenz);
-}
-letzteReaktionszeit = jetzt;
+    let differenz = (jetzt - letzteMessung) / 1000;
+    if (differenz > 0) reaktionszeiten.push(differenz);
+    letzteMessung = jetzt;
+    letzteReaktionszeit = jetzt;
   }
 }
 
@@ -691,7 +699,8 @@ datenSpeichern()
         sound.play();
 
         if (item.id === "reaktionsChart") {
-          const bereinigteDaten = reaktionszeiten.slice(1).filter(wert => wert <= 10);
+          const bereinigteDaten = bereinigeReaktionsDaten(reaktionszeiten.slice(1));
+          if (bereinigteDaten.length === 0) return;
           item.style.display = "block";
 
           const ctx = item.getContext("2d");
@@ -709,7 +718,7 @@ datenSpeichern()
             datasets: [dataset]
           };
 
-          const maxY = Math.max(...bereinigteDaten) * 1.1;
+          const maxY = Math.max(...bereinigteDaten) * 1.1 || 1;
 
           const chartOptions = {
             responsive: true,
