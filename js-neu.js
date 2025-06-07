@@ -1,6 +1,5 @@
 let reaktionszeiten = [];
-let bereinigteDaten= [];
-let letzteReaktionszeit = 0;
+let bereinigteDaten = [];
 let letzteMessung = performance.now();
 let anzahl;
 let startTime;
@@ -423,23 +422,16 @@ function handleGameInput() {
     const farben = ["blue", "red", "green", "yellow", "#FF10F0", "#FF8000", "#8B00FF", "#8B4513", "grey", "white"];
     karte.style.backgroundColor = farben[zustand - 1];
     input.value = "";
-    let jetzt = performance.now();
-let differenz = (jetzt - letzteMessung) / 1000; // in Sekunden
-reaktionszeiten.push(differenz);  // Speichern
-letzteMessung = jetzt;
   } else {
     playFixedSound(soundWrong);
     feedbackfalse.classList.add("sichtbar");
     setTimeout(() => feedbackfalse.classList.remove("sichtbar"), 1500);
     input.value = "";
-    const jetzt = performance.now();
-    console.log("falsch");
-if (letzteReaktionszeit !== 0) {
-  let differenz = (jetzt - letzteReaktionszeit) / 1000; // Sekunden
-  reaktionszeiten.push(differenz);
-}
-letzteReaktionszeit = jetzt;
   }
+  const jetzt = performance.now();
+  const differenz = (jetzt - letzteMessung) / 1000;
+  reaktionszeiten.push(differenz);
+  letzteMessung = jetzt;
 }
 
 let spielStartBereit = false;
@@ -557,7 +549,6 @@ starteCountdown(() => {
     zustand = 1;
     reaktionszeiten = [];
     letzteMessung = performance.now();
-    letzteReaktionszeit = letzteMessung;
     
 
     if (!timerGestartet) {
