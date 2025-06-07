@@ -254,7 +254,7 @@ display: none;
   border-radius: 5px;
   height: 30px;
   width: 200px;
-  font-family: 'Sergio-UI', sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   font-size: 14px;
   padding: 5px;
   transition: 0.3s ease;
@@ -276,7 +276,7 @@ display: none;
   width: 90px;
   border-radius: 20px;
   padding: 15px;
-  font-family: 'Sergio-UI', sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   font-weight: bold;
   font-size: 13px;
   display: flex;
@@ -376,7 +376,7 @@ transition: 0.3s ease;
   z-index: 10;
   /* dein bisheriges Styling */
   display: block;
-  font-family: 'Sergio-UI', sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   border-radius: 30px;
   width: 150px;
   margin: 15% auto 0;
@@ -542,20 +542,6 @@ transition: 0.3s ease;
   }
 }
 
-#placemaker {
-  display: block;
-}
-
-#placemaker.sichtbar {
-  bottom: 100%;
-  left: 50%;
-  right:50%;
-  transform: translate(-50%, -50%);
-  position: relative;
-  height: 2vh;
-  width: 20vh;
-  background-color: transparent;
-}
 
 #platzmacher.sichtbar {
   bottom: 100%;

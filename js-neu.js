@@ -336,7 +336,6 @@ startCards.forEach(card => {
     card.classList.remove('hovering');
     if (!fixedOpen) {
       card.classList.remove('open');
-    if (!fixedOpen) {
       card.classList.remove('hovering');
     }
   });
