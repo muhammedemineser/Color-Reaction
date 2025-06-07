@@ -266,7 +266,7 @@ display: none;
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-  margin-top: 40px;
+  margin-top: 50px;
   color: rgb(0, 225, 255);
   animation: pulse 1.2s infinite alternate;
 }
@@ -910,7 +910,7 @@ transition: 0.3s ease;
   flex-direction: column;
   gap: 30px;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 50px;
 }
 
 .aspect-card {
