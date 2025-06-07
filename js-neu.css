@@ -145,10 +145,10 @@
     display: none;
 }
 .intro-highlight {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
-  color: rgb(0, 225, 255);
-  margin-top: 20px;
+  color: rgb(100, 240, 255);
+  margin-top: 15px;
   margin-bottom: 10px;
     list-style-position: inside;
   text-align: center;
@@ -160,9 +160,9 @@
     display: none;
 }
 .intro-text {
-  font-size: 18px;
-  line-height: 1.6;
-  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 20px;
     list-style-position: inside;
   text-align: center;
   padding: 0;
@@ -173,8 +173,8 @@
 display: none;
 }
 .intro-subtle, #EingabeInfosTitle {
-  font-size: 16px;
-  color: rgb(0, 225, 255);
+  font-size: 14px;
+  color: rgb(100, 240, 255);
   margin-bottom: 20px;
     list-style-position: inside;
   text-align: center;
@@ -868,4 +868,73 @@ transition: 0.3s ease;
 
 .rang-highlight {
   animation: pulse-card 1s ease-in-out infinite;
+}
+
+/* === Startmenü Karten === */
+#startCards {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.aspect-card {
+  width: 90%;
+  max-width: 600px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid rgb(0, 225, 255);
+  border-radius: 15px;
+  overflow: hidden;
+  color: white;
+  cursor: pointer;
+  transition: max-height 0.6s ease;
+  max-height: 50px;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.aspect-card.hovering,
+.aspect-card.open {
+  max-height: 1000px;
+}
+
+.aspect-header {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+  color: rgb(0, 225, 255);
+}
+
+.aspect-content {
+  display: none;
+  background: white;
+  color: black;
+  border: 4px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  line-height: 1.8;
+}
+
+.aspect-card.hovering .aspect-content,
+.aspect-card.open .aspect-content {
+  display: block;
+  animation: scroll-open 0.5s ease;
+}
+
+#startCards .intro-list,
+#startCards .intro-info ul,
+#startCards .intro-text,
+#startCards .intro-subtle {
+  color: black;
+  line-height: 1.8;
+}
+#startCards li {
+  margin-bottom: 8px;
+}
+
+@keyframes scroll-open {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
