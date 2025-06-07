@@ -314,6 +314,35 @@ const timeOver = document.getElementById("timeOver");
 const timeOverContainer=document.getElementById("timeOverContainer");
 
 // Karten im Startmenü
+document.addEventListener('DOMContentLoaded', () => {
+  const startCards = document.querySelectorAll('.aspect-card');
+  startCards.forEach(card => {
+    const header = card.querySelector('.aspect-header');
+    let fixedOpen = false;
+
+    header.addEventListener('click', () => {
+      fixedOpen = !fixedOpen;
+      card.classList.toggle('open', fixedOpen);
+      card.classList.add('clicked');
+      setTimeout(() => {
+        card.classList.remove('clicked');
+      }, 200);
+    });
+
+    card.addEventListener('mouseenter', () => {
+      card.classList.add('hovering');
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.classList.remove('hovering');
+      if (!fixedOpen) {
+        card.classList.remove('open');
+      }
+    });
+  });
+});
+
+// Karten im Startmenü
 const startCards = document.querySelectorAll('.aspect-card');
 startCards.forEach(card => {
   const header = card.querySelector('.aspect-header');
