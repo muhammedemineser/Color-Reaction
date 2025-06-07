@@ -112,7 +112,7 @@
     display: none;
 }
 .intro-wrapper {
-  color: white;
+  color: #00e1ff;
   font-family: 'Segoe UI', sans-serif;
   max-width: 90%;
   margin: 0 auto;
@@ -228,7 +228,7 @@ display: none;
   text-align: center;
   padding: 0;
   margin: 0 auto;
-  color: white;
+  color: #00e1ff;
 }
 
 
@@ -1005,7 +1005,7 @@ transition: 0.3s ease;
   border: 2px solid rgb(0, 225, 255);
   border-radius: 15px;
   overflow: hidden;
-  color: white;
+  color: #00e1ff;
   cursor: pointer;
   transition: max-height 0.6s ease, box-shadow 0.3s ease;
   max-height: 60px;
@@ -1040,7 +1040,7 @@ transition: 0.3s ease;
 }
 
 .aspect-content {
-  background: white;
+  background: #00e1ff;
   color: black;
   border: 4px solid black;
   border-radius: 10px;
