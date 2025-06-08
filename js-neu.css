@@ -670,7 +670,7 @@ transition: 0.3s ease;
   letter-spacing: 12px;
   font-size: clamp(32px, 8vw, 60px);
   text-shadow: #00e1ff 0px 0px 15px;
-
+  text-align: center;
 }
 
 #cursor {
