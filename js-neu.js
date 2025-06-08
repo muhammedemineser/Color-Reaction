@@ -202,10 +202,10 @@ document.getElementById("startWeiterBtn").addEventListener("click", () => {
   })
     .then(res => res.json())
     .then(data => {
-      userId = data.id;
-      soundSignup.play();
       zeigeUebergangsAnimation(() => {
       });
+      userId = data.id;
+      soundSignup.play();
       document.getElementById("startbildschirm").style.display = "none";
       document.getElementById("mainContent").style.display = "block";
       startErfolgt = true;
