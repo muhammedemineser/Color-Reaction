@@ -57,22 +57,29 @@ function zeigeLetsTest() {
   }, 4000);
 }
 
-function zeigeUebergangsAnimation(callback) {
+const zeigeUebergangsAnimation = (callback) => {
   const overlayTrans = document.getElementById("transitionOverlay");
   if (!overlayTrans) {
     if (callback) callback();
     return;
   }
+
   overlayTrans.style.display = "flex";
-  // Trigger CSS animation
-  requestAnimationFrame(() => overlayTrans.classList.add("active"));
+
+  // Trigger CSS animation im nächsten Frame
+  requestAnimationFrame(() => {
+    overlayTrans.classList.add("active");
+  });
+
   const dauer = 2000; // Gesamtdauer inkl. Verzögerungen
+
   setTimeout(() => {
     overlayTrans.classList.remove("active");
     overlayTrans.style.display = "none";
     if (callback) callback();
   }, dauer);
-}
+};
+
 
 function passeAuswertungBoxAn() {
   const box = document.querySelector(".auswertung-box");
@@ -198,10 +205,10 @@ document.getElementById("startWeiterBtn").addEventListener("click", () => {
       userId = data.id;
       soundSignup.play();
       zeigeUebergangsAnimation(() => {
-        document.getElementById("startbildschirm").style.display = "none";
-        document.getElementById("mainContent").style.display = "block";
-        startErfolgt = true;
       });
+      document.getElementById("startbildschirm").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+      startErfolgt = true;
     });
 });
 
