@@ -941,26 +941,29 @@ transition: 0.3s ease;
 .aspect-card {
   width: 90%;
   max-width: 600px;
-  background: rgba(0, 0, 0, 0.6);
-  border: 2px solid rgb(0, 225, 255);
+  background: #111;
+  border: 2px solid #00e1ff;
   border-radius: 15px;
   overflow: hidden;
-  color: white;
+  color: #00e1ff;
   cursor: pointer;
-  transition: max-height 0.6s ease, box-shadow 0.3s ease;
+  transition: max-height 0.6s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
   max-height: 60px;
   padding: 15px;
   box-sizing: border-box;
-  box-shadow: 0 0 10px rgb(0, 225, 255);
+  box-shadow: 0 0 15px #00e1ff;
 }
 
 .aspect-card.hovering,
 .aspect-card.open {
   max-height: 1000px;
+  background-color: #00e1ff;
+  color: #000;
+  box-shadow: 0 0 25px #00e1ff, 0 0 50px #00e1ff;
 }
 
 .aspect-card.hovering {
-  box-shadow: 0 0 20px rgb(0, 225, 255);
+  box-shadow: 0 0 25px #00e1ff, 0 0 50px #00e1ff;
 }
 
 .aspect-card.clicked {
@@ -973,6 +976,11 @@ transition: 0.3s ease;
   text-align: center;
   margin-bottom: 15px;
   color: rgb(0, 225, 255);
+}
+
+.aspect-card.hovering .aspect-header,
+.aspect-card.open .aspect-header {
+  color: #000;
 }
 
 .aspect-content {
@@ -996,6 +1004,9 @@ transition: 0.3s ease;
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+  background: #000;
+  color: #fff;
+  border-color: #fff;
 }
 
 #startCards .intro-list,
@@ -1100,17 +1111,17 @@ transition: 0.3s ease;
 .aspect-card {
   width: 90%;
   max-width: 600px;
-  background: rgba(0, 0, 0, 0.6);
-  border: 2px solid rgb(0, 225, 255);
+  background: #111;
+  border: 2px solid #00e1ff;
   border-radius: 15px;
   overflow: hidden;
   color: #00e1ff;
   cursor: pointer;
-  transition: max-height 0.6s ease, box-shadow 0.3s ease;
+  transition: max-height 0.6s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
   max-height: 60px;
   padding: 15px;
   box-sizing: border-box;
-  box-shadow: 0 0 10px rgb(0, 225, 255);
+  box-shadow: 0 0 15px #00e1ff;
   transition: max-height 0.6s ease;
   max-height: 50px;
   padding: 10px;
@@ -1119,10 +1130,13 @@ transition: 0.3s ease;
 .aspect-card.hovering,
 .aspect-card.open {
   max-height: 1000px;
+  background-color: #00e1ff;
+  color: #000;
+  box-shadow: 0 0 25px #00e1ff, 0 0 50px #00e1ff;
 }
 
 .aspect-card.hovering {
-  box-shadow: 0 0 20px rgb(0, 225, 255);
+  box-shadow: 0 0 25px #00e1ff, 0 0 50px #00e1ff;
 }
 
 .aspect-card.clicked {
@@ -1136,6 +1150,11 @@ transition: 0.3s ease;
   margin-bottom: 15px;
   margin-bottom: 10px;
   color: rgb(0, 225, 255);
+}
+
+.aspect-card.hovering .aspect-header,
+.aspect-card.open .aspect-header {
+  color: #000;
 }
 
 .aspect-content {
@@ -1156,6 +1175,9 @@ transition: 0.3s ease;
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+  background: #000;
+  color: #fff;
+  border-color: #fff;
 }
 
 #startCards .intro-list,
