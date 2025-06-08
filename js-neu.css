@@ -1030,6 +1030,14 @@ transition: 0.3s ease;
   align-items: center;
   z-index: 10000;
   overflow: hidden;
+  backdrop-filter: blur(0px);
+  transition: backdrop-filter 0.6s ease, opacity 0.6s ease;
+  opacity: 1;
+}
+
+#transitionOverlay.fadeout {
+  backdrop-filter: blur(20px);
+  opacity: 0;
 }
 
 #transitionOverlay .ring {
@@ -1075,14 +1083,6 @@ transition: 0.3s ease;
     transform: scale(8);
     opacity: 1;
   }
-  100% {
-    transform: scale(0);
-    opacity: 0;
-  }
-}
-
-.rang-highlight {
-  animation: pulse-card 1s ease-in-out infinite;
 }
 
 /* === Startmenü Karten === */
