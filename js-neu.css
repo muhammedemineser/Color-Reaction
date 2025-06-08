@@ -668,7 +668,7 @@ transition: 0.3s ease;
   font-family: "StreamerSlant", sans-serif;
   color: rgb(0, 225, 255);
   letter-spacing: 12px;
-  font-size: 60px;
+  font-size: clamp(32px, 8vw, 60px);
   text-shadow: #00e1ff 0px 0px 15px;
 
 }
