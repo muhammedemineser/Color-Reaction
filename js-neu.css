@@ -667,7 +667,7 @@ transition: 0.3s ease;
 #welcome {
   font-family: "StreamerSlant", sans-serif;
   color: rgb(0, 225, 255);
-  letter-spacing: 5px;
+  letter-spacing: 12px;
   font-size: 60px;
 }
 
