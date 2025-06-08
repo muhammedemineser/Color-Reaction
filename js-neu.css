@@ -1,4 +1,9 @@
- /* === Allgemeines Layout === */
+/* === Allgemeines Layout === */
+
+@font-face {
+  font-family: "StreamerSlant";
+  src: url("fonts/StreamerSlantDemo-WyrX4.otf") format("opentype");
+}
 .body, html {
   transition: 0.5s ease;
   background-color: #2a2a2a;
@@ -657,6 +662,21 @@ transition: 0.3s ease;
   border: none;
   border-radius: 20px;
   width: 150px;
+}
+
+#welcome {
+  font-family: "StreamerSlant", sans-serif;
+  color: rgb(0, 225, 255);
+  letter-spacing: 5px;
+  font-size: 60px;
+}
+
+#cursor {
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to { visibility: hidden; }
 }
 
 .overlay {
