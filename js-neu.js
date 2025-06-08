@@ -88,6 +88,14 @@ let spielerIP = "Unbekannt";
 let userId = ""; // NEU
 let startErfolgt = false;
 
+const typedNameSpan = document.getElementById("typedName");
+const nameInputField = document.getElementById("spielerName");
+if (typedNameSpan && nameInputField) {
+  nameInputField.addEventListener("input", () => {
+    typedNameSpan.textContent = nameInputField.value;
+  });
+}
+
 /*// IP-Adresse abrufen
 fetch("https://api.ipify.org?format=json")
   .then(res => res.json())
