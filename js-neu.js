@@ -66,18 +66,24 @@ const zeigeUebergangsAnimation = (callback) => {
 
   overlayTrans.style.display = "flex";
 
-  // Trigger CSS animation im nächsten Frame
   requestAnimationFrame(() => {
     overlayTrans.classList.add("active");
   });
 
-  const dauer = 2000; // Gesamtdauer inkl. Verzögerungen
+  // Dauer der Ringanimation (z. B. 1800ms)
+  const ringDauer = 1000;
 
   setTimeout(() => {
-    overlayTrans.classList.remove("active");
-    overlayTrans.style.display = "none";
-    if (callback) callback();
-  }, dauer);
+    // Blur-Übergang einleiten
+    overlayTrans.classList.add("fadeout");
+
+    // Nach dem Blur-Übergang komplett ausblenden
+    setTimeout(() => {
+      overlayTrans.classList.remove("active", "fadeout");
+      overlayTrans.style.display = "none";
+      if (callback) callback();
+    }, 600); // Übergangszeit aus CSS (backdrop-filter & opacity)
+  }, ringDauer);
 };
 
 
