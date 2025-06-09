@@ -362,6 +362,7 @@ const eingabeInfos = document.querySelectorAll(".EingabeInfosContainer");
 const overlay = document.getElementById("letsTestOverlay");
 const timeOver = document.getElementById("timeOver");
 const timeOverContainer=document.getElementById("timeOverContainer");
+const nextRoundBtn = document.getElementById("nextRoundBtn");
 
 // Karten im Startmenü
 document.addEventListener('DOMContentLoaded', () => {
@@ -822,6 +823,11 @@ datenSpeichern()
   document.querySelector(".auswertung").style.height = "auto";
   window.addEventListener("resize", passeAuswertungBoxAn);
   passeAuswertungBoxAn();
+
+  const totalDelay = items.length * 900 + 1200;
+  setTimeout(() => {
+    nextRoundBtn.style.display = "block";
+  }, totalDelay);
 });
 
 
@@ -887,3 +893,44 @@ function starteTimer() {
     }
   }, 10);
 }
+
+nextRoundBtn.addEventListener("click", () => {
+  const box = document.querySelector(".auswertung-box");
+  box.classList.remove("sichtbar");
+  document.querySelectorAll(".auswertung-item").forEach(item => {
+    item.classList.remove("sichtbar", "animate");
+  });
+  document.getElementById("ranglisteContainer").innerHTML = "";
+  document.getElementById("box-reaktion-beste").textContent = "";
+  document.getElementById("box-einschaetzung").textContent = "";
+  document.getElementById("box-punkte").textContent = "";
+  document.getElementById("box-reaktion-unbekannt").textContent = "";
+  document.getElementById("box-reaktion-bekannt").textContent = "";
+  document.getElementById("reaktionsChart").style.display = "none";
+  nextRoundBtn.style.display = "none";
+
+  [introWrapper, introTitle, introSubtle, introList, introInfo, introCall].forEach(el => el.classList.remove("unsichtbar"));
+  introHighlights.forEach(el => el.classList.remove("unsichtbar"));
+  introTexts.forEach(el => el.classList.remove("unsichtbar"));
+  eingabeInfos.forEach(el => el.classList.add("sichtbar"));
+
+  document.getElementById("wuerfelAnimation").style.display = "flex";
+  document.getElementById("platzmacher").classList.remove("sichtbar");
+  button.style.display = "block";
+
+  spielGestartet = false;
+  ersterClickGetan = false;
+  timerGestartet = false;
+  countedNum = false;
+  counted = false;
+  zustand = 0;
+  korrektAnzahl = 0;
+  reaktionszeiten = [];
+  anzahl = null;
+  spielStartBereit = false;
+
+  sekTens.textContent = 0;
+  sek.textContent = 0;
+  msHundreds.textContent = 0;
+  msTens.textContent = 0;
+});
