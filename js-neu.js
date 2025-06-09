@@ -120,10 +120,26 @@ let startErfolgt = false;
 
 const typedNameSpan = document.getElementById("typedName");
 const nameInputField = document.getElementById("spielerName");
+const loginContainer = document.querySelector(".login-container");
+
+function updateLoginContainerBefore() {
+  if (!loginContainer || !nameInputField) return;
+  const maxChars = 15;
+  const minWidth = 100; // in px
+  const length = nameInputField.value.length;
+  const containerWidth = loginContainer.clientWidth;
+  const ratio = Math.min(1, length / maxChars);
+  const width = minWidth + ratio * (containerWidth - minWidth);
+  loginContainer.style.setProperty("--before-width", `${width}px`);
+}
+
 if (typedNameSpan && nameInputField) {
   nameInputField.addEventListener("input", () => {
     typedNameSpan.textContent = nameInputField.value;
+    updateLoginContainerBefore();
   });
+  window.addEventListener("resize", updateLoginContainerBefore);
+  updateLoginContainerBefore();
 }
 
 /*// IP-Adresse abrufen
