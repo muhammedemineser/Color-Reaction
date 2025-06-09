@@ -109,6 +109,29 @@ function passeAuswertungBoxAn() {
   }
 }
 
+function positionDiceAndButton() {
+  const box = document.querySelector(".auswertung-box.sichtbar");
+  if (!box) return;
+  const wuerfel = document.getElementById("wuerfelAnimation");
+  const btn = document.getElementById("nextRoundBtn");
+  if (!wuerfel || !btn) return;
+
+  const rect = box.getBoundingClientRect();
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const diceTop = rect.bottom + 10 + scrollTop;
+
+  wuerfel.style.position = "absolute";
+  wuerfel.style.left = "50%";
+  wuerfel.style.transform = "translateX(-50%)";
+  wuerfel.style.top = `${diceTop}px`;
+
+  const btnTop = diceTop + wuerfel.offsetHeight + 10;
+  btn.style.position = "absolute";
+  btn.style.left = "50%";
+  btn.style.transform = "translateX(-50%)";
+  btn.style.top = `${btnTop}px`;
+}
+
 
 let spielerName = "";
 let spielerAlter = 0;
@@ -848,7 +871,9 @@ datenSpeichern()
   const totalDelay = items.length * 900 + 900;
   setTimeout(() => {
     nextRoundBtn.style.display = "block";
+    positionDiceAndButton();
   }, totalDelay);
+  window.addEventListener("resize", positionDiceAndButton);
 });
 
 
@@ -941,9 +966,17 @@ nextRoundBtn.addEventListener("click", () => {
   wuerfel.classList.remove("result");
   wuerfel.style.position = "";
   wuerfel.style.top = "";
+  wuerfel.style.left = "";
+  wuerfel.style.transform = "";
   wuerfel.style.marginTop = "";
+  nextRoundBtn.style.position = "";
+  nextRoundBtn.style.top = "";
+  nextRoundBtn.style.left = "";
+  nextRoundBtn.style.transform = "";
   document.getElementById("platzmacher").classList.remove("sichtbar");
   button.style.display = "block";
+
+  window.removeEventListener("resize", positionDiceAndButton);
 
   spielGestartet = false;
   ersterClickGetan = false;
