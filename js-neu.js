@@ -662,6 +662,7 @@ starteCountdown(() => {
     }
 
     zeigeTimerOver();
+    input.value = "";
 
     buttonSec.classList.remove("sichtbar");
     anzeigeWrapper.classList.remove("sichtbar");
