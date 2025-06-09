@@ -108,9 +108,12 @@
 }
 
 #nextRoundBtn {
-  position: relative;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
   display: none;
-  margin: 40px auto;
   padding: 15px 30px;
   width: 180px;
   height: 55px;
@@ -501,6 +504,11 @@ transition: 0.3s ease;
   font-weight: bold;
   transition: 0.3s ease;
   margin: 10px;
+}
+
+.auswertung {
+  position: relative;
+  min-height: 100vh;
 }
 
 .auswertung-box, .auswertung-item, .EingabeInfosContainer {
