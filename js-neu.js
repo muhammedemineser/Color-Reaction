@@ -58,6 +58,9 @@ function zeigeLetsTest() {
   }, 4000);
 }
 
+
+let zeigeUebergangsAnimDone = false
+
 const zeigeUebergangsAnimation = (callback) => {
   const overlayTrans = document.getElementById("transitionOverlay");
   if (!overlayTrans) {
@@ -225,10 +228,13 @@ document.getElementById("startWeiterBtn").addEventListener("click", () => {
   })
     .then(res => res.json())
     .then(data => {
+      if (zeigeUebergangsAnimDone===false) {
       zeigeUebergangsAnimation(() => {
       });
-      userId = data.id;
       soundSignup.play();
+      zeigeUebergangsAnimDone=true; 
+      }
+      userId = data.id;
       document.getElementById("startbildschirm").style.display = "none";
       document.getElementById("mainContent").style.display = "block";
       document.getElementById("shaderCanvas").style.display = "none";
