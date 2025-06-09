@@ -129,7 +129,7 @@ function updateLoginContainerBefore() {
   const length = nameInputField.value.length;
   const containerWidth = loginContainer.clientWidth;
   const ratio = Math.min(1, length / maxChars);
-  const width = minWidth + ratio * (containerWidth - minWidth);
+  const width = minWidth + ratio * 3 * (containerWidth - minWidth);
   loginContainer.style.setProperty("--before-width", `${width}px`);
 }
 
@@ -661,6 +661,9 @@ starteCountdown(() => {
     document.getElementById("wuerfelAnimation").style.display = "flex";
     document.getElementById("wuerfelAnimation").style.position = "relative";
     document.getElementById("wuerfelAnimation").style.top = "50vh";
+    document.getElementById("wuerfelAnimation").style.marginTop = "600px";
+
+
     document.getElementById("platzmacher").classList.add("sichtbar");
 document.getElementById("box-einschaetzung").textContent =
   "Selbsteinschätzung: " + anzahl;
@@ -840,7 +843,7 @@ datenSpeichern()
   window.addEventListener("resize", passeAuswertungBoxAn);
   passeAuswertungBoxAn();
 
-  const totalDelay = items.length * 900 + 1200;
+  const totalDelay = items.length * 900 + 900;
   setTimeout(() => {
     nextRoundBtn.style.display = "block";
   }, totalDelay);
@@ -929,6 +932,8 @@ nextRoundBtn.addEventListener("click", () => {
   introHighlights.forEach(el => el.classList.remove("unsichtbar"));
   introTexts.forEach(el => el.classList.remove("unsichtbar"));
   eingabeInfos.forEach(el => el.classList.add("sichtbar"));
+  window.scrollTo({ top: 600, behavior: "smooth" });
+
 
   document.getElementById("wuerfelAnimation").style.display = "flex";
   document.getElementById("platzmacher").classList.remove("sichtbar");
