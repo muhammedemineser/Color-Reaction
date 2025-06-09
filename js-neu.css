@@ -125,7 +125,7 @@
   cursor: pointer;
   text-align: center;
   transition: all 0.3s ease;
-  margin-top: 650px;
+  margin-top: 30px;
 }
 
 #nextRoundBtn:hover {
@@ -817,6 +817,11 @@ transition: 0.3s ease;
 .login-container * {
   z-index: 2;
   position: relative;
+  transition: transform 0.2s ease;
+}
+
+.login-container > *:hover {
+  transform: translateY(-5px);
 }
 
 @keyframes rotBGimg {
@@ -866,7 +871,11 @@ transition: 0.3s ease;
   height: auto;
   display: flex;
   justify-content: center;
-  margin: 0 auto;
+  margin: 150px auto 0;
+}
+
+#wuerfelAnimation.result {
+  margin-top: 30px;
 }
 
 #wuerfelAnimation.unsichtbar {
@@ -1298,5 +1307,15 @@ transition: 0.3s ease;
   height: 100vh;
   z-index: -1;
   display: block;
+}
+
+
+@media (max-width: 600px) {
+  #wuerfelAnimation.result {
+    margin-top: 20px;
+  }
+  #nextRoundBtn {
+    margin-top: 20px;
+  }
 }
 

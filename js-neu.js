@@ -658,10 +658,12 @@ starteCountdown(() => {
 
     buttonSec.classList.remove("sichtbar");
     anzeigeWrapper.classList.remove("sichtbar");
-    document.getElementById("wuerfelAnimation").style.display = "flex";
-    document.getElementById("wuerfelAnimation").style.position = "relative";
-    document.getElementById("wuerfelAnimation").style.top = "50vh";
-    document.getElementById("wuerfelAnimation").style.marginTop = "600px";
+    const wuerfel = document.getElementById("wuerfelAnimation");
+    wuerfel.style.display = "flex";
+    wuerfel.classList.add("result");
+    wuerfel.style.position = "";
+    wuerfel.style.top = "";
+    wuerfel.style.marginTop = "";
 
 
     document.getElementById("platzmacher").classList.add("sichtbar");
@@ -932,10 +934,14 @@ nextRoundBtn.addEventListener("click", () => {
   introHighlights.forEach(el => el.classList.remove("unsichtbar"));
   introTexts.forEach(el => el.classList.remove("unsichtbar"));
   eingabeInfos.forEach(el => el.classList.add("sichtbar"));
-  window.scrollTo({ top: 600, behavior: "smooth" });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
-
-  document.getElementById("wuerfelAnimation").style.display = "flex";
+  const wuerfel = document.getElementById("wuerfelAnimation");
+  wuerfel.style.display = "flex";
+  wuerfel.classList.remove("result");
+  wuerfel.style.position = "";
+  wuerfel.style.top = "";
+  wuerfel.style.marginTop = "";
   document.getElementById("platzmacher").classList.remove("sichtbar");
   button.style.display = "block";
 
