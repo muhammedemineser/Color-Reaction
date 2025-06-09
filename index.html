@@ -11,6 +11,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.9.6/lottie.min.js"></script>
 </head>
 <body class="body" style="position: relative;">
+<canvas id="shaderCanvas"></canvas>
    
 <div id="letsTestOverlay" class="overlay" style="display: none;">
   <div class="overlay-content animate-popup">
@@ -188,6 +189,27 @@
   </div>
 
 </div>
+<script type="x-shader/x-fragment" id="fragShader">
+  precision mediump float;
+  uniform float iTime;
+  uniform vec2 iResolution;
+  void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+    vec2 uv = fragCoord.xy / iResolution.xy;
+    uv = uv * 2.0 - 1.0;
+    uv.x *= iResolution.x / iResolution.y;
+    float t = iTime * 0.2;
+    float r = length(uv);
+    float a = atan(uv.y, uv.x);
+    float f = cos(10.0 * (r + t)) * 0.5 + 0.5;
+    float glow = 0.005 / abs(f - 0.5);
+    vec3 col = mix(vec3(0.165), vec3(0.0, 1.0, 1.0), clamp(glow, 0.0, 1.0));
+    fragColor = vec4(col, 1.0);
+  }
+  void main() {
+    mainImage(gl_FragColor, gl_FragCoord.xy);
+  }
+</script>
+<script src="background-animation.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="js-neu.js"></script>
 </body>

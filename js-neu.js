@@ -214,6 +214,7 @@ document.getElementById("startWeiterBtn").addEventListener("click", () => {
       soundSignup.play();
       document.getElementById("startbildschirm").style.display = "none";
       document.getElementById("mainContent").style.display = "block";
+      document.getElementById("shaderCanvas").style.display = "none";
       startErfolgt = true;
     });
 });
