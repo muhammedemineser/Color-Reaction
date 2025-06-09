@@ -107,6 +107,32 @@
   box-shadow: 0 0 25px #00e1ff, 0 0 50px #00e1ff;
 }
 
+#nextRoundBtn {
+  position: relative;
+  display: none;
+  margin: 40px auto;
+  padding: 15px 30px;
+  width: 180px;
+  height: 55px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  color: #00e1ff;
+  background-color: #111;
+  border: 2px solid #00e1ff;
+  border-radius: 25px;
+  box-shadow: 0 0 15px #00e1ff;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+#nextRoundBtn:hover {
+  background-color: #00e1ff;
+  color: #000;
+  box-shadow: 0 0 25px #00e1ff, 0 0 50px #00e1ff;
+}
+
 #platzhalterZwei {
   width: 100vw;
   height: 1vh;
