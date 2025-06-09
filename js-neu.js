@@ -963,4 +963,5 @@ nextRoundBtn.addEventListener("click", () => {
   sek.textContent = 0;
   msHundreds.textContent = 0;
   msTens.textContent = 0;
+  karte.style.backgroundColor = farben[0];
 });
