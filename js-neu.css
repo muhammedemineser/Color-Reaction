@@ -801,14 +801,15 @@ transition: 0.3s ease;
 .login-container::before {
   content: '';
   position: absolute;
-  width: 100%;
-  height: 130%;
+  width: 140%;
+  height: 140%;
+  top: -20%;
+  left: -20%;
   background-image: linear-gradient(180deg, cyan, white);
   animation: rotBGimg 3s linear infinite;
-  transition: all 0.2s linear;
   z-index: 0;
-  top: -65px;
   border-radius: inherit;
+  will-change: transform;
 }
 
 .login-container::after {
