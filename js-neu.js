@@ -935,6 +935,8 @@ nextRoundBtn.addEventListener("click", () => {
   introTexts.forEach(el => el.classList.remove("unsichtbar"));
   eingabeInfos.forEach(el => el.classList.add("sichtbar"));
   window.scrollTo({ top: 0, behavior: "smooth" });
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
 
   const wuerfel = document.getElementById("wuerfelAnimation");
   wuerfel.style.display = "flex";
