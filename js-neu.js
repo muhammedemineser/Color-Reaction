@@ -1,3 +1,4 @@
+
 let reaktionszeiten = [];
 let bereinigteDaten= [];
 let letzteReaktionszeit = 0;
@@ -845,7 +846,7 @@ datenSpeichern()
   window.addEventListener("resize", passeAuswertungBoxAn);
   passeAuswertungBoxAn();
 
-  const totalDelay = items.length * 900 + 900;
+  const totalDelay = items.length * 900;
   setTimeout(() => {
     nextRoundBtn.style.display = "block";
   }, totalDelay);
