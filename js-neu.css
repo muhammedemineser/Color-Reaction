@@ -1208,3 +1208,14 @@ transition: 0.3s ease;
   from { box-shadow: 0 0 30px rgb(0, 225, 255); }
   to   { box-shadow: 0 0 20px rgb(0, 225, 255); }
 }
+
+#shaderCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  display: block;
+}
+
