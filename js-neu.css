@@ -1319,6 +1319,12 @@ transition: 0.3s ease;
 
 
 @media (max-width: 600px) {
+  #wuerfelAnimation,
+  #wuerfelAnimation svg {
+    width: 80vw !important;
+    height: 80vw !important;
+    max-width: none;
+  }
   #wuerfelAnimation.result {
     margin-top: 650px;
   }
