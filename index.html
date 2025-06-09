@@ -26,16 +26,20 @@
 
 <div id="startbildschirm" class="sichtbar">
   <canvas id="shaderCanvas"></canvas>
-  <h1 id="welcome">Hallo <span id="typedName"></span><span id="cursor" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">|</span></h1>
-  <input id="spielerName" type="text" placeholder="Dein Name">
-  <label><input type="checkbox" id="anonym"> Ich möchte anonym bleiben</label>
-  <input id="spielerAlter" type="number" placeholder="Dein Alter" min="1" max="100">
-  <div class="geschlecht-box">
-    <label><input type="radio" name="geschlecht" value="m"> Männlich</label>
-    <label><input type="radio" name="geschlecht" value="w"> Weiblich</label>
+
+  <div class="login-container">
+    <h1 id="welcome">Hallo <span id="typedName"></span><span id="cursor" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">|</span></h1>
+    <input id="spielerName" type="text" placeholder="Dein Name">
+    <label><input type="checkbox" id="anonym"> Ich möchte anonym bleiben</label>
+    <input id="spielerAlter" type="number" placeholder="Dein Alter" min="1" max="100">
+    <div class="geschlecht-box">
+      <label><input type="radio" name="geschlecht" value="m"> Männlich</label>
+      <label><input type="radio" name="geschlecht" value="w"> Weiblich</label>
+    </div>
+    <button id="startWeiterBtn">Sign in</button>
   </div>
-  <button id="startWeiterBtn">Sign in</button>
 </div>
+
   
 <div id="mainContent" style="display: none;">
 <div id="timeOverContainer" style="display: none;"><div id="timeOver" style="display: none;">
