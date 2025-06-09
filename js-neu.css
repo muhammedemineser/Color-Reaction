@@ -866,9 +866,7 @@ transition: 0.3s ease;
 
 
 #wuerfelAnimation {
-  width: 60%;
-  max-width: max-content;
-  height: auto;
+  width: 100%;
   display: flex;
   justify-content: center;
   margin: 150px auto 0;
@@ -884,14 +882,10 @@ transition: 0.3s ease;
 
 #wuerfelAnimation svg {
   filter: drop-shadow(0 0 15px #00e1ff);
-    width: 60%;
-  max-width: max-content;
+  width: 60%;
+  max-width: 450px !important;
   height: auto;
-  display: flex;
-  justify-content: center;
-  margin: 150px auto 0;
-    width: 450px !important;
-  height: 450px !important;
+  display: block;
 }
 
 #gameStart {
@@ -1319,6 +1313,11 @@ transition: 0.3s ease;
 
 
 @media (max-width: 600px) {
+  #wuerfelAnimation svg {
+    width: 80vw !important;
+    height: 80vw !important;
+    max-width: none;
+  }
   #wuerfelAnimation.result {
     margin-top: 650px;
   }
