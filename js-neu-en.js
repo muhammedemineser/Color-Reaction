@@ -124,31 +124,27 @@ let startErfolgt = false;
 
 const typedNameSpan = document.getElementById("typedName");
 const nameInputField = document.getElementById("spielerName");
-const loginContainer = document.querySelector(".login-container");
+const bright = document.getElementById("bright");
 
 function updateLoginContainerBefore() {
-  if (!loginContainer || !nameInputField) return;
-  const maxChars = 15;
-  const minWidth = 100; // in px
-  const length = nameInputField.value.length;
-  const containerWidth = loginContainer.clientWidth;
-  const ratio = Math.min(1, length / maxChars);
-  const baseMultiplier = 1; // width equals container width when ratio = 0
-  const maxWidthMultiplier = 2.375; // maximum width relative to container
-  const targetWidth =
-    containerWidth * (baseMultiplier + ratio * 3000 * (maxWidthMultiplier - baseMultiplier));
-  const width = Math.max(minWidth, targetWidth);
-  loginContainer.style.setProperty("--before-width", `${width}px`);
+  if (!nameInputField || !bright) return;
+
+  const value = nameInputField.value.trim();
+
+  if (value.length > 0) {
+    bright.classList.add("v");
+  } else {
+    bright.classList.remove("v");
+  }
+
+  if (typedNameSpan) {
+    typedNameSpan.textContent = value;
+  }
 }
 
-if (typedNameSpan && nameInputField) {
-  nameInputField.addEventListener("input", () => {
-    typedNameSpan.textContent = nameInputField.value;
-    updateLoginContainerBefore();
-  });
-  window.addEventListener("resize", updateLoginContainerBefore);
-  updateLoginContainerBefore();
-}
+nameInputField?.addEventListener("input", updateLoginContainerBefore);
+window.addEventListener("resize", updateLoginContainerBefore);
+updateLoginContainerBefore();
 
 /*// IP-Adresse abrufen
 fetch("https://api.ipify.org?format=json")
