@@ -812,6 +812,36 @@ transition: 0.3s ease;
   z-index: 1;
   pointer-events: none;
 }
+.language-switch {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 60px;
+  height: 30px;
+  background: #111;
+  border: 2px solid #00e1ff;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.lang-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-size: cover;
+  transition: transform 0.3s;
+  background-image: url("https://flagcdn.com/w40/de.png");
+}
+
+.language-switch.english .lang-circle {
+  transform: translateX(30px);
+  background-image: url("https://flagcdn.com/w40/gb.png");
+}
+
 
 
 .login-container * {
