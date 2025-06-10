@@ -215,7 +215,7 @@ document.getElementById("startWeiterBtn").addEventListener("click", () => {
     !spielerGeschlecht ||
     (!anonym && spielerName === "")
   ) {
-    alert("Bitte fülle alle Felder korrekt aus");
+    alert("Please fill out all fields correctly");
     return;
   }
 
@@ -273,7 +273,7 @@ function frageNachAnnahme(callback) {
   button.onclick = () => {
     const eingabe = Number(inputAs.value.trim());
     if (isNaN(eingabe) || eingabe < 1 || eingabe > 100) {
-      fehler.textContent = "Bitte gib eine gültige Zahl zwischen 1 und 100 ein.";
+      fehler.textContent = "Please enter a valid number between 1 and 100.";
       return;
     }
 
@@ -590,8 +590,8 @@ function zeigeRangliste(topSpieler) {
         <span style="font-size:22px;">#${spieler.rang || index + 1}</span>
         <span style="flex:1; text-align:center;">${name}</span>
         <span>
-          <div style="font-size:12px;">Punkte</div>${spieler.punkte}<br>
-          <div style="font-size:12px;">Zeit</div>${spieler.besteReaktion.toFixed(2)}s
+          <div style="font-size:12px;">Points</div>${spieler.punkte}<br>
+          <div style="font-size:12px;">Time</div>${spieler.besteReaktion.toFixed(2)}s
         </span>
       </div>
     `;
@@ -680,20 +680,20 @@ starteCountdown(() => {
 
     document.getElementById("platzmacher").classList.add("sichtbar");
 document.getElementById("box-einschaetzung").textContent =
-  "Selbsteinschätzung: " + anzahl;
+  "Self-assessment: " + anzahl;
 
 document.getElementById("box-punkte").textContent =
-  "Punkte: " + korrektAnzahl;
+  "Points: " + korrektAnzahl;
 
 document.getElementById("box-reaktion-unbekannt").textContent =
-  "Reaktionszeit (unbekannter Reiz): " + reaktionszeitProFarbe.toFixed(2) + "s";
+  "Reaction time (unknown stimulus): " + reaktionszeitProFarbe.toFixed(2) + "s";
 
 document.getElementById("box-reaktion-bekannt").textContent =
-  "Reaktionszeit (bekannter Reiz): " + reaktionszeitProFarbeSec.toFixed(2) + "s";
+  "Reaction time (known stimulus): " + reaktionszeitProFarbeSec.toFixed(2) + "s";
 
 const besteReaktion = Math.min(...reaktionszeiten.slice(1));
 document.getElementById("box-reaktion-beste").textContent =
-  "Beste Reaktionszeit: " + besteReaktion.toFixed(2) + "s";
+  "Best reaction time: " + besteReaktion.toFixed(2) + "s";
 
 document.querySelector(".auswertung-box").classList.add("sichtbar");
 const items = document.querySelectorAll(".auswertung-item");
@@ -738,8 +738,8 @@ datenSpeichern()
         <span style="font-size:22px;">#${spieler.rang || index + 1}</span>
         <span style="flex:1; text-align:center;">${name}</span>
         <span>
-          <div style="font-size:12px;">Punkte</div>${spieler.punkte}<br>
-          <div style="font-size:12px;">Zeit</div>${spieler.besteReaktion.toFixed(2)}s
+          <div style="font-size:12px;">Points</div>${spieler.punkte}<br>
+          <div style="font-size:12px;">Time</div>${spieler.besteReaktion.toFixed(2)}s
         </span>
       </div>
     `;
@@ -781,7 +781,7 @@ datenSpeichern()
           const ctx = item.getContext("2d");
           let index = 0;
           const dataset = {
-            label: "Reaktionszeit (Sekunden)",
+            label: "Reaction time (seconds)",
             data: [],
             fill: false,
             borderColor: "#00ffcc",
@@ -789,7 +789,7 @@ datenSpeichern()
           };
 
           const chartData = {
-            labels: bereinigteDaten.map((_, i) => "Farbe " + (i + 1)),
+            labels: bereinigteDaten.map((_, i) => "Color " + (i + 1)),
             datasets: [dataset]
           };
 
@@ -977,11 +977,12 @@ nextRoundBtn.addEventListener("click", () => {
   karte.style.backgroundColor = "blue";
 });
 
-// Sprache umschalten
+// Switch language back to German
 const langSwitch = document.getElementById("langSwitch");
 if (langSwitch) {
+  langSwitch.classList.add("english");
   langSwitch.addEventListener("click", () => {
-    window.location.href = "index_en.html";
+    window.location.href = "index.html";
   });
 }
 
