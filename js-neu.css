@@ -914,6 +914,28 @@ transition: 0.3s ease;
   to { transform: rotate(360deg); }
 }
 
+#anonym {
+  width: 20px;
+  height: 20px;
+  appearance: none;
+  top: 7px;
+  border: 2px solid #00e1ff;
+  border-radius: 4px;
+  background-color: black;
+  cursor: pointer;
+  position: relative;
+  transition: 0.3s ease;
+  right: 3px;
+}
+
+#anonym:checked {
+  background-color: #00e1ff;
+  background-image: url("/unnamed.png");
+  background-size: cover; /* Passt das Bild an die Größe des Elements an */
+  background-size: 165%;
+  background-position: center; /* Zentriert das Bild */
+}
+
 .overlay {
   position: fixed;
   top: 0;
