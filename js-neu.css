@@ -686,6 +686,52 @@ transition: 0.3s ease;
   font-size: 14px;
 }
 
+#man {
+  width: 20px;
+  height: 20px;
+  top: 4px;
+  appearance: none;
+  border: 2px solid #00e1ff;
+  border-radius: 10px;
+  background-color: black;
+  cursor: pointer;
+  position: relative;
+  transition: 0.3s ease;
+}
+
+#woman {
+  width: 20px;
+  height: 20px;
+  top: 4px;
+  appearance: none;
+  border: 2px solid #00e1ff;
+  border-radius: 10px;
+  background-color: black;
+  cursor: pointer;
+  position: relative;
+  transition: 0.3s ease;
+
+}
+
+#man:checked {
+  background-color: #00e1ff;
+    background-color: #00e1ff;
+  background-image: url("/unnamed.png");
+  background-size: cover; /* Passt das Bild an die Größe des Elements an */
+  background-size: 155%;
+  background-position: center; /* Zentriert das Bild */
+}
+
+#woman:checked {
+    background-color: #00e1ff;
+      background-color: #00e1ff;
+  background-image: url("/unnamed.png");
+  background-size: cover; /* Passt das Bild an die Größe des Elements an */
+  background-size: 155%;
+  background-position: center; /* Zentriert das Bild */s
+
+}
+
 #startWeiterBtn {
   padding: 10px 20px;
   font-size: 18px;
