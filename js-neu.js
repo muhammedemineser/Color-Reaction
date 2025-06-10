@@ -136,7 +136,7 @@ function updateLoginContainerBefore() {
   const baseMultiplier = 1; // width equals container width when ratio = 0
   const maxWidthMultiplier = 2.375; // maximum width relative to container
   const targetWidth =
-    containerWidth * (baseMultiplier + ratio * 300 * (maxWidthMultiplier - baseMultiplier));
+    containerWidth * (baseMultiplier + ratio * 400 * (maxWidthMultiplier - baseMultiplier));
   const width = Math.max(minWidth, targetWidth);
   loginContainer.style.setProperty("--before-width", `${width}px`);
 }
