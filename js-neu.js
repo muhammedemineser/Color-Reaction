@@ -133,8 +133,11 @@ function updateLoginContainerBefore() {
   const length = nameInputField.value.length;
   const containerWidth = loginContainer.clientWidth;
   const ratio = Math.min(1, length / maxChars);
-  const maxWidthMultiplier = 2.375;
-  const width = minWidth + ratio * (maxWidthMultiplier * containerWidth - minWidth);
+  const baseMultiplier = 1; // width equals container width when ratio = 0
+  const maxWidthMultiplier = 2.375; // maximum width relative to container
+  const targetWidth =
+    containerWidth * (baseMultiplier + ratio * (maxWidthMultiplier - baseMultiplier));
+  const width = Math.max(minWidth, targetWidth);
   loginContainer.style.setProperty("--before-width", `${width}px`);
 }
 
