@@ -458,16 +458,16 @@ function handleGameInput() {
 
   const antwort = input.value.toLowerCase().replace(/\s/g, "");
   const korrekt =
-    (zustand === 1 && antwort === "blau") ||
-    (zustand === 2 && antwort === "rot") ||
-    (zustand === 3 && antwort === "grün") ||
-    (zustand === 4 && antwort === "gelb") ||
+    (zustand === 1 && antwort === "blue") ||
+    (zustand === 2 && antwort === "red") ||
+    (zustand === 3 && antwort === "green") ||
+    (zustand === 4 && antwort === "yellow") ||
     (zustand === 5 && antwort === "pink") ||
     (zustand === 6 && antwort === "orange") ||
-    (zustand === 7 && (antwort === "violett" || antwort === "lila")) ||
+    (zustand === 7 && (antwort === "violet" || antwort === "purple")) ||
     (zustand === 8 && antwort === "braun") ||
-    (zustand === 9 && antwort === "grau") ||
-    (zustand === 10 && (antwort === "weiß" || antwort === "weiss"));
+    (zustand === 9 && antwort === "grey") ||
+    (zustand === 10 && antwort === "white");
 
 
   if (korrekt) {
