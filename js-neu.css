@@ -716,7 +716,7 @@ transition: 0.3s ease;
 #man:checked {
   background-color: #00e1ff;
     background-color: #00e1ff;
-  background-image: url("/unnamed.png");
+  background-image: url("unnamed.png");
   background-size: cover; /* Passt das Bild an die Größe des Elements an */
   background-size: 155%;
   background-position: center; /* Zentriert das Bild */
@@ -725,7 +725,7 @@ transition: 0.3s ease;
 #woman:checked {
     background-color: #00e1ff;
       background-color: #00e1ff;
-  background-image: url("/unnamed.png");
+  background-image: url("unnamed.png");
   background-size: cover; /* Passt das Bild an die Größe des Elements an */
   background-size: 155%;
   background-position: center; /* Zentriert das Bild */s
@@ -930,7 +930,7 @@ transition: 0.3s ease;
 
 #anonym:checked {
   background-color: #00e1ff;
-  background-image: url("/unnamed.png");
+  background-image: url("unnamed.png");
   background-size: cover; /* Passt das Bild an die Größe des Elements an */
   background-size: 165%;
   background-position: center; /* Zentriert das Bild */
