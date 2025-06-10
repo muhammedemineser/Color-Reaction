@@ -37,6 +37,22 @@
   margin-top: 5%;
 }
 
+#spielerName {
+  font-weight: 600;
+}
+
+#spielerName::placeholder {
+  font-weight: normal;
+}
+
+#spielerAlter {
+  font-weight: 600;
+}
+
+#spielerAlter::placeholder {
+  font-weight: normal;
+}
+
 /* === Button zentriert === */
 
 
