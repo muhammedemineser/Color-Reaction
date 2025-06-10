@@ -875,7 +875,7 @@ transition: 0.3s ease;
 }
 
 #wuerfelAnimation.result {
-  margin-top: 1215px;
+  margin-top: 1115px;
 }
 
 #wuerfelAnimation.unsichtbar {
@@ -1323,7 +1323,7 @@ transition: 0.3s ease;
     max-width: none;
   }
   #wuerfelAnimation.result {
-    margin-top: 1250px;
+    margin-top: 1150px;
   }
   #nextRoundBtn {
     margin-top: 20px;
