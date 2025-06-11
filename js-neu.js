@@ -977,7 +977,11 @@ nextRoundBtn.addEventListener("click", () => {
 const langSwitch = document.getElementById("langSwitch");
 if (langSwitch) {
   langSwitch.addEventListener("click", () => {
-    window.location.href = "index_en.html";
-  });
+document.body.style.transition = "opacity 0.5s ease";
+document.body.style.opacity = "0"; 
+
+setTimeout(() => {
+  window.location.href = "index_en.html";
+}, 500);  });
 }
 
