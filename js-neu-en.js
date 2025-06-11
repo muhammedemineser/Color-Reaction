@@ -973,12 +973,15 @@ nextRoundBtn.addEventListener("click", () => {
   karte.style.backgroundColor = "blue";
 });
 
-// Switch language back to German
+// Sprache umschalten
 const langSwitch = document.getElementById("langSwitch");
 if (langSwitch) {
-  langSwitch.classList.add("english");
   langSwitch.addEventListener("click", () => {
-    window.location.href = "index.html";
-  });
+document.body.style.transition = "opacity 0.5s ease";
+document.body.style.opacity = "0"; 
+
+setTimeout(() => {
+  window.location.href = "index.html";
+}, 500);  });
 }
 
