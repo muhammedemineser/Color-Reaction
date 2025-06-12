@@ -183,25 +183,26 @@
 }
 
 .intro-title.unsichtbar {
-    display: none;
+    display: none !important;
 }
-.intro-title {
-  font-size: 40px;
-  font-weight: 900;
-  display: flex;
-  flex-wrap: wrap;
-  font-family: "StreamerSlant", sans-serif;
-  letter-spacing: 5px;
-  margin-bottom: 20px;
-  color: rgb(0, 225, 255);
-  text-shadow: 0 0 10px rgb(0, 225, 255);
-    list-style-position: inside;
-  padding: 0;
-  margin: 0 auto;
-  justify-content: center;
-    text-align: center;
 
+.intro-title {
+  font-size: 40px !important;
+  font-weight: 900 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  font-family: "StreamerSlant", sans-serif !important;
+  letter-spacing: 5px !important;
+  margin-bottom: 20px !important;
+  color: rgb(0, 225, 255) !important;
+  text-shadow: 0 0 10px rgb(0, 225, 255) !important;
+  list-style-position: inside !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  justify-content: center !important;
+  text-align: center !important;
 }
+
 
 .intro-highlight.unsichtbar {
     display: none;
@@ -355,18 +356,40 @@ ul.sichtbar.hover,
 }
 
 .intro-call {
-  font-family: "StreamerSlant", sans-serif;
-  letter-spacing: 5px;
-  font-size: 30px;
-  display: flex;
-  flex-wrap: wrap;
-  font-weight: bold;
-  text-align: center;
-  justify-content:center;
-  margin-top: 50px;
-  color: rgb(0, 225, 255);
-  animation: pulse 1.2s infinite alternate;
+  font-family: "StreamerSlant", sans-serif !important;
+  letter-spacing: 5px !important;
+  font-size: 30px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  font-weight: bold !important;
+  text-align: center !important;
+  justify-content:center !important;
+  margin-top: 50px !important;
+  color: rgb(0, 225, 255) !important;
+  animation: pulse 1.2s infinite alternate !important;
 }
+
+.intro-call span {
+  font-family: "StreamerSlant", sans-serif !important;
+    font-size: 50px !important;
+    vertical-align: middle !important;
+    font-weight: 400 !important;
+}
+
+.intro-call i {
+    bottom: 20% !important;
+    position: relative !important;
+}
+
+.intro-call span[style*="visibility: hidden"] {
+    font-size: 30px !important;
+}
+
+.Quest {
+  font-family: "Number", sans-serif;
+  font-weight: bold;
+}
+
 
 @keyframes pulse {
   from {
@@ -915,6 +938,19 @@ transition: 0.3s ease;
   cursor: pointer;
 }
 
+#einschaetzungInput {
+  font-family: "Number", sans-serif;
+}
+
+#einschaetzungInput::placeholder {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#einschaetzungBtn {
+    font-family: orbitron, sans-serif;
+
+}
+
 .fehlerText {
   color: red;
   font-size: 14px;
@@ -1186,6 +1222,7 @@ transition: 0.3s ease;
 }
 
 #timeOverContainer {
+  display: none !important;
  transition:0.5s ease;
   position: absolute;
   bottom: 50%;
@@ -1205,12 +1242,20 @@ transition: 0.3s ease;
   padding: 15px;
   height: fit-content;
   z-index: 1000000;
+  opacity: 0;
+      function zeigeTimerOver() {
+      setTimeout(() => {
+        timeOver.style.display = "none";
+        timeOverContainer.style.display = "none";
+      }, 900);
+    }
+
 }
 
 #timeOver {
     transition: 0.3s ease;
     z-index: 10000000;
-  display: block;
+  display: none !important;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   color: rgb(0, 225, 255);
@@ -1223,6 +1268,8 @@ transition: 0.3s ease;
   border: 2px solid rgb(0, 225, 255);
   box-shadow: 0 0 25px rgb(0, 225, 255);
   text-shadow: 0 0 5px rgb(0, 225, 255), 0 0 10px rgb(0, 225, 255);
+  opacity: 0;
+  transition: opacity 0.1s ease-in;
 }
 
 #ranglisteContainer {
@@ -1318,6 +1365,8 @@ transition: 0.3s ease;
   text-align: center;
   margin-bottom: 15px;
   color: rgb(0, 225, 255);
+      font-family: orbitron, sans-serif;
+
 }
 
 .aspect-card.hovering .aspect-header,
@@ -1572,19 +1621,28 @@ transition: 0.3s ease;
 
 @keyframes closeOpen {
   0% {
-    clip-path: circle(500% at center);
+    clip-path: circle(100% at center);
     opacity: 1;
   }
-  50% {
+  33% {
     clip-path: circle(0% at center);
     opacity: 0;
   }
+
+    66% {
+    clip-path: circle(0% at center);
+    opacity: 0;
+  }
+
   100% {
-    clip-path: circle(500% at center);
+    clip-path: circle(100% at top);
     opacity: 1;
   }
 }
 .close-open {
-  animation: closeOpen 1s forwards;
+  animation: closeOpen 0.66s ease-in-out;
+  animation-duration: 1.33s;
+  animation-delay: 0.2;
   overflow: hidden;
+transition: clip-path 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
