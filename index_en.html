@@ -42,11 +42,12 @@
 </div>
 
   
-<div id="mainContent" style="display: none;">
 <div id="timeOverContainer" style="display: none;"><div id="timeOver" style="display: none;">
   Time Over!
 </div>
 </div>
+
+<div id="mainContent" style="display: none;">
 <div id="einschaetzungsOverlay" class="overlay" style="display: none;">
   <div class="einschaetzungsBox">
     <p>How many colors do you think you can manage?</p>
@@ -62,9 +63,9 @@
     <div id="platzmacher"></div>
 
 
-    <div class="anzeige-wrapper">
-    <div class="colorchanger"></div>
-    <div class="punktezeiger"></div>
+    <div class="anzeige-wrapper" class="gamecontent">
+    <div class="colorchanger" class="gamecontent"></div>
+    <div class="punktezeiger" style="font-weight: 100;" class="gamecontent" ></div>
   </div>
 
     <div id="inputBlock">
@@ -75,8 +76,8 @@
   <div id="platzhalterZwei"></div>
   <div class="intro-wrapper" style="display: static;">
     <div class="intro-title">Welcome to the Color Reaction Game!</div>
-<div id="startCards">
 <br><br>
+    <div id="startCards">
       <div class="aspect-card">
         <div class="aspect-header">Good to know</div>
         <div class="aspect-content">
@@ -141,25 +142,26 @@
       </div>
 </div>
 <br><br>
-    <div class="intro-call">Ready? Then get started and find out how fast your mind really is!</div>
+    <div class="intro-call">Ready <span style="font-family: Number, sans serif; font-size: 50px; vertical-align: middle; font-weight: 400;"><i class="Quest" style="bottom: 20%; position: relative;">?</i></span><span style="visibility: hidden; font-size: 30px;">o</span>Then get started and find out how fast your mind really is!</div>
   </div>
   <div id="platzhalter"></div>
 
   <div class="containerNachClick">
-    <button id="gameBtnSec">Click me</button>
+    <button id="gameBtnSec">Input</button>
   </div>
 
   <div class="EingabeInfosContainer sichtbar">
-    <div id="EingabeInfosTitle" style="font-size:20px; font-weight: bold; padding: 7px; padding-top: 12px;color:red;">Game tips</div>
+    <div id="EingabeInfosTitle" style="font-size:20px; font-weight: bold; padding: 7px; padding-top: 12px;color:red; font-family: orbitron, sans-serif;">Game tips</div>
     <div id="EingabeInfosText" style="font-size:15px; padding: 15px;line-height: 24px;">
-  <li>For a complete evaluation you need to manage at least 20 colors.</li>
+  <li>For a complete evaluation you must manage at least 20 colors.</li>
+  <li>"White" and "white" both count as correct.</li>
   <li>Spaces are automatically ignored – just type!</li>
-  <li>Mistyped? No problem – just enter it and the field clears automatically.</li>
+  <li>Mistyped? No problem – just enter and the field clears automatically.</li>
   <li>You can use the button or the Enter key on your keyboard to submit</li> <br>
   </div>
   </div>
       <div class="container">
-      <button id="gameBtn">Click me</button>
+      <button id="gameBtn">Start Game</button>
     </div>
   <div id="wuerfelAnimation"></div>
 </div>
@@ -172,7 +174,7 @@
     <div id="feedbackRight">Correct!</div>
     <div id="feedbackFalse">Wrong!</div>
 
-    <div id="timer">
+    <div id="timer" class="gamecontent">
       <div class="card" id="sekTens">0</div>
       <div class="card" id="sek">0</div>
       <div class="card" id="msHundreds">0</div>
