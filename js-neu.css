@@ -1569,3 +1569,22 @@ transition: 0.3s ease;
     margin-top: 20px;
   }
 }
+
+@keyframes closeOpen {
+  0% {
+    clip-path: circle(500% at center);
+    opacity: 1;
+  }
+  50% {
+    clip-path: circle(0% at center);
+    opacity: 0;
+  }
+  100% {
+    clip-path: circle(500% at center);
+    opacity: 1;
+  }
+}
+.close-open {
+  animation: closeOpen 1s forwards;
+  overflow: hidden;
+}

@@ -647,6 +647,8 @@ starteCountdown(() => {
 
 
   setTimeout(() => {
+    const mainContent = document.getElementById("mainContent");
+    mainContent.classList.add("close-open");
     punkteZeiger.classList.remove("sichtbar");
     input.style.display = "none";
     karte.classList.remove("sichtbar");
@@ -858,6 +860,9 @@ datenSpeichern()
     nextRoundBtn.style.display = "block";
   }, totalDelay);
 });
+    setTimeout(() => {
+      mainContent.classList.remove("close-open");
+    }, 1000);
 
 
   }, 64000);
