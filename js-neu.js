@@ -74,8 +74,8 @@ const zeigeUebergangsAnimation = (callback) => {
     overlayTrans.classList.add("active");
   });
 
-  // Dauer der Ringanimation (z. B. 1800ms)
-  const ringDauer = 1000;
+  // Dauer der Ringanimation
+  const ringDauer = 500;
 
   setTimeout(() => {
     // Blur-Übergang einleiten
@@ -86,7 +86,7 @@ const zeigeUebergangsAnimation = (callback) => {
       overlayTrans.classList.remove("active", "fadeout");
       overlayTrans.style.display = "none";
       if (callback) callback();
-    }, 600); // Übergangszeit aus CSS (backdrop-filter & opacity)
+    }, 0); // Übergangszeit aus CSS (backdrop-filter & opacity)
   }, ringDauer);
 };
 
@@ -235,12 +235,36 @@ document.getElementById("startWeiterBtn").addEventListener("click", () => {
       zeigeUebergangsAnimDone=true; 
       }
       userId = data.id;
+
+
+  document.body.style.transition = "opacity 0.1s ease out";
+document.body.style.opacity = "0"; 
+
+setTimeout (() => {
+  document.body.style.transition = "opacity 0.1s ease in";
+document.body.style.opacity = "1"; 
+
       document.getElementById("startbildschirm").style.display = "none";
       document.getElementById("mainContent").style.display = "block";
       document.getElementById("shaderCanvas").style.display = "none";
       startErfolgt = true;
+        }, 130);
     });
 });
+
+//intro-page hover
+document.querySelectorAll('.aspect-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        document.querySelectorAll('.intro-text, .intro-subtle, #EingabeInfosTitle, .intro-list, #EingabeInfosText, ul.sichtbar, .intro-info ul, .intro-highlight')
+            .forEach(el => el.classList.add('hover'));
+    });
+
+    card.addEventListener('mouseleave', () => {
+        document.querySelectorAll('.intro-text, .intro-subtle, #EingabeInfosTitle, .intro-list, #EingabeInfosText, ul.sichtbar, .intro-info ul, .intro-highlight')
+            .forEach(el => el.classList.remove('hover'));
+    });
+});
+
 
 // Beim Klicken des Spielstart-Buttons:
 document.getElementById("gameBtn").addEventListener("click", () => {
@@ -647,14 +671,30 @@ starteCountdown(() => {
 
 
   setTimeout(() => {
+document.querySelectorAll(".gamecontent").forEach(element => {
+    element.style.transition = "opacity 0.5s ease";
+});      
+document.querySelectorAll(".gamecontent").forEach(element => {
+    element.style.opacity = "0";
+});      
+      timeOverContainer.style.display = "flex";
+      timeOver.style.display = "block";
+      timeOverContainer.style.opacity = "1";
+      timeOver.style.opacity = "1";
+
+setTimeout (() => {
+document.querySelectorAll(".auswertung").forEach(element => {
+    element.style.transition = "opacity 0.5s ease";
+});      
+document.querySelectorAll(".auswertung").forEach(element => {
+    element.style.opacity = "1";
+});      
     punkteZeiger.classList.remove("sichtbar");
     input.style.display = "none";
     karte.classList.remove("sichtbar");
     timer.classList.remove("sichtbar");
     
     function zeigeTimerOver() {
-      timeOverContainer.style.display = "flex";
-      timeOver.style.display = "block";
       setTimeout(() => {
         timeOver.style.display = "none";
         timeOverContainer.style.display = "none";
@@ -859,7 +899,7 @@ datenSpeichern()
   }, totalDelay);
 });
 
-
+  }, 500);
   }, 64000);
 });
 
@@ -924,7 +964,7 @@ function starteTimer() {
 }
 
 nextRoundBtn.addEventListener("click", () => {
-  const box = document.querySelector(".auswertung-box");
+  setTimeout(() => {  const box = document.querySelector(".auswertung-box");
   box.classList.remove("sichtbar");
   document.querySelectorAll(".auswertung-item").forEach(item => {
     item.classList.remove("sichtbar", "animate");
@@ -971,6 +1011,14 @@ nextRoundBtn.addEventListener("click", () => {
   msHundreds.textContent = 0;
   msTens.textContent = 0;
   karte.style.backgroundColor = "blue";
+  }, 500);
+document.body.style.transition = "opacity 0.5s ease";
+document.body.style.opacity = "0"; 
+
+setTimeout (() => {
+  document.body.style.transition = "opacity 0.5s ease";
+document.body.style.opacity = "1"; 
+  }, 500);
 });
 
 // Sprache umschalten
