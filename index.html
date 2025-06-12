@@ -37,7 +37,7 @@
       <label><input type="radio" name="geschlecht" value="m" id="man"> Männlich</label>
       <label><input type="radio" name="geschlecht" value="w" id="woman"> Weiblich</label>
     </div>
-    <button id="startWeiterBtn">Sign in</button>
+    <button id="startWeiterBtn">Anmelden</button>
   </div>
 </div>
 
@@ -62,13 +62,13 @@
     <div id="platzmacher"></div>
 
 
-    <div class="anzeige-wrapper">
-    <div class="colorchanger"></div>
-    <div class="punktezeiger"></div>
+    <div class="anzeige-wrapper" class="gamecontent">
+    <div class="colorchanger" class="gamecontent"></div>
+    <div class="punktezeiger" style="font-weight: 100;" class="gamecontent" ></div>
   </div>
 
     <div id="inputBlock">
-      <input id="input" type="text" placeholder="Gebe die Farbe ein..." style="display: none;" />
+      <input id="input" type="text" placeholder="Gebe die Farbe ein..." style="display: none;">
     </div>
 
   <div id="Eingang">
@@ -142,16 +142,16 @@
 
     </div>
 <br><br>
-    <div class="intro-call">Bereit? Dann leg los und finde heraus, wie schnell dein Kopf wirklich ist!</div>
+    <div class="intro-call">Bereit <span style="font-family: Number, sans serif; font-size: 50px; vertical-align: middle; font-weight: 400;"><i style="bottom: 20%; position: relative;">?</i></span><span style="visibility: hidden; font-size: 30px;">o</span>Dann leg los und finde heraus, wie schnell dein Kopf wirklich ist!</div>
   </div>
   <div id="platzhalter"></div>
 
   <div class="containerNachClick">
-    <button id="gameBtnSec">Click me</button>
+    <button id="gameBtnSec">Eingabe</button>
   </div>
 
   <div class="EingabeInfosContainer sichtbar">
-    <div id="EingabeInfosTitle" style="font-size:20px; font-weight: bold; padding: 7px; padding-top: 12px;color:red;">Game Hinweise</div>
+    <div id="EingabeInfosTitle" style="font-size:20px; font-weight: bold; padding: 7px; padding-top: 12px;color:red; font-family: orbitron, sans-serif;">Game Hinweise</div>
     <div id="EingabeInfosText" style="font-size:15px; padding: 15px;line-height: 24px;">
   <li>Für eine vollständige Auswertung musst du mindestens 20 Farben schaffen.</li>
   <li>„Weiss“ und „Weiß“ zählen beide als richtig.</li>
@@ -161,7 +161,7 @@
   </div>
   </div>
       <div class="container">
-      <button id="gameBtn">Click me</button>
+      <button id="gameBtn">Spielstart</button>
     </div>
   <div id="wuerfelAnimation"></div>
 </div>
@@ -174,7 +174,7 @@
     <div id="feedbackRight">Richtig!</div>
     <div id="feedbackFalse">Falsch!</div>
 
-    <div id="timer">
+    <div id="timer" class="gamecontent">
       <div class="card" id="sekTens">0</div>
       <div class="card" id="sek">0</div>
       <div class="card" id="msHundreds">0</div>
@@ -191,7 +191,7 @@
       <div class="auswertung-item" id="box-reaktion-bekannt"></div>
       <canvas class="auswertung-item" id="reaktionsChart"></canvas>
     </div>
-    <button id="nextRoundBtn" style="display:none;">Next Round</button>
+    <button id="nextRoundBtn" style="display:none;">Neue Runde</button>
   </div>
 
 </div>
