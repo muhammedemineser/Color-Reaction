@@ -4,6 +4,12 @@
   font-family: "StreamerSlant";
   src: url("fonts/StreamerSlantDemo-WyrX4.otf") format("opentype");
 }
+
+@font-face {
+  font-family: "Number";
+  src: url("fonts/VeniteAdoremus.ttf");
+}
+
 .body, html {
   transition: 0.5s ease;
   background-color: #2a2a2a;
@@ -61,8 +67,8 @@
   display: block;
   margin: 40px auto;
   padding: 15px 30px;
-  width: 180px;
-  height: 55px;
+  width: 280px;
+  height: 70px;
   font-family: 'Orbitron', sans-serif;
   font-size: 14px;
   font-weight: bold;
@@ -74,6 +80,7 @@
   cursor: pointer;
   text-align: center;
   transition: all 0.3s ease;
+  letter-spacing: 3px;
 }
 
 #gameBtn:hover {
@@ -109,6 +116,7 @@
   cursor: pointer;
   text-align: center;
   transition: all 0.3s ease;
+  letter-spacing: 2px;
 }
 
 #gameBtn:hover {
@@ -125,11 +133,11 @@
 
 #nextRoundBtn {
   position: relative;
-  display: none;
+  display: block;
   margin: 40px auto;
   padding: 15px 30px;
-  width: 180px;
-  height: 55px;
+  width: 280px;
+  height: 70px;
   font-family: 'Orbitron', sans-serif;
   font-size: 14px;
   font-weight: bold;
@@ -141,6 +149,7 @@
   cursor: pointer;
   text-align: center;
   transition: all 0.3s ease;
+  letter-spacing: 3px;
 }
 
 #nextRoundBtn:hover {
@@ -177,16 +186,21 @@
     display: none;
 }
 .intro-title {
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 900;
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: "StreamerSlant", sans-serif;
+  letter-spacing: 5px;
   margin-bottom: 20px;
   color: rgb(0, 225, 255);
   text-shadow: 0 0 10px rgb(0, 225, 255);
     list-style-position: inside;
-  text-align: center;
   padding: 0;
   margin: 0 auto;
+  justify-content: center;
+    text-align: center;
+
 }
 
 .intro-highlight.unsichtbar {
@@ -209,7 +223,7 @@
 .intro-highlight {
   font-size: 20px;
   font-weight: 800;
- color: #fff !important;
+ color: black !important;
   margin-top: 15px;
   margin-bottom: 15px;
     list-style-position: inside;
@@ -233,7 +247,7 @@
   margin: 0 auto;
  font-weight:500;
  font-family: 'Segoe UI', sans-serif;
- color: #fff !important;
+ color: black !important;
 }
 
 .intro-text {
@@ -246,14 +260,27 @@
   margin: 0 auto;
  font-weight:500;
  font-family: 'Segoe UI', sans-serif;
- color: #fff !important;
+ color: black !important;
 }
 
 .intro-subtle.unsichtbar {
 display: none;
 }
 
-.intro-subtle, #EingabeInfosTitle {
+.intro-subtle{
+  font-size: 20px;
+  color: rgb(100, 240, 255);
+  margin-bottom: 20px;
+    list-style-position: inside;
+  text-align: center;
+  padding: 0;
+  margin: 0 auto;
+ font-weight:500;
+ font-family: 'Segoe UI', sans-serif;
+ color: black !important;
+}
+
+ #EingabeInfosTitle {
   font-size: 20px;
   color: rgb(100, 240, 255);
   margin-bottom: 20px;
@@ -266,23 +293,12 @@ display: none;
  color: #fff !important;
 }
 
-.intro-subtle, #EingabeInfosTitle {
-  font-size: 20px;
-  color: rgb(100, 240, 255);
-  margin-bottom: 20px;
-    list-style-position: inside;
-  text-align: center;
- font-weight:500;
-  padding: 0;
-  margin: 0 auto;
- font-family: 'Segoe UI', sans-serif;
- color: #fff !important;
-}
+
 
 .intro-list, ul.unsichtbar {
     display:none;
 }
-.intro-list, #EingabeInfosText, ul.sichtbar {
+#EingabeInfosText, ul.sichtbar {
   padding-left: 20px;
   list-style-type: disc;
   margin-bottom: 20px;
@@ -291,7 +307,19 @@ display: none;
   padding: 0;
   margin: 0 auto;
  color: #fff !important;
- font-family: 'Segoe UI', sans-serif;
+font-family: Orbitron, sans-serif;
+}
+
+.intro-list {
+  padding-left: 20px;
+  list-style-type: disc;
+  margin-bottom: 20px;
+  list-style-position: inside;
+  text-align: center;
+  padding: 0;
+  margin: 0 auto;
+ color: black !important;
+font-family: Orbitron, sans-serif;
 }
 
 
@@ -308,17 +336,33 @@ display: none;
   padding: 0;
   margin: 0 auto;
  font-family: 'Segoe UI', sans-serif;
- color: #fff !important;
+ color: black !important;
 }
 
 .intro-call.unsichtbar {
     display: none;
 }
 
+.intro-highlight.hover,
+.intro-text.hover,
+.intro-subtle.hover,
+#EingabeInfosTitle.hover,
+.intro-list.hover,
+#EingabeInfosText.hover,
+ul.sichtbar.hover,
+.intro-info ul.hover {
+    color: #fff !important;
+}
+
 .intro-call {
-  font-size: 24px;
+  font-family: "StreamerSlant", sans-serif;
+  letter-spacing: 5px;
+  font-size: 30px;
+  display: flex;
+  flex-wrap: wrap;
   font-weight: bold;
   text-align: center;
+  justify-content:center;
   margin-top: 50px;
   color: rgb(0, 225, 255);
   animation: pulse 1.2s infinite alternate;
@@ -349,15 +393,30 @@ display: none;
 
 #input {
   color:white;
-  background-color: transparent;
-  border: 2px solid white;
-  border-radius: 5px;
+  background-color: #111;
+  border: 2px solid cyan;
+  border-radius: 3px;
   height: 30px;
   width: 200px;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 14px;
   padding: 5px;
   transition: 0.3s ease;
+}
+
+#input:focus {
+  appearance: none;
+  color:white;
+  background-color: #111;
+  border: 2px solid cyan;
+  border-radius: 3px;
+  height: 30px;
+  width: 200px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  padding: 5px;
+  transition: 0.3s ease;
+  outline: none;
 }
 
 /* === Feedback (Richtig/Falsch) === */
@@ -366,35 +425,65 @@ display: none;
   display: none;
 }
 
+@keyframes feedbackPop {
+  0% {
+    transform: translateX(-50%) scale(0.7);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-50%) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
 #feedbackRight.sichtbar,
 #feedbackFalse.sichtbar {
   position: fixed;
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  height: 20px;
-  width: 90px;
-  border-radius: 20px;
-  padding: 15px;
-  font-family: 'Segoe UI', sans-serif;
-  font-weight: bold;
-  font-size: 13px;
+  min-width: 120px;
+  padding: 16px 28px;
+  border-radius: 25px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.3s ease;
+  text-align: center;
+  z-index: 10000;
+  animation: feedbackPop 0.4s ease;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 20px rgba(0, 225, 255, 0.4);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+/* ✅ Richtig */
 #feedbackRight.sichtbar {
-  background-color: rgb(0, 225, 255);
-  color: white;
-  border: 2px solid white;
+  background: rgba(0, 225, 255, 0.15);
+  color: rgb(0, 225, 255);
+  border: 2px solid rgb(0, 225, 255);
+  text-shadow: 0 0 6px rgb(0, 225, 255);
+  box-shadow: 0 0 25px rgba(0, 225, 255, 0.6);
 }
 
+/* ❌ Falsch */
 #feedbackFalse.sichtbar {
-  background-color: red;
-  color: black;
-  border: 2px solid rgb(255, 106, 106);
+  background: rgba(255, 40, 40, 0.15);
+  color: rgb(255, 80, 80);
+  border: 2px solid rgb(255, 80, 80);
+  text-shadow: 0 0 6px rgb(255, 80, 80);
+  box-shadow: 0 0 25px rgba(255, 80, 80, 0.4);
+}
+#feedbackRight.fade-out,
+#feedbackFalse.fade-out {
+  opacity: 0;
+  transform: translateX(-50%) scale(0.95);
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 /* === Karte (Farbfeld) === */
@@ -438,10 +527,10 @@ display: none;
   height: 70px;
   background-color: white;
   font-size: 30px;
+  font-family: "Number", sans-serif;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  font-weight: bold;
   transition: 0.3s ease;
 }
 
@@ -511,12 +600,17 @@ transition: 0.3s ease;
   height: 70px;
   background-color: white;
   font-size: 30px;
+  font-family: "Number", sans-serif;;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  font-weight: bold;
   transition: 0.3s ease;
   margin: 10px;
+  font-weight: 100;
+}
+
+.auswertung {
+  opacity: 0;
 }
 
 .auswertung-box, .auswertung-item, .EingabeInfosContainer {
@@ -750,7 +844,9 @@ transition: 0.3s ease;
 
 #startWeiterBtn {
   padding: 10px 20px;
-  font-size: 18px;
+  font-size: 15px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
   background: rgb(0, 225, 255);
   color: black;
   border: none;
@@ -850,6 +946,7 @@ transition: 0.3s ease;
   z-index: 2;
   min-width: 320px;
   min-height: 420px;
+  transition: 0.3s ease;
 }
 
 .login-container::before {
@@ -931,7 +1028,9 @@ transition: 0.3s ease;
   transition: transform 0.3s;
 }
 
-
+.login-container:hover {
+    transform: scale3d(1.05, 1.05, 1.05);
+}
 
 .login-container * {
   z-index: 2;
@@ -940,7 +1039,7 @@ transition: 0.3s ease;
 }
 
 .login-container:hover > * {
-  transform: translateY(-5px);
+  transform: translateY(-5px) scale3d(1.05, 1.05, 1.05);
 }
 
 @keyframes rotBGimg {
@@ -1223,7 +1322,7 @@ transition: 0.3s ease;
 
 .aspect-card.hovering .aspect-header,
 .aspect-card.open .aspect-header {
-  color: #000;
+  color: rgb(0, 225, 255);
 }
 
 .aspect-content {
@@ -1248,7 +1347,7 @@ transition: 0.3s ease;
   transform: translateY(0);
   pointer-events: auto;
   background: #000;
-  color: #fff;
+  color: black;
   border-color: #fff;
 }
 
@@ -1256,7 +1355,7 @@ transition: 0.3s ease;
 #startCards .intro-info ul,
 #startCards .intro-text,
 #startCards .intro-subtle {
-  color: #fff;
+  color: black;
   line-height: 1.8;
 }
 #startCards li {
@@ -1298,7 +1397,7 @@ transition: 0.3s ease;
   position: absolute;
   width: 150px;
   height: 150px;
-  border-radius: 50%;
+  border-radius: 25%;
   border: 6px solid rgb(255, 255, 255);
   background: radial-gradient(
     circle,
@@ -1311,8 +1410,8 @@ transition: 0.3s ease;
     0 0 160px rgba(0, 225, 255, 1),
     0 0 300px rgba(0, 225, 255, 1),
     inset 0 0 60px rgba(0, 225, 255, 0.8);
-  opacity: 0;
-  filter: blur(1px);
+  opacity: 0.1;
+  filter: blur(5px);
   will-change: transform, opacity;
   transform: scale(0);
 }
@@ -1331,11 +1430,11 @@ transition: 0.3s ease;
 @keyframes ring-grow {
   0% {
     transform: scale(30);
-    opacity: 1;
+    opacity: 0.2;
   }
   50% {
-    transform: scale(300);
-    opacity: 1;
+    transform: scale(400);
+    opacity: 0.3;
   }
 }
 
@@ -1392,12 +1491,12 @@ transition: 0.3s ease;
   text-align: center;
   margin-bottom: 15px;
   margin-bottom: 10px;
-  color: rgb(0, 225, 255);
+  color: rgb(0, 225, 255) !important;
 }
 
 .aspect-card.hovering .aspect-header,
 .aspect-card.open .aspect-header {
-  color: #000;
+  color: black !important;
 }
 
 .aspect-content {
