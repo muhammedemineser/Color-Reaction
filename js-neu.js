@@ -671,16 +671,12 @@ starteCountdown(() => {
 
 
   setTimeout(() => {
-document.querySelectorAll(".gamecontent").forEach(element => {
-    element.style.transition = "opacity 0.5s ease";
-});      
-document.querySelectorAll(".gamecontent").forEach(element => {
-    element.style.opacity = "0";
-});      
-      timeOverContainer.style.display = "flex";
-      timeOver.style.display = "block";
-      timeOverContainer.style.opacity = "1";
-      timeOver.style.opacity = "1";
+    const mainContent = document.getElementById("mainContent");
+    mainContent.classList.add("close-open");
+    timeOverContainer.style.display = "flex";
+    timeOver.style.display = "block";
+    timeOverContainer.style.opacity = "1";
+    timeOver.style.opacity = "1";
 
 setTimeout (() => {
 document.querySelectorAll(".auswertung").forEach(element => {
@@ -898,6 +894,10 @@ datenSpeichern()
     nextRoundBtn.style.display = "block";
   }, totalDelay);
 });
+
+    setTimeout(() => {
+      mainContent.classList.remove("close-open");
+    }, 1000);
 
   }, 500);
   }, 64000);
