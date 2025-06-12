@@ -122,6 +122,10 @@ let spielerIP = "Unbekannt";
 let userId = ""; // NEU
 let startErfolgt = false;
 
+document.querySelectorAll("#Eingang *").forEach((element) => {
+  element.style.fontFamily = "Orbitron, sans-serif";
+});
+
 const typedNameSpan = document.getElementById("typedName");
 const nameInputField = document.getElementById("spielerName");
 const bright = document.getElementById("bright");
@@ -673,10 +677,19 @@ starteCountdown(() => {
   setTimeout(() => {
     const mainContent = document.getElementById("mainContent");
     mainContent.classList.add("close-open");
-    timeOverContainer.style.display = "flex";
-    timeOver.style.display = "block";
+    document.getElementById("timeOverContainer").style.setProperty("display", "flex", "important");
+    document.getElementById("timeOver").style.setProperty("display", "block", "important");
     timeOverContainer.style.opacity = "1";
     timeOver.style.opacity = "1";
+        function zeigeTimerOver() {
+      setTimeout(() => {
+        timeOver.style.display = "none";
+        timeOverContainer.style.display = "none";
+      }, 900);
+    }
+
+        zeigeTimerOver();
+
 
 setTimeout (() => {
 document.querySelectorAll(".auswertung").forEach(element => {
@@ -690,14 +703,7 @@ document.querySelectorAll(".auswertung").forEach(element => {
     karte.classList.remove("sichtbar");
     timer.classList.remove("sichtbar");
     
-    function zeigeTimerOver() {
-      setTimeout(() => {
-        timeOver.style.display = "none";
-        timeOverContainer.style.display = "none";
-      }, 900);
-    }
 
-    zeigeTimerOver();
     input.value = "";
 
     buttonSec.classList.remove("sichtbar");
@@ -1032,4 +1038,3 @@ setTimeout(() => {
   window.location.href = "index_en.html";
 }, 500);  });
 }
-
