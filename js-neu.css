@@ -1008,6 +1008,12 @@ transition: 0.3s ease;
   pointer-events: none;
 }
 
+@media screen and (max-width: 768px) {
+  .intro-title {
+    font-size: 30px !important; 
+  }
+}
+
 #bright {
   position: absolute;
   inset: 0;
