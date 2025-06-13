@@ -10,6 +10,43 @@
   src: url("fonts/VeniteAdoremus.ttf");
 }
 
+/*
+  Global flex settings to improve responsiveness across devices.
+  All elements are treated as flex containers so that their
+  children can scale with flex-grow and flex-shrink.  These
+  factors are adjusted via media queries for common device
+  sizes (phone, tablet and desktop).
+*/
+* {
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+/* iPhone 14 Pro Max and similar phones */
+@media (max-width: 430px) {
+  * {
+    flex-grow: 1.2;
+    flex-shrink: 1;
+  }
+}
+
+/* iPad mini and other tablets */
+@media (min-width: 431px) and (max-width: 1024px) {
+  * {
+    flex-grow: 1.1;
+    flex-shrink: 1;
+  }
+}
+
+/* Desktop displays around 23" */
+@media (min-width: 1025px) {
+  * {
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+}
+
 .body, html {
   transition: 0.5s ease;
   background-color: #2a2a2a;
