@@ -256,14 +256,19 @@ document.body.style.opacity = "1";
     });
 });
 
-//intro-page hover
+const AspectEvents = ["mouseenter", "click"];
+
+// intro-page hover
 document.querySelectorAll('.aspect-card').forEach(card => {
-    card.addEventListener('mouseenter', () => {
-        document.querySelectorAll('.intro-text, .intro-subtle, #EingabeInfosTitle, .intro-list, #EingabeInfosText, ul.sichtbar, .intro-info ul, .intro-highlight')
-            .forEach(el => el.classList.add('hover'));
+    AspectEvents.forEach(event => {  // Schleife über die Events
+        card.addEventListener(event, () => {  // Hier wird jedes Event richtig registriert
+            document.querySelectorAll('.intro-text, .intro-subtle, #EingabeInfosTitle, .intro-list, #EingabeInfosText, ul.sichtbar, .intro-info ul, .intro-highlight')
+                .forEach(el => el.classList.add('hover'));
+        });
     });
 
-    card.addEventListener('mouseleave', () => {
+
+    card.addEventListener('onclick', () => {
         document.querySelectorAll('.intro-text, .intro-subtle, #EingabeInfosTitle, .intro-list, #EingabeInfosText, ul.sichtbar, .intro-info ul, .intro-highlight')
             .forEach(el => el.classList.remove('hover'));
     });
