@@ -258,26 +258,23 @@ document.body.style.opacity = "1";
 
 let aspectClickCount = 0;
 
-document.querySelectorAll('.aspect-card').forEach(card => {
-  card.addEventListener('click', () => {
+document.querySelector('.aspect-card').addEventListener('click', () => {
+
     const elements = document.querySelectorAll(
       '.intro-text, .intro-subtle, #EingabeInfosTitle, .intro-list, #EingabeInfosText, ul.sichtbar, .intro-info ul, .intro-highlight'
     );
 
     aspectClickCount++;
 
-    if (aspectClickCount === 1) {
+    if (aspectClickCount % 2 !== 0) {
       elements.forEach(el => el.classList.add('hover'));
-    } else if (aspectClickCount === 2) {
+
+    } else {
       elements.forEach(el => {
         el.classList.remove('hover');
-        el.style.setProperty('color', 'black', 'important');
       });
-      aspectClickCount = 0;
     }
   });
-});
-
 
 
 // Beim Klicken des Spielstart-Buttons:
@@ -428,18 +425,21 @@ const nextRoundBtn = document.getElementById("nextRoundBtn");
 // Karten im Startmenü
 document.addEventListener('DOMContentLoaded', () => {
   const startCards = document.querySelectorAll('.aspect-card');
+
   startCards.forEach(card => {
     const header = card.querySelector('.aspect-header');
     let fixedOpen = false;
 
-    header.addEventListener('click', () => {
+    // Klick-Event für das Header-Element innerhalb der Karte
+    card.addEventListener('click', () => {
       fixedOpen = !fixedOpen;
       card.classList.toggle('open', fixedOpen);
       card.classList.add('clicked', 'hovering');
     });
 
+    // Klick-Event für die Karte selbst
     card.addEventListener('click', () => {
-      card.classList.remove('hovering','clicked');
+      card.classList.remove('hovering', 'clicked');
       if (!fixedOpen) {
         card.classList.toggle('open', fixedOpen);
       }
