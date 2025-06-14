@@ -26,6 +26,19 @@ const countdownSound = new Audio("countdown.mp3");
 let counted = false;
 let countedNum = false;
 
+const farben = [
+  "blue",
+  "red",
+  "green",
+  "yellow",
+  "#FF10F0",
+  "#FF8000",
+  "#8B00FF",
+  "#8B4513",
+  "grey",
+  "white"
+];
+
 const bingBaseVolume = 0.2;
 const bingMaxVolume = 1;
 const wuerfelAnimContainer = document.getElementById("wuerfelAnimation");
@@ -489,7 +502,6 @@ function handleGameInput() {
     }
 
     zustand = (zustand % 10) + 1;
-    const farben = ["blue", "red", "green", "yellow", "#FF10F0", "#FF8000", "#8B00FF", "#8B4513", "grey", "white"];
     karte.style.backgroundColor = farben[zustand - 1];
     input.value = "";
     let jetzt = performance.now();
@@ -638,6 +650,7 @@ starteCountdown(() => {
     anzeigeWrapper.classList.add("sichtbar");
     anzeigeWrapper.style.display = "flex";
     karte.classList.add("sichtbar");
+    karte.style.backgroundColor = farben[0];
   });
 
 
@@ -973,6 +986,7 @@ nextRoundBtn.addEventListener("click", () => {
   timerGestartet = false;
   countedNum = false;
   counted = false;
+  karte.style.backgroundColor = farben[0];
   zustand = 0;
   korrektAnzahl = 0;
   reaktionszeiten = [];
