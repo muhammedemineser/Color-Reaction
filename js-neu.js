@@ -258,7 +258,7 @@ document.body.style.opacity = "1";
 
 let aspectClickCount = 0;
 
-document.querySelector('.aspect-card').addEventListener('click', () => {
+document.querySelectorAll('.aspect-card').forEach(e=> e.addEventListener('click', () => {
 
     const elements = document.querySelectorAll(
       '.intro-text, .intro-subtle, #EingabeInfosTitle, .intro-list, #EingabeInfosText, ul.sichtbar, .intro-info ul, .intro-highlight'
@@ -274,7 +274,8 @@ document.querySelector('.aspect-card').addEventListener('click', () => {
         el.classList.remove('hover');
       });
     }
-  });
+  }));
+
 
 
 // Beim Klicken des Spielstart-Buttons:
