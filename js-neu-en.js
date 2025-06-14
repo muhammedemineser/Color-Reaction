@@ -279,6 +279,7 @@ document.querySelectorAll('.aspect-card').forEach(e=> e.addEventListener('click'
 
 
 
+
 // Beim Klicken des Spielstart-Buttons:
 document.getElementById("gameBtn").addEventListener("click", () => {
   if (!anzahl) {
