@@ -427,18 +427,21 @@ const nextRoundBtn = document.getElementById("nextRoundBtn");
 // Karten im Startmenü
 document.addEventListener('DOMContentLoaded', () => {
   const startCards = document.querySelectorAll('.aspect-card');
+
   startCards.forEach(card => {
     const header = card.querySelector('.aspect-header');
     let fixedOpen = false;
 
-    header.addEventListener('click', () => {
+    // Klick-Event für das Header-Element innerhalb der Karte
+    card.addEventListener('click', () => {
       fixedOpen = !fixedOpen;
       card.classList.toggle('open', fixedOpen);
       card.classList.add('clicked', 'hovering');
     });
 
+    // Klick-Event für die Karte selbst
     card.addEventListener('click', () => {
-      card.classList.remove('hovering','clicked');
+      card.classList.remove('hovering', 'clicked');
       if (!fixedOpen) {
         card.classList.toggle('open', fixedOpen);
       }
