@@ -1005,14 +1005,3 @@ setTimeout(() => {
   window.location.href = "index_en.html";
 }, 500);  });
 }
-
-// Screen reader button
-const srBtn = document.getElementById("screenReaderBtn");
-if (srBtn && "speechSynthesis" in window) {
-  srBtn.addEventListener("click", () => {
-    const utterance = new SpeechSynthesisUtterance(document.body.innerText);
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
-  });
-}
-
