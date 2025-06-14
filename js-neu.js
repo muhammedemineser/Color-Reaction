@@ -256,23 +256,20 @@ document.body.style.opacity = "1";
     });
 });
 
-const AspectEvents = ["mouseenter", "click"];
+let clickedDropDown = false;
 
-// intro-page hover
-document.querySelectorAll('.aspect-card').forEach(card => {
-    AspectEvents.forEach(event => {  // Schleife über die Events
-        card.addEventListener(event, () => {  // Hier wird jedes Event richtig registriert
-            document.querySelectorAll('.intro-text, .intro-subtle, #EingabeInfosTitle, .intro-list, #EingabeInfosText, ul.sichtbar, .intro-info ul, .intro-highlight')
-                .forEach(el => el.classList.add('hover'));
-        });
+document.querySelector('.aspect-card').addEventListener('click', () => {
+        const elements = document.querySelectorAll('.intro-text, .intro-subtle, #EingabeInfosTitle, .intro-list, #EingabeInfosText, ul.sichtbar, .intro-info ul, .intro-highlight');
+
+        if (!clickedDropDown) {
+            elements.forEach(el => el.classList.add('hover'));
+            clickedDropDown = true;
+        } else if (!fixedOpen){
+            elements.forEach(el => el.classList.remove('hover'));
+            clickedDropDown = false;
+        }
     });
 
-
-    card.addEventListener('onclick', () => {
-        document.querySelectorAll('.intro-text, .intro-subtle, #EingabeInfosTitle, .intro-list, #EingabeInfosText, ul.sichtbar, .intro-info ul, .intro-highlight')
-            .forEach(el => el.classList.remove('hover'));
-    });
-});
 
 
 // Beim Klicken des Spielstart-Buttons:
@@ -430,50 +427,15 @@ document.addEventListener('DOMContentLoaded', () => {
     header.addEventListener('click', () => {
       fixedOpen = !fixedOpen;
       card.classList.toggle('open', fixedOpen);
-      card.classList.add('clicked');
-      setTimeout(() => {
-        card.classList.remove('clicked');
-      }, 200);
+      card.classList.add('clicked', 'hovering');
     });
 
-    card.addEventListener('mouseenter', () => {
-      card.classList.add('hovering');
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.classList.remove('hovering');
+    card.addEventListener('click', () => {
+      card.classList.remove('hovering','clicked');
       if (!fixedOpen) {
-        card.classList.remove('open');
+        card.classList.toggle('open', fixedOpen);
       }
     });
-  });
-});
-
-// Karten im Startmenü
-const startCards = document.querySelectorAll('.aspect-card');
-startCards.forEach(card => {
-  const header = card.querySelector('.aspect-header');
-  let fixedOpen = false;
-
-  header.addEventListener('click', () => {
-    fixedOpen = !fixedOpen;
-    card.classList.toggle('open', fixedOpen);
-    card.classList.add('clicked');
-    setTimeout(() => {
-      card.classList.remove('clicked');
-    }, 200);
-  });
-
-  card.addEventListener('mouseenter', () => {
-    card.classList.add('hovering');
-  });
-
-  card.addEventListener('mouseleave', () => {
-    card.classList.remove('hovering');
-    if (!fixedOpen) {
-      card.classList.remove('open');
-      card.classList.remove('hovering');
-    }
   });
 });
 
