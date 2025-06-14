@@ -256,19 +256,27 @@ document.body.style.opacity = "1";
     });
 });
 
-let clickedDropDown = false;
+let aspectClickCount = 0;
 
-document.querySelector('.aspect-card').addEventListener('click', () => {
-        const elements = document.querySelectorAll('.intro-text, .intro-subtle, #EingabeInfosTitle, .intro-list, #EingabeInfosText, ul.sichtbar, .intro-info ul, .intro-highlight');
+document.querySelectorAll('.aspect-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const elements = document.querySelectorAll(
+      '.intro-text, .intro-subtle, #EingabeInfosTitle, .intro-list, #EingabeInfosText, ul.sichtbar, .intro-info ul, .intro-highlight'
+    );
 
-        if (!clickedDropDown) {
-            elements.forEach(el => el.classList.add('hover'));
-            clickedDropDown = true;
-        } else if (!fixedOpen){
-            elements.forEach(el => el.classList.remove('hover'));
-            clickedDropDown = false;
-        }
-    });
+    aspectClickCount++;
+
+    if (aspectClickCount === 1) {
+      elements.forEach(el => el.classList.add('hover'));
+    } else if (aspectClickCount === 2) {
+      elements.forEach(el => {
+        el.classList.remove('hover');
+        el.style.setProperty('color', 'black', 'important');
+      });
+      aspectClickCount = 0;
+    }
+  });
+});
 
 
 
