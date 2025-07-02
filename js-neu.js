@@ -580,7 +580,7 @@ function zeigeRangliste(topSpieler) {
       li.style.boxShadow = "0 0 25px silver";
     } else if (index === 2) {
       li.style.boxShadow = "0 0 25px #cd7f32"; // Bronze
-    }
+    } else if (spieler.userId === userId) li.classList.add("rang-eintrag", "rang-highlight");
 
     // Spielername evtl. kürzen
     const name = spieler.name.length > 12 ? spieler.name.slice(0, 12) + "…" : spieler.name;
