@@ -716,13 +716,18 @@ const items = document.querySelectorAll(".auswertung-item");
 datenSpeichern()
   .then(() => ladeAlleScores())
   .then(scores => {
+  const EPSILON = 0.01;
+
   const sortiert = scores
     .map(s => ({ ...s, besteReaktion: Number(s.besteReaktion) }))
     .filter(s => !isNaN(s.besteReaktion))
     .sort((a, b) => a.besteReaktion - b.besteReaktion)
     .map((s, i) => ({ ...s, rang: i + 1 }));
 
-  const aktuellerEintrag = sortiert.find(s => s.userId === userId);
+  const currentBest = Number(besteReaktion.toFixed(2));
+  const aktuellerEintrag = sortiert.find(
+    s => s.userId === userId && Math.abs(s.besteReaktion - currentBest) < EPSILON
+  );
 
   const top3 = sortiert.slice(0, 3);
 
