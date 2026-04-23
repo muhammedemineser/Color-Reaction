@@ -16,13 +16,13 @@ let startTimeZwei = 0;
 let anzahlLang = 0;
 let spielGestartet = false;
 let ersterClickGetan = false;
-const soundCorrect = new Audio("correct-answer.mp3");
-const soundWrong = new Audio("wrong-answer.mp3");
-const soundSignup = new Audio("signed-up.mp3");
-const bingSound = new Audio("bing.mp3");
-const bingLastSound = new Audio("bingLast.mp3");
-const buttonSound = new Audio("buttonSound.mp3");
-const countdownSound = new Audio("countdown.mp3");
+const soundCorrect = new Audio("assets/sounds/correct-answer.mp3");
+const soundWrong = new Audio("assets/sounds/wrong-answer.mp3");
+const soundSignup = new Audio("assets/sounds/signed-up.mp3");
+const bingSound = new Audio("assets/sounds/bing.mp3");
+const bingLastSound = new Audio("assets/sounds/bingLast.mp3");
+const buttonSound = new Audio("assets/sounds/buttonSound.mp3");
+const countdownSound = new Audio("assets/sounds/countdown.mp3");
 let counted = false;
 let countedNum = false;
 
@@ -41,7 +41,7 @@ const animationInstance = lottie.loadAnimation({
   renderer: 'svg',
   loop: true,
   autoplay: true,
-  path: 'wuerfelAnimation.json'
+  path: 'assets/wuerfelAnimation.json'
 });
 
 function playFixedSound(audio) {
@@ -1011,6 +1011,6 @@ document.body.style.transition = "opacity 0.5s ease";
 document.body.style.opacity = "0"; 
 
 setTimeout(() => {
-  window.location.href = "index_en.html";
+  window.location.href = "en.html";
 }, 500);  });
 }

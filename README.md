@@ -2,7 +2,7 @@
 
 An interactive color reaction game to measure your sensorimotor reaction speed.
 
-**Live:** https://muhammedemineser.github.io/Color-Reaction/
+**Live:** https://mu-mino.github.io/Color-Reaction/
 
 ---
 
